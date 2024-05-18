@@ -13,3 +13,7 @@ config_version=5
 config/name="Game"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
+
+[audio]
+
+driver/enable_input=true

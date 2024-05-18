@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3745p7a81wyc"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_fru5e"]
+[ext_resource type="PackedScene" uid="uid://doak0rcd00mvf" path="res://player.tscn" id="2_k0e47"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_fru5e")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
+transform = Transform3D(10.585, 0, 0, 0, 1.00153, 0, 0, 0, 24.7933, -6.46298, 0.00408125, 9.99973)
+
+[node name="Player" parent="." instance=ExtResource("2_k0e47")]
