@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://doak0rcd00mvf"]
+[gd_scene load_steps=4 format=3 uid="uid://doak0rcd00mvf"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_3jrqg"]
 [ext_resource type="PackedScene" uid="uid://6g30kot4811t" path="res://voip_manager.tscn" id="1_xeeuq"]
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_wqy7p"]
 
 [node name="Player" type="Node3D"]
 script = ExtResource("1_3jrqg")
@@ -9,4 +11,5 @@ script = ExtResource("1_3jrqg")
 [node name="VOIPmanager" parent="." instance=ExtResource("1_xeeuq")]
 output_path = NodePath("../Output")
 
-[node name="Output" type="AudioStreamPlayer" parent="."]
+[node name="Output" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamGenerator_wqy7p")

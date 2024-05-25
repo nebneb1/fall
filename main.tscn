@@ -7,6 +7,12 @@
 script = ExtResource("1_fru5e")
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
-transform = Transform3D(10.585, 0, 0, 0, 1.00153, 0, 0, 0, 24.7933, -6.46298, 0.00408125, 9.99973)
+transform = Transform3D(10.585, 0, 0, 0, 1.00153, 0, 0, 0, 24.7933, -6.46298, -1.93454, 9.99973)
+
+[node name="Player2" parent="." instance=ExtResource("2_k0e47")]
 
 [node name="Player" parent="." instance=ExtResource("2_k0e47")]
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+
+[editable path="Player2"]

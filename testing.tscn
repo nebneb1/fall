@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://ben4j4cajklwp"]
+
+[ext_resource type="PackedScene" uid="uid://dx6ygkevy1k8f" path="res://server.tscn" id="2_q3ib2"]
+[ext_resource type="PackedScene" uid="uid://d1m0mn7m448vg" path="res://client.tscn" id="3_iwp05"]
+
+[node name="testing" type="Node3D"]
+
+[node name="Server" parent="." instance=ExtResource("2_q3ib2")]
+room = NodePath("../Room")
+
+[node name="Client" parent="." instance=ExtResource("3_iwp05")]
+room = NodePath("../Room")
+
+[node name="Room" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]

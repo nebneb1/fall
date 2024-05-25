@@ -1,9 +1,14 @@
-[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://bn658a2thk4v8"]
+[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://bn658a2thk4v8"]
+
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_t5gfj"]
+resource_name = "Limiter"
 
 [sub_resource type="AudioEffectCapture" id="AudioEffectCapture_h88i8"]
 resource_name = "Capture"
 
 [resource]
+bus/0/effect/0/effect = SubResource("AudioEffectLimiter_t5gfj")
+bus/0/effect/0/enabled = true
 bus/1/name = &"Mute"
 bus/1/solo = false
 bus/1/mute = true
