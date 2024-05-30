@@ -1,0 +1,3 @@
+username:nebneb
+met:100
+friends:100

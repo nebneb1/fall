@@ -1,7 +1,6 @@
 extends Node
 
 
-const PORT = 2556
 var peer = ENetMultiplayerPeer.new()
 
 @export var player_scene : PackedScene
@@ -20,7 +19,7 @@ func peer_disconnected(id):
 func _ready() -> void:
 	if "--server" in OS.get_cmdline_args():
 		setup_host()
-		print("Hosting on ", PORT)
+		print("Hosting on ", Global.PORT)
 	multiplayer.peer_connected.connect(peer_connected)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
 
@@ -28,7 +27,7 @@ func _process(delta: float) -> void:
 	if server_ready: peer.poll()
 
 func setup_host():
-	var error = peer.create_server(PORT)
+	var error = peer.create_server(Global.PORT)
 	if error: print("server err: ", error)
 	
 	multiplayer.multiplayer_peer = peer
