@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cmrajsg26ffmb"
+path="res://.godot/imported/large chirp.ogg-0114d92864353b594f92d7ab7736f400.oggvorbisstr"
+
+[deps]
+
+source_file="res://temp/Sky SFX/large chirp.ogg"
+dest_files=["res://.godot/imported/large chirp.ogg-0114d92864353b594f92d7ab7736f400.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

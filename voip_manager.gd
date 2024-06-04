@@ -9,6 +9,7 @@ var playback : AudioStreamGeneratorPlayback
 var input_threshold := 0.005
 var recieved_buffer := PackedFloat32Array()
 var output : AudioStreamPlayer3D
+var is_active = false
 
 @export var output_path : NodePath
 
@@ -21,20 +22,20 @@ func setup_audio(id):
 		input.play()
 		index = AudioServer.get_bus_index("Record")
 		effect = AudioServer.get_bus_effect(index, 0)
-		print("inputsetup")
-		
 	#sync genorator mix rate to heaphone mix rate
 	output.stream.mix_rate = AudioServer.get_mix_rate()
 	output.stream.buffer_length = BUFFER
 	output.play()
 	playback = output.get_stream_playback()
+	print(str(multiplayer.get_unique_id()) + " audsetup " + str(id))
 	
 	
 func _process(delta):
-	if is_multiplayer_authority():
-		process_mic()
-		
-	process_voice()
+	if is_active:
+		if is_multiplayer_authority():
+			process_mic()
+			
+		process_voice()
 		
 func process_mic():
 	var stereo_data : PackedVector2Array = effect.get_buffer(effect.get_frames_available())
@@ -55,8 +56,6 @@ func process_mic():
 		
 		send_data.rpc(data)
 		#send_data(data)
-		
-	
 
 func process_voice():
 	if recieved_buffer.size() <= 0:

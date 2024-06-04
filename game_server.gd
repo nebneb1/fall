@@ -1,14 +1,19 @@
 extends Node
 
 #const INDEX_KEY := {"id":0,"username":1,"met":2,"friends":3}
-
+const PLAYER_PATH = "user://players.txt"
 var peer = ENetMultiplayerPeer.new()
 
 var queue : Array = []
 
 
 func _ready():
+	multiplayer.multiplayer_peer.poll()
+	print("Server running")
 	setup_server()
+	if not FileAccess.file_exists(PLAYER_PATH):
+		var file = FileAccess.open(PLAYER_PATH, FileAccess.WRITE)
+		file.close
 
 
 
@@ -22,16 +27,20 @@ func peer_disconnected(id):
 
 
 func setup_server():
-	var error = peer.create_server(Global.PORT)
+	var error = peer.create_server(Global.PORT, 4095)
 	if error: print("server err: ", error)
 	multiplayer.multiplayer_peer = peer
 	
 	multiplayer.peer_connected.connect(peer_connected)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
+	
+	print("server set up on: ", Global.PORT)
 
 @rpc("any_peer", "call_remote", "reliable")
 func request_connection(network_info : Dictionary):
+	print(network_info["peer_id"], " request ")
 	var choices: Array = []
+	print("player requests connection:" + str(network_info))
 	for player in queue:
 		if player["id"] != network_info["id"]: #check if player is self
 			var ship = true
@@ -41,7 +50,7 @@ func request_connection(network_info : Dictionary):
 			if not (player["upnp_open"] or network_info["upnp_open"]): # if this is true a connection cannot be made
 				ship = false 
 			
-			if not (player["met_recently"].has(network_info["id"]) or network_info["met_recently"].has(player["id"])): # dont want to serve players people they have just met
+			if (player["met_recently"].has(network_info["id"]) or network_info["met_recently"].has(player["id"])): # dont want to serve players people they have just met
 				ship = false
 			
 			if player["friends"].has(network_info["id"]) and network_info["friends"].has(player["id"]):  # Friends suprass all boundries :D
@@ -51,20 +60,21 @@ func request_connection(network_info : Dictionary):
 				score += -1000
 			
 			if player["country"] == network_info["country"]: # if they share a country, give a bonus
-				score += 10
+				score += 20
 			
 			if player["primary_language"] == network_info["primary_language"]: # if they share the same primary language, give a large bonus, language is more important than country
-				score += 20
+				score += 10
 				shared_languages.append(player["primary_language"])
 			
 			for language in network_info["language"]: # ppl can relate over shared language
-				if player["language"].has(language) or language == player["primary_language"]:
+				if player["language"].has(language):
 					shared_languages.append(language)
 					score += 4
 			
 			if abs(player["hue"] - network_info["hue"]) < 7: # lol if they have a similar hue, slightly prioritize them
 				score += 1
 			
+			print([score, player, shared_languages, ship])
 			if shared_languages.size() > 0 and ship:
 				choices.append([score, player, shared_languages])
 			
@@ -73,7 +83,9 @@ func request_connection(network_info : Dictionary):
 	if choices.size() > 0:
 		choices.sort_custom(func(a, b): return a[0] > b[0]) # sorting by score
 		intitate_connection(network_info, choices[0][1], choices[0][2])
+		print("found ", choices[0])
 	else: 
+		print("none found")
 		connect_players.rpc_id(network_info["peer_id"], false, [], "NA") # send back if no one could be found
 
 
@@ -104,6 +116,9 @@ func intitate_connection(requester : Dictionary, requestee : Dictionary, shared_
 		connect_players.rpc_id(requester["peer_id"], false, shared_languages, requestee["ip"])
 	else:
 		print("no avalable host")
+	
+	await get_tree().create_timer(0.1).timeout
+	multiplayer.multiplayer_peer = null
 
 @rpc("authority", "call_remote", "reliable")
 func connect_players(is_host : bool, shared_languages : Array, ip : String = "local"):
@@ -118,7 +133,7 @@ func set_user_id(id : int):
 func send_network_info(network_info : Dictionary):
 	if network_info["id"] == 0:
 		while network_info["id"] == 0:
-			var players = FileAccess.open("res://players.txt", FileAccess.READ)
+			var players = FileAccess.open(PLAYER_PATH, FileAccess.READ)
 			players.seek(0)
 			var potential_id = randi_range(1000000, 9999999)
 			var is_unique = true
@@ -132,11 +147,19 @@ func send_network_info(network_info : Dictionary):
 				set_user_id.rpc_id(network_info["peer_id"], network_info["id"])
 				var temp = players.get_as_text()
 				players.close()
-				players = FileAccess.open("res://players.txt", FileAccess.WRITE)
+				players = FileAccess.open(PLAYER_PATH, FileAccess.WRITE)
 				players.store_string(str(network_info["id"]) + "\n" + temp)
 				players.close()
 	if not network_info in queue:
 		queue.append(network_info)
+	
+	print(network_info)
+
+@rpc("any_peer", "call_remote", "reliable")
+func ping():
+	pass
+
+
 
 # This feels horribly inefficiant but i dont care! but like i probably will in the future if it starts costing me mone
 #func write_db(id : int, index : String, value):

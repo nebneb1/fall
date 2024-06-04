@@ -1,11 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://d3745p7a81wyc"]
+[gd_scene load_steps=3 format=3 uid="uid://d3745p7a81wyc"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_fru5e"]
+[ext_resource type="PackedScene" uid="uid://doak0rcd00mvf" path="res://player.tscn" id="2_dbpgj"]
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_fru5e")
+player_scene = ExtResource("2_dbpgj")
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
 transform = Transform3D(10.585, 0, 0, 0, 1.00153, 0, 0, 0, 24.7933, -6.46298, -1.93454, 9.99973)
+
+[node name="Camera3D" type="Camera3D" parent="."]
 
 [connection signal="tree_exited" from="." to="." method="_on_tree_exited"]

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://rj2jo6ft3xo1"
+path="res://.godot/imported/medium chirp.ogg-079583c91e087e4a6763beafb6dec380.oggvorbisstr"
+
+[deps]
+
+source_file="res://temp/Sky SFX/medium chirp.ogg"
+dest_files=["res://.godot/imported/medium chirp.ogg-079583c91e087e4a6763beafb6dec380.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
