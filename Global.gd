@@ -31,6 +31,10 @@ var network_info := {
 }
 
 
+#enables all dev stuff so it doesnt get lost and sent thru production
+const debug = true
+var is_client:  bool = false
+
 func _ready():
 	var dir = DirAccess.open("user://") 
 	if not dir.dir_exists("saves"):

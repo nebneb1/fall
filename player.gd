@@ -3,13 +3,18 @@ extends Node3D
 const CHIRP_THRESHOLDS = [0.75, 1.5, 2.0]
 
 var is_puppet = false
-var id = 1
+var id = 1 
 var chirp_durr : float = 0.0
 var is_chirping = false
 
 
 func _ready() -> void:
 	init()
+	if Global.is_client:
+		$Output.volume_db = -80
+		$SFX/chirp_small.volume_db = -80
+		$SFX/chirp_medium.volume_db = -80
+		$SFX/chirp_large.volume_db = -80
 
 func init():
 	if multiplayer.multiplayer_peer != null:
@@ -63,3 +68,6 @@ func _input(event: InputEvent):
 		if event.is_action_pressed("chirp"):  
 			chirp_queue.rpc(true)
 		if event.is_action_released("chirp"):  chirp_queue.rpc(false)
+		
+
+	

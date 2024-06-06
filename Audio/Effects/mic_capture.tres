@@ -1,0 +1,4 @@
+[gd_resource type="AudioEffectCapture" format=3 uid="uid://mgr3lghgv46n"]
+
+[resource]
+resource_name = "Capture"

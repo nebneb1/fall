@@ -1,10 +1,17 @@
-[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://bn658a2thk4v8"]
+[gd_resource type="AudioBusLayout" load_steps=5 format=3 uid="uid://bn658a2thk4v8"]
+
+[ext_resource type="AudioEffectCapture" uid="uid://mgr3lghgv46n" path="res://Audio/Effects/mic_capture.tres" id="1_vnq64"]
 
 [sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_t5gfj"]
 resource_name = "Limiter"
 
-[sub_resource type="AudioEffectCapture" id="AudioEffectCapture_h88i8"]
-resource_name = "Capture"
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_21jxr"]
+resource_name = "Limiter"
+threshold_db = -3.2
+soft_clip_db = 0.0
+
+[sub_resource type="AudioEffectAmplify" id="AudioEffectAmplify_w2ifm"]
+resource_name = "Amplify"
 
 [resource]
 bus/0/effect/0/effect = SubResource("AudioEffectLimiter_t5gfj")
@@ -21,5 +28,9 @@ bus/2/mute = false
 bus/2/bypass_fx = false
 bus/2/volume_db = 0.0
 bus/2/send = &"Mute"
-bus/2/effect/0/effect = SubResource("AudioEffectCapture_h88i8")
+bus/2/effect/0/effect = SubResource("AudioEffectLimiter_21jxr")
 bus/2/effect/0/enabled = true
+bus/2/effect/1/effect = SubResource("AudioEffectAmplify_w2ifm")
+bus/2/effect/1/enabled = true
+bus/2/effect/2/effect = ExtResource("1_vnq64")
+bus/2/effect/2/enabled = true

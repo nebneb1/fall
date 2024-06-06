@@ -15,7 +15,8 @@ func _ready():
 		var file = FileAccess.open(PLAYER_PATH, FileAccess.WRITE)
 		file.close
 
-
+func _process(delta):
+	multiplayer.multiplayer_peer.poll()
 
 func peer_connected(id): 
 	print("Peer connected: ", id, " awaiting data")

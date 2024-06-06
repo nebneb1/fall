@@ -6,10 +6,10 @@ extends Node3D
 func _ready():
 	get_tree().set_auto_accept_quit(false)
 	setup_upnp()
-	await get_tree().create_timer(3.0).timeout
-	print(connect_to_server(Global.MATCHING_SERVER_IP, Global.PORT))
-	await get_tree().create_timer(3.0).timeout
-	print("rdy to request")
+	#await get_tree().create_timer(3.0).timeout
+	#print(connect_to_server(Global.MATCHING_SERVER_IP, Global.PORT))
+	#await get_tree().create_timer(3.0).timeout
+	#print("rdy to request")
 	
 func _process(delta: float):
 	if Global.active_players.size() > 1 and Global.active_players[0].chirp_durr >= Global.CONFIRM_CHIRP and Global.active_players[1].chirp_durr >= Global.CONFIRM_CHIRP:
@@ -21,14 +21,14 @@ func _input(event: InputEvent):
 		print("request sent to server")
 		request_connection.rpc(Global.network_info)
 		
-	#if event.is_action_pressed("server"):
-		##print("request sent to server")
-		##request_connection.rpc(Global.network_info)
-		#print("server set up")
-		#connect_players(true, ["en"], "127.0.0.1")
-	#
-	#if event.is_action_pressed("client"):
-		#connect_players(false, ["en"], "127.0.0.1")
+	if event.is_action_pressed("server"):
+		print("server set up")
+		connect_players(true, ["en"], "127.0.0.1")
+		Global.is_client = false
+	
+	if event.is_action_pressed("client"):
+		connect_players(false, ["en"], "127.0.0.1")
+		Global.is_client = true
 
 
 # below here is stuff to handle various networking things
@@ -125,12 +125,13 @@ func setup_upnp():
 			print("UPNP setup failed")
 			Global.network_info["upnp_open"] = false
 	
+	else: 
+		print("UPNP discovery failure")
+		Global.network_info["upnp_open"] = false
+	
 	if Global.network_info["upnp_open"]:
 		Global.network_info["ip"] = upnp.query_external_address()
 		print("UPNP setup sucess, port " + str(Global.network_info["port"]) + " forwarded")
-
-
-
 
 #close ports on app close
 func close_ports():
