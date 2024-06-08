@@ -5,7 +5,7 @@ const SAVE_DIRECTORY = "user://saves/save.fall"
 #const BACKUPS = ["user://saves/backup1.fall", "user://saves/backup2.fall"]
 const GAME_IDENTIFIER = "under_dream"
 const PORT = 25564
-const MATCHING_SERVER_IP = "54.177.57.251"
+const MATCHING_SERVER_IP = "54.183.253.71"
 
 const CONFIRM_CHIRP = 5.0
 
@@ -33,7 +33,6 @@ var network_info := {
 
 #enables all dev stuff so it doesnt get lost and sent thru production
 const debug = true
-const local = true
 var is_client:  bool = false
 
 func _ready():

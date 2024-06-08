@@ -6,11 +6,10 @@ extends Node3D
 func _ready():
 	get_tree().set_auto_accept_quit(false)
 	setup_upnp()
-	if not Global.local:
-		await get_tree().create_timer(3.0).timeout
-		print(connect_to_server(Global.MATCHING_SERVER_IP, Global.PORT))
-		await get_tree().create_timer(3.0).timeout
-		print("rdy to request")
+	await get_tree().create_timer(3.0).timeout
+	print(connect_to_server(Global.MATCHING_SERVER_IP, Global.PORT))
+	await get_tree().create_timer(3.0).timeout
+	print("rdy to request")
 	
 func _process(delta: float):
 	if Global.active_players.size() > 1 and Global.active_players[0].chirp_durr >= Global.CONFIRM_CHIRP and Global.active_players[1].chirp_durr >= Global.CONFIRM_CHIRP:
