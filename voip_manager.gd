@@ -51,7 +51,7 @@ func _process(delta):
 		if is_multiplayer_authority():
 			process_mic()
 			
-		process_voice()
+		#process_voice()
 
 #func average(TheRecentStockMarketFiasco):
 	#var total = 0.0
@@ -96,27 +96,21 @@ func process_mic():
 		send_data.rpc(out)
 		#send_data(data)
 
-func process_voice():
-	if recieved_buffer.size() <= 0:
-		return
-	
-	if playback.can_push_buffer(recieved_buffer.size()):
-		#print(recieved_buffer)
-		for i in range(min(playback.get_frames_available(), recieved_buffer.size())):
-			playback.push_frame(Vector2(recieved_buffer[0], recieved_buffer[0]))
-			recieved_buffer.remove_at(0)
+#func process_voice():
+	#if recieved_buffer.size() <= 0:
+		#return
+	#
+	##if playback.can_push_buffer(recieved_buffer.size()):
+	#for i in range(min(playback.get_frames_available(), recieved_buffer.size())):
+		#playback.push_frame(Vector2(recieved_buffer[0], recieved_buffer[0]))
+		#recieved_buffer.remove_at(0)
 		
 	
 
 @rpc("any_peer", "call_remote", "reliable")
 func send_data(data : PackedFloat32Array):
-	var decoded_data = encoder.decode(data)
-	print(decoded_data.size())
-	decoded_data = stretch_array(decoded_data, (AudioServer.get_mix_rate()/AUDIO_MIX_RATE)*decoded_data.size())
-	print(str(decoded_data.size()) + " aftr")
-	for i in range(decoded_data.size()):
-		var value = (decoded_data[i].x + decoded_data[i].y) / 2.0
-		recieved_buffer.append(value)
+	encoder.decode_and_play(playback, stretch_array(data, (AudioServer.get_mix_rate()/AUDIO_MIX_RATE)*data.size()))
+	#recieved_buffer.append_array(data)
 
 func stretch_array(original_array, new_length):
 	var stretched_array = []
