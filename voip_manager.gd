@@ -2,7 +2,7 @@ extends Node
 
 const BUFFER = 0.5 #seconds
 const BUFFER_SIZE := 480 #audio frames
-const AUDIO_MIX_RATE = 32000
+const AUDIO_MIX_RATE = 48000
 
 @onready var input : AudioStreamPlayer = $Input
 var index : int
@@ -109,5 +109,14 @@ func process_mic():
 
 @rpc("any_peer", "call_remote", "reliable")
 func send_data(data : PackedFloat32Array):
-	encoder.decode_and_play(playback, data)
+	encoder.decode_and_play(playback, stretch_array(data, (AudioServer.get_mix_rate()/AUDIO_MIX_RATE)*data.size()))
 	#recieved_buffer.append_array(data)
+
+func stretch_array(original_array, new_length):
+	var stretched_array = []
+	var original_length = original_array.size()
+	var scale = float(original_length) / float(new_length)
+	for i in range(new_length):
+		var original_pos = int(i * scale)
+		stretched_array.append(original_array[original_pos])
+	return stretched_array
