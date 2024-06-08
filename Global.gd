@@ -33,7 +33,7 @@ var network_info := {
 
 #enables all dev stuff so it doesnt get lost and sent thru production
 const debug = true
-const local = false
+const local = true
 var is_client:  bool = false
 
 func _ready():
