@@ -95,7 +95,6 @@ func process_mic():
 		
 		send_data.rpc(out)
 		#send_data(data)
-
 #func process_voice():
 	#if recieved_buffer.size() <= 0:
 		#return
