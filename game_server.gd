@@ -119,7 +119,7 @@ func intitate_connection(requester : Dictionary, requestee : Dictionary, shared_
 		print("no avalable host")
 	
 	await get_tree().create_timer(0.1).timeout
-	#multiplayer.multiplayer_peer = null
+	multiplayer.multiplayer_peer = null
 
 @rpc("authority", "call_remote", "reliable")
 func connect_players(is_host : bool, shared_languages : Array, ip : String = "local"):
