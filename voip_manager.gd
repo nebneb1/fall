@@ -29,8 +29,8 @@ func setup_audio(id):
 		index = AudioServer.get_bus_index("Record")
 		effect = audio_capture
 	#sync genorator mix rate to heaphone mix rate
-	output.stream.mix_rate = AudioServer.get_mix_rate()
-	#output.stream.mix_rate = 48000
+	#output.stream.mix_rate = AudioServer.get_mix_rate()
+	output.stream.mix_rate = AUDIO_MIX_RATE
 	output.stream.buffer_length = BUFFER
 	output.play()
 	playback = output.get_stream_playback()
@@ -111,12 +111,11 @@ func process_voice():
 @rpc("any_peer", "call_remote", "reliable")
 func send_data(data : PackedFloat32Array):
 	var decoded_data = encoder.decode(data)
-	print(decoded_data.size())
 	decoded_data = stretch_array(decoded_data, (AudioServer.get_mix_rate()/AUDIO_MIX_RATE)*decoded_data.size())
-	print(str(decoded_data.size()) + " aftr")
 	for i in range(decoded_data.size()):
 		var value = (decoded_data[i].x + decoded_data[i].y) / 2.0
 		recieved_buffer.append(value)
+		print(recieved_buffer)
 
 func stretch_array(original_array, new_length):
 	var stretched_array = []
