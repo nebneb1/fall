@@ -16,7 +16,7 @@ var is_active = false
 @export var output_path : NodePath
 @export var audio_capture : AudioEffectCapture
 
-var encoder = Opus.new()
+var encoder = Opus.new()  
 #var decoder = Opus.new()
 
 func setup_audio(id):
@@ -69,13 +69,11 @@ func _process(delta):
 	#
 	#return stereo_data.size() / delta
 
-func has_data() -> bool:
-	return effect.can_get_buffer(BUFFER_SIZE)
 
 
 func process_mic():
 	#var stereo_data : PackedVector2Array = effect.get_buffer(effect.get_frames_available())
-	if has_data():
+	if effect.can_get_buffer(BUFFER_SIZE):
 		var stereo_data : PackedVector2Array = effect.get_buffer(BUFFER_SIZE)
 		#var data = PackedFloat32Array()
 		#data.resize(stereo_data.size())

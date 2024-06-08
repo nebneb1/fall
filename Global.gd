@@ -5,7 +5,7 @@ const SAVE_DIRECTORY = "user://saves/save.fall"
 #const BACKUPS = ["user://saves/backup1.fall", "user://saves/backup2.fall"]
 const GAME_IDENTIFIER = "under_dream"
 const PORT = 25564
-const MATCHING_SERVER_IP = "52.53.179.218"
+const MATCHING_SERVER_IP = "54.183.253.71"
 
 const CONFIRM_CHIRP = 5.0
 
