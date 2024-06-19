@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://doak0rcd00mvf"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_3jrqg"]
+[ext_resource type="PackedScene" uid="uid://6g30kot4811t" path="res://voip_manager.tscn" id="1_xeeuq"]
+[ext_resource type="AudioEffectCapture" uid="uid://mgr3lghgv46n" path="res://Audio/Effects/mic_capture.tres" id="3_quh2m"]
+[ext_resource type="AudioStream" uid="uid://btti0pflt7ura" path="res://temp/Sky SFX/small chirp.ogg" id="3_wwir2"]
+[ext_resource type="AudioStream" uid="uid://rj2jo6ft3xo1" path="res://temp/Sky SFX/medium chirp.ogg" id="4_8d3u3"]
+[ext_resource type="AudioStream" uid="uid://cmrajsg26ffmb" path="res://temp/Sky SFX/large chirp.ogg" id="5_nirw0"]
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_wqy7p"]
+
+[node name="Player" type="Node3D"]
+script = ExtResource("1_3jrqg")
+
+[node name="VOIPmanager" parent="." instance=ExtResource("1_xeeuq")]
+output_path = NodePath("../Output")
+audio_capture = ExtResource("3_quh2m")
+
+[node name="Output" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamGenerator_wqy7p")
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="chirp_small" type="AudioStreamPlayer3D" parent="SFX"]
+stream = ExtResource("3_wwir2")
+volume_db = -32.821
+max_polyphony = 6
+
+[node name="chirp_medium" type="AudioStreamPlayer3D" parent="SFX"]
+stream = ExtResource("4_8d3u3")
+max_polyphony = 4
+
+[node name="enter" type="AudioStreamPlayer3D" parent="SFX"]
+stream = ExtResource("4_8d3u3")
+pitch_scale = 0.28
+
+[node name="chirp_large" type="AudioStreamPlayer3D" parent="SFX"]
+stream = ExtResource("5_nirw0")
+volume_db = -28.718
+max_polyphony = 4

@@ -4,8 +4,9 @@ extends Node3D
 @onready var player = get_node("Player")
 
 func _ready():
-	get_tree().set_auto_accept_quit(false)
-	setup_upnp()
+	pass
+	#get_tree().set_auto_accept_quit(false)
+	#setup_upnp()
 	#await get_tree().create_timer(3.0).timeout
 	#print(connect_to_server(Global.MATCHING_SERVER_IP, Global.PORT))
 	#await get_tree().create_timer(3.0).timeout
@@ -16,19 +17,19 @@ func _process(delta: float):
 		Global.active_players[0].set_voip_status.rpc(true)
 		Global.active_players[1].set_voip_status.rpc(true)
 	
-func _input(event: InputEvent):
-	if event.is_action_pressed("request"):
-		print("request sent to server")
-		request_connection.rpc(Global.network_info)
-		
-	if event.is_action_pressed("server"):
-		print("server set up")
-		connect_players(true, ["en"], "127.0.0.1")
-		Global.is_client = false
-	
-	if event.is_action_pressed("client"):
-		connect_players(false, ["en"], "127.0.0.1")
-		Global.is_client = true
+#func _input(event: InputEvent):
+	#if event.is_action_pressed("request"):
+		#print("request sent to server")
+		#request_connection.rpc(Global.network_info)
+		#
+	#if event.is_action_pressed("server"):
+		#print("server set up")
+		#connect_players(true, ["en"], "127.0.0.1")
+		#Global.is_client = false
+	#
+	#if event.is_action_pressed("client"):
+		#connect_players(false, ["en"], "127.0.0.1")
+		#Global.is_client = true
 
 
 # below here is stuff to handle various networking things

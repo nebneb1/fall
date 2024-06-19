@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://d1m0mn7m448vg"]
 
 [ext_resource type="Script" path="res://client.gd" id="1_hymhu"]
-[ext_resource type="PackedScene" uid="uid://doak0rcd00mvf" path="res://player.tscn" id="2_riri2"]
+[ext_resource type="PackedScene" uid="uid://doak0rcd00mvf" path="res://audio_player.tscn" id="2_riri2"]
 
 [node name="Client" type="Node3D"]
 script = ExtResource("1_hymhu")

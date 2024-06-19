@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcd4hcjjj8lqf"]
+
+[ext_resource type="PackedScene" uid="uid://bjmkmistd7n46" path="res://player.tscn" id="1_a4ko5"]
+[ext_resource type="PackedScene" uid="uid://dv2nk18edsbsq" path="res://camera_holder.tscn" id="2_tceji"]
+
+[node name="player_group" type="Node3D" groups=["player_group"]]
+
+[node name="Player" parent="." node_paths=PackedStringArray("camera_holder") instance=ExtResource("1_a4ko5")]
+camera_holder = NodePath("../camera_holder")
+
+[node name="camera_holder" parent="." node_paths=PackedStringArray("camera_ray", "player") instance=ExtResource("2_tceji")]
+camera_ray = NodePath("../cam_ray")
+player = NodePath("../Player")
+
+[node name="cam_ray" type="RayCast3D" parent="."]
+target_position = Vector3(6.455, -1, 0)
+
+[node name="marker" type="CSGSphere3D" parent="."]
+visible = false
+
+[node name="marker2" type="CSGSphere3D" parent="."]
+visible = false

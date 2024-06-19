@@ -1,44 +1,175 @@
-[gd_scene load_steps=8 format=3 uid="uid://doak0rcd00mvf"]
+[gd_scene load_steps=14 format=3 uid="uid://bjmkmistd7n46"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_3jrqg"]
-[ext_resource type="PackedScene" uid="uid://6g30kot4811t" path="res://voip_manager.tscn" id="1_xeeuq"]
-[ext_resource type="AudioEffectCapture" uid="uid://mgr3lghgv46n" path="res://Audio/Effects/mic_capture.tres" id="3_quh2m"]
-[ext_resource type="AudioStream" uid="uid://btti0pflt7ura" path="res://temp/Sky SFX/small chirp.ogg" id="3_wwir2"]
-[ext_resource type="AudioStream" uid="uid://rj2jo6ft3xo1" path="res://temp/Sky SFX/medium chirp.ogg" id="4_8d3u3"]
-[ext_resource type="AudioStream" uid="uid://cmrajsg26ffmb" path="res://temp/Sky SFX/large chirp.ogg" id="5_nirw0"]
+[ext_resource type="Script" path="res://player_controller.gd" id="1_wx3ro"]
 
-[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_wqy7p"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84t4t"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 16.0
+emission_intensity = 100000.0
 
-[node name="Player" type="Node3D"]
-script = ExtResource("1_3jrqg")
+[sub_resource type="SphereMesh" id="SphereMesh_nygfw"]
+material = SubResource("StandardMaterial3D_84t4t")
+radius = 0.1
+height = 0.2
+radial_segments = 32
+rings = 16
 
-[node name="VOIPmanager" parent="." instance=ExtResource("1_xeeuq")]
-output_path = NodePath("../Output")
-audio_capture = ExtResource("3_quh2m")
+[sub_resource type="Curve" id="Curve_tcgj4"]
+_data = [Vector2(0, 0.989011), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.158293, 0.0, 0, 0]
+point_count = 2
 
-[node name="Output" type="AudioStreamPlayer3D" parent="."]
-stream = SubResource("AudioStreamGenerator_wqy7p")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3b5wp"]
+cull_mode = 2
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 3.84
+emission_intensity = 11126.6
 
-[node name="SFX" type="Node" parent="."]
+[sub_resource type="ArrayMesh" id="ArrayMesh_od3no"]
+_surfaces = [{
+"aabb": AABB(-0.970427, 0.073591, -1, 1.97043, 0.623885, 2),
+"attribute_data": PackedByteArray(0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0),
+"material": SubResource("StandardMaterial3D_3b5wp"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray(193, 158, 253, 255, 255, 127, 29, 78, 255, 255, 253, 255, 0, 0, 29, 78, 0, 0, 0, 0, 255, 127, 29, 78, 0, 0, 0, 0, 255, 127, 29, 206, 255, 255, 253, 255, 255, 255, 29, 206, 193, 158, 253, 255, 255, 127, 29, 206, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103)
+}]
 
-[node name="chirp_small" type="AudioStreamPlayer3D" parent="SFX"]
-stream = ExtResource("3_wwir2")
-volume_db = -32.821
-max_polyphony = 6
+[sub_resource type="Curve" id="Curve_lf6t6"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.426966, 0.648352), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
 
-[node name="chirp_medium" type="AudioStreamPlayer3D" parent="SFX"]
-stream = ExtResource("4_8d3u3")
-max_polyphony = 4
+[sub_resource type="Animation" id="Animation_cudx3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
 
-[node name="enter" type="AudioStreamPlayer3D" parent="SFX"]
-stream = ExtResource("4_8d3u3")
-pitch_scale = 0.28
+[sub_resource type="Animation" id="Animation_oum2w"]
+resource_name = "idle"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.5, 5),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.315, 0), Vector3(0, 0, 0)]
+}
 
-[node name="chirp_large" type="AudioStreamPlayer3D" parent="SFX"]
-stream = ExtResource("5_nirw0")
-volume_db = -28.718
-max_polyphony = 4
+[sub_resource type="Animation" id="Animation_l227c"]
+resource_name = "intro"
+length = 3.0
 
-[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
-radial_segments = 48
-rings = 26
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p8mll"]
+_data = {
+"RESET": SubResource("Animation_cudx3"),
+"idle": SubResource("Animation_oum2w"),
+"intro": SubResource("Animation_l227c")
+}
+
+[sub_resource type="FogMaterial" id="FogMaterial_lt3kw"]
+density = 0.6729
+emission = Color(0.666667, 0.666667, 0.666667, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4bbmc"]
+height = 3.36989
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_wx3ro")
+
+[node name="trail" type="CPUParticles3D" parent="."]
+amount = 195
+lifetime = 0.4
+preprocess = 1.0
+speed_scale = 5.0
+mesh = SubResource("SphereMesh_nygfw")
+gravity = Vector3(0, 0, 0)
+scale_amount_curve = SubResource("Curve_tcgj4")
+
+[node name="sparkles" type="CPUParticles3D" parent="trail"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+amount = 133
+mesh = SubResource("ArrayMesh_od3no")
+particle_flag_align_y = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 4.26, 0)
+initial_velocity_max = 20.2
+radial_accel_min = -43.43
+radial_accel_max = 2.71
+damping_min = 22.222
+damping_max = 22.222
+scale_amount_min = 0.05
+scale_amount_max = 0.1
+scale_amount_curve = SubResource("Curve_lf6t6")
+
+[node name="sparkles2" type="CPUParticles3D" parent="trail"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+amount = 133
+mesh = SubResource("ArrayMesh_od3no")
+emission_shape = 1
+emission_sphere_radius = 1.0
+particle_flag_align_y = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -39.38
+radial_accel_max = -29.62
+scale_amount_min = 0.05
+scale_amount_max = 0.1
+scale_amount_curve = SubResource("Curve_lf6t6")
+
+[node name="sparkles3" type="CPUParticles3D" parent="trail"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+emitting = false
+amount = 1103
+one_shot = true
+explosiveness = 1.0
+mesh = SubResource("ArrayMesh_od3no")
+emission_shape = 1
+emission_sphere_radius = 1.0
+particle_flag_align_y = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 20.21
+initial_velocity_max = 20.21
+scale_amount_min = 0.5
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_lf6t6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="trail"]
+libraries = {
+"": SubResource("AnimationLibrary_p8mll")
+}
+autoplay = "idle"
+
+[node name="FogVolume" type="FogVolume" parent="trail"]
+transform = Transform3D(1.27907, 0, 0, 0, 1.27907, 0, 0, 0, 1.27907, 0, 0, 0)
+shape = 0
+material = SubResource("FogMaterial_lt3kw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_4bbmc")

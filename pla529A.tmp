@@ -1,0 +1,70 @@
+[gd_scene load_steps=8 format=3 uid="uid://bjmkmistd7n46"]
+
+[ext_resource type="Script" path="res://camera_controller.gd" id="1_pkuhp"]
+[ext_resource type="Script" path="res://player_controller.gd" id="1_wx3ro"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84t4t"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 16.0
+emission_intensity = 100000.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_nygfw"]
+material = SubResource("StandardMaterial3D_84t4t")
+radius = 0.1
+height = 0.2
+radial_segments = 32
+rings = 16
+
+[sub_resource type="Curve" id="Curve_tcgj4"]
+_data = [Vector2(0, 0.989011), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.158293, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4bbmc"]
+
+[sub_resource type="FogMaterial" id="FogMaterial_lt3kw"]
+density = 0.6729
+emission = Color(0.666667, 0.666667, 0.666667, 1)
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_wx3ro")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+amount = 930
+lifetime = 0.51
+mesh = SubResource("SphereMesh_nygfw")
+gravity = Vector3(0, 0, 0)
+scale_amount_curve = SubResource("Curve_tcgj4")
+color = Color(0.976471, 0.301961, 0.807843, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_4bbmc")
+
+[node name="FogVolume" type="FogVolume" parent="."]
+transform = Transform3D(1.27907, 0, 0, 0, 1.27907, 0, 0, 0, 1.27907, 0, 0, 0)
+shape = 0
+material = SubResource("FogMaterial_lt3kw")
+
+[node name="camera_holder" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.966823, 0.255446, 0, -0.255446, 0.966823, 0, 3.78531, 0)
+script = ExtResource("1_pkuhp")
+
+[node name="RayCast3D" type="RayCast3D" parent="camera_holder"]
+transform = Transform3D(1, 0, 0, 0, 0.966823, -0.255446, 0, 0.255446, 0.966823, 0, 0, 0)
+target_position = Vector3(0, 5.565, 0)
+hit_back_faces = false
+debug_shape_custom_color = Color(0.901961, 0, 0.478431, 1)
+debug_shape_thickness = 5
+
+[node name="Camera3D" type="Camera3D" parent="camera_holder"]
+transform = Transform3D(1, 0, 0, 0, 0.930769, 0.365608, 0, -0.365608, 0.930769, 0, 4.14818, 9.57466)
+
+[node name="right_view" type="Marker3D" parent="camera_holder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.43637, 4.14818, 9.57466)
+
+[node name="left_view" type="Marker3D" parent="camera_holder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.436, 4.148, 9.575)
+
+[node name="center_view" type="Marker3D" parent="camera_holder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.148, 9.575)

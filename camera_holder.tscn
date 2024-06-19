@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://dv2nk18edsbsq"]
+
+[ext_resource type="Script" path="res://camera_controller.gd" id="1_eqavx"]
+
+[node name="camera_holder" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 0.966823, 0.255446, 0, -0.255446, 0.966823, 0, 3.78531, 0)
+script = ExtResource("1_eqavx")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.930769, 0.365608, 0, -0.365608, 0.930769, 0, 4.14818, 9.57466)
+
+[node name="right_view" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 1.49012e-08, 0, -1.49012e-08, 1, 6.6843, 4.14818, 9.57466)
+
+[node name="left_view" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.684, 4.148, 9.575)
+
+[node name="center_view" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.148, 9.575)

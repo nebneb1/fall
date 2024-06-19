@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c5ahjqiqkqil0"
+path="res://.godot/imported/placement.obj-859bc0493279fabe15f3483d6a5dc00f.mesh"
+
+[deps]
+
+files=["res://.godot/imported/placement.obj-859bc0493279fabe15f3483d6a5dc00f.mesh"]
+
+source_file="res://Art/Meshes/grass/placement.obj"
+dest_files=["res://.godot/imported/placement.obj-859bc0493279fabe15f3483d6a5dc00f.mesh", "res://.godot/imported/placement.obj-859bc0493279fabe15f3483d6a5dc00f.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
