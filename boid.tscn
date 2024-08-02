@@ -1,0 +1,130 @@
+[gd_scene load_steps=13 format=3 uid="uid://bq3ym8x5q0h88"]
+
+[ext_resource type="Script" path="res://boid.gd" id="1_luyoo"]
+[ext_resource type="Material" uid="uid://b01moepp8svdc" path="res://Art/Blends/Particles/particle_mat.tres" id="2_pms4p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1q4p3"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 8.85
+emission_intensity = 10588.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_48fqt"]
+material = SubResource("StandardMaterial3D_1q4p3")
+radius = 0.1
+height = 0.2
+radial_segments = 7
+rings = 5
+
+[sub_resource type="Curve" id="Curve_63kcp"]
+_data = [Vector2(0, 0.989011), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.158293, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_um0se"]
+_surfaces = [{
+"aabb": AABB(-0.970427, 0.073591, -1, 1.97043, 0.623885, 2),
+"attribute_data": PackedByteArray(0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0),
+"material": ExtResource("2_pms4p"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray(193, 158, 253, 255, 255, 127, 29, 78, 255, 255, 253, 255, 0, 0, 29, 78, 0, 0, 0, 0, 255, 127, 29, 78, 0, 0, 0, 0, 255, 127, 29, 206, 255, 255, 253, 255, 255, 255, 29, 206, 193, 158, 253, 255, 255, 127, 29, 206, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103)
+}]
+
+[sub_resource type="Curve" id="Curve_tmp1g"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.426966, 0.648352), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="FogMaterial" id="FogMaterial_74odu"]
+density = 0.238
+emission = Color(0.666667, 0.666667, 0.666667, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_cgq45"]
+_surfaces = [{
+"aabb": AABB(-0.970427, 0.073591, -1, 1.97043, 0.623885, 2),
+"attribute_data": PackedByteArray(0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0),
+"material": ExtResource("2_pms4p"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray(193, 158, 253, 255, 255, 127, 29, 78, 255, 255, 253, 255, 0, 0, 29, 78, 0, 0, 0, 0, 255, 127, 29, 78, 0, 0, 0, 0, 255, 127, 29, 206, 255, 255, 253, 255, 255, 255, 29, 206, 193, 158, 253, 255, 255, 127, 29, 206, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103)
+}]
+
+[sub_resource type="Curve" id="Curve_xf7dj"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.426966, 0.648352), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5talq"]
+radius = 30.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_07a36"]
+radius = 5.0
+
+[node name="Boid" type="Area3D"]
+script = ExtResource("1_luyoo")
+
+[node name="trail" type="CPUParticles3D" parent="."]
+amount = 195
+lifetime = 10.0
+preprocess = 1.0
+speed_scale = 5.0
+mesh = SubResource("SphereMesh_48fqt")
+gravity = Vector3(0, 0, 0)
+scale_amount_curve = SubResource("Curve_63kcp")
+
+[node name="sparkles" type="CPUParticles3D" parent="trail"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+amount = 135
+mesh = SubResource("ArrayMesh_um0se")
+particle_flag_align_y = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 4.26, 0)
+initial_velocity_max = 20.2
+radial_accel_min = -43.43
+radial_accel_max = 2.71
+damping_min = 22.222
+damping_max = 22.222
+scale_amount_min = 0.05
+scale_amount_max = 0.1
+scale_amount_curve = SubResource("Curve_tmp1g")
+
+[node name="FogVolume" type="FogVolume" parent="trail"]
+transform = Transform3D(1.27907, 0, 0, 0, 1.27907, 0, 0, 0, 1.27907, 0, 0, 0)
+shape = 0
+material = SubResource("FogMaterial_74odu")
+
+[node name="sparkles2" type="CPUParticles3D" parent="trail"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+amount = 133
+mesh = SubResource("ArrayMesh_cgq45")
+particle_flag_align_y = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 4.26, 0)
+initial_velocity_max = 20.2
+radial_accel_min = -43.43
+radial_accel_max = 2.71
+damping_min = 22.222
+damping_max = 22.222
+scale_amount_min = 0.05
+scale_amount_max = 0.1
+scale_amount_curve = SubResource("Curve_xf7dj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.113338, 0.354942, 0)
+shape = SubResource("SphereShape3D_5talq")
+
+[node name="Close" type="Area3D" parent="." groups=["close"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Close"]
+shape = SubResource("SphereShape3D_07a36")

@@ -1,8 +1,9 @@
 [gd_scene load_steps=14 format=3 uid="uid://bjmkmistd7n46"]
 
 [ext_resource type="Script" path="res://player_controller.gd" id="1_wx3ro"]
+[ext_resource type="Material" uid="uid://b01moepp8svdc" path="res://Art/Blends/Particles/particle_mat.tres" id="2_bukpv"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84t4t"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jxygp"]
 albedo_color = Color(0, 0, 0, 1)
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
@@ -10,7 +11,7 @@ emission_energy_multiplier = 16.0
 emission_intensity = 100000.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_nygfw"]
-material = SubResource("StandardMaterial3D_84t4t")
+material = SubResource("StandardMaterial3D_jxygp")
 radius = 0.1
 height = 0.2
 radial_segments = 32
@@ -20,13 +21,6 @@ rings = 16
 _data = [Vector2(0, 0.989011), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.158293, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3b5wp"]
-cull_mode = 2
-emission_enabled = true
-emission = Color(1, 1, 1, 1)
-emission_energy_multiplier = 3.84
-emission_intensity = 11126.6
-
 [sub_resource type="ArrayMesh" id="ArrayMesh_od3no"]
 _surfaces = [{
 "aabb": AABB(-0.970427, 0.073591, -1, 1.97043, 0.623885, 2),
@@ -34,7 +28,7 @@ _surfaces = [{
 "format": 34896613399,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0),
-"material": SubResource("StandardMaterial3D_3b5wp"),
+"material": ExtResource("2_bukpv"),
 "name": "Material",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),

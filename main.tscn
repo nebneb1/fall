@@ -1,4 +1,4 @@
-[gd_scene load_steps=106 format=3 uid="uid://d3745p7a81wyc"]
+[gd_scene load_steps=107 format=3 uid="uid://d3745p7a81wyc"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_fru5e"]
 [ext_resource type="PackedScene" uid="uid://doak0rcd00mvf" path="res://audio_player.tscn" id="2_dbpgj"]
@@ -51,7 +51,7 @@ shader_parameter/uv_offset = Vector2(0.5, 0)
 shader_parameter/wind_noise_scale = 1.64
 shader_parameter/wind_direction = Vector2(0.98, 0.385)
 shader_parameter/wind_speed = 1.674
-shader_parameter/wind_strength = 0.551
+shader_parameter/wind_strength = 1.899
 shader_parameter/color_variatiion = 0.18
 shader_parameter/height = 1.0
 shader_parameter/height_variation = 0.607
@@ -80,6 +80,9 @@ buffer = PackedFloat32Array(-0.113629, 0.0668441, 0.992281, -24.093, 0.0846841, 
 density = 0.05
 
 [sub_resource type="FogMaterial" id="FogMaterial_j3epq"]
+albedo = Color(0.462745, 0.470588, 0.478431, 1)
+
+[sub_resource type="FogMaterial" id="FogMaterial_5sek4"]
 albedo = Color(0.462745, 0.470588, 0.478431, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nb3tk"]
@@ -885,7 +888,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("../../FogVolume2:material:density")
+tracks/4/path = NodePath("../../Fogwall:material:density")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -1014,7 +1017,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("../../FogVolume2:material:density")
+tracks/6/path = NodePath("../../Fogwall:material:density")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -1141,7 +1144,7 @@ multimesh = SubResource("MultiMesh_gveye")
 script = ExtResource("6_ufvk4")
 
 [node name="grass_mesh" type="MeshInstance3D" parent="MultiMeshInstance3D"]
-transform = Transform3D(1.383, -8.77393e-16, 0, 3.55271e-15, 1.383, 0, 0, 0, 1.383, 0, -4.93734, 0)
+transform = Transform3D(1.383, -8.77393e-16, 0, -3.55271e-15, 1.383, 0, 0, 0, 1.383, 0, -4.93734, 0)
 visible = false
 mesh = ExtResource("6_3ogqa")
 
@@ -1153,15 +1156,20 @@ mesh = ExtResource("6_8rk1w")
 [node name="player_group" parent="." instance=ExtResource("3_novdk")]
 transform = Transform3D(-0.0550373, 0, -0.998484, 0, 1, 0, 0.998484, 0, -0.0550373, -22.151, 2.27079, 0)
 
-[node name="FogVolume" type="FogVolume" parent="."]
+[node name="Foglamp" type="FogVolume" parent="."]
 transform = Transform3D(0.978375, 0.0675396, -0.195501, -0.0688685, 0.997625, -2.98155e-09, 0.195037, 0.0134639, 0.980703, 17.7717, -0.245093, 3.17165)
 size = Vector3(3.96087, 10.0643, 3.6814)
 material = SubResource("FogMaterial_j2s5d")
 
-[node name="FogVolume2" type="FogVolume" parent="."]
+[node name="Fogwall" type="FogVolume" parent="."]
 transform = Transform3D(0.998901, 0, -0.0468624, 0, 1, 0, 0.0468624, 0, 0.998901, 20.5016, 0, 0)
-size = Vector3(18.2323, 171.788, 446.118)
+size = Vector3(18.2323, 171.788, 2113.79)
 material = SubResource("FogMaterial_j3epq")
+
+[node name="Fogwall2" type="FogVolume" parent="."]
+transform = Transform3D(0.998901, 0, -0.0468624, 0, 1, 0, 0.0468624, 0, 0.998901, -52.0881, -46.0406, 0)
+size = Vector3(2607.95, 93.086, 1412.38)
+material = SubResource("FogMaterial_5sek4")
 
 [node name="rubble" type="Node3D" parent="."]
 script = ExtResource("3_5ik7v")
@@ -1438,7 +1446,7 @@ mesh = SubResource("ArrayMesh_ecp6j")
 skeleton = NodePath("")
 
 [node name="Cube_001-rigid" type="MeshInstance3D" parent="rubble/Cube_001-rigid"]
-transform = Transform3D(1.01267, -0.0516871, -0.0042288, 0.0516827, 1.01268, -0.00116733, 0.0042828, 0.000950268, 1.01399, -0.00303745, -0.00575924, -0.0101299)
+transform = Transform3D(1.01267, -0.0516888, -0.00422889, 0.0516844, 1.01268, -0.00116735, 0.00428289, 0.000950277, 1.01399, -0.00303745, -0.00575924, -0.0101299)
 mesh = SubResource("ArrayMesh_3462q")
 skeleton = NodePath("")
 
