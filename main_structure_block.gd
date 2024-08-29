@@ -63,9 +63,8 @@ func calc_angular_velocity(from_basis: Basis, to_basis: Basis) -> Vector3:
 	return axis * angle
 
 
-func _input(event: InputEvent):
-	if event.is_action_pressed("move"):
-		$AnimationPlayer.play("cube")
+func activate():
+	$AnimationPlayer.play("cube")
 
 #func vec3_pow(base : Vector3, exp: float):
 	#var out := Vector3.ZERO

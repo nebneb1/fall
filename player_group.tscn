@@ -1,9 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://dcd4hcjjj8lqf"]
+[gd_scene load_steps=5 format=3 uid="uid://dcd4hcjjj8lqf"]
 
+[ext_resource type="Script" path="res://strings.gd" id="1_7jhpi"]
 [ext_resource type="PackedScene" uid="uid://bjmkmistd7n46" path="res://player.tscn" id="1_a4ko5"]
 [ext_resource type="PackedScene" uid="uid://dv2nk18edsbsq" path="res://camera_holder.tscn" id="2_tceji"]
 
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_h6mx7"]
+
 [node name="player_group" type="Node3D" groups=["player_group"]]
+
+[node name="string" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.17115, 0, 0.976515, 0, 0.9914, 0, -0.976515, 0, 0.17115, 0, 0, 0)
+mesh = SubResource("ImmediateMesh_h6mx7")
+skeleton = NodePath("../Player")
+script = ExtResource("1_7jhpi")
 
 [node name="Player" parent="." node_paths=PackedStringArray("camera_holder") instance=ExtResource("1_a4ko5")]
 camera_holder = NodePath("../camera_holder")

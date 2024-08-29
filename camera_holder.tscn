@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dv2nk18edsbsq"]
+[gd_scene load_steps=3 format=3 uid="uid://dv2nk18edsbsq"]
 
 [ext_resource type="Script" path="res://camera_controller.gd" id="1_eqavx"]
+
+[sub_resource type="FogMaterial" id="FogMaterial_bqoay"]
+density = 0.01
+albedo = Color(0.733333, 0.572549, 0.592157, 1)
+edge_fade = 1.34543
 
 [node name="camera_holder" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 0.966823, 0.255446, 0, -0.255446, 0.966823, 0, 3.78531, 0)
@@ -17,3 +22,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.684, 4.148, 9.575)
 
 [node name="center_view" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.148, 9.575)
+
+[node name="FogVolume" type="FogVolume" parent="."]
+size = Vector3(1000, 1000, 1000)
+shape = 0
+material = SubResource("FogMaterial_bqoay")

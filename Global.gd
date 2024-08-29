@@ -10,6 +10,7 @@ const MATCHING_SERVER_IP = "52.53.179.218"
 const CONFIRM_CHIRP = 5.0
 
 var player : CharacterBody3D
+var game : Node3D
 
 var active_players : Array = []
 var distance = [0, 0]

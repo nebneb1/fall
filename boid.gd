@@ -2,7 +2,7 @@ extends Area3D
 
 const DETECT_RADIUS = 20.0
 const SPACE_RADIUS = 10.0
-const MAX_DIST = 50.0
+const MAX_DIST = 25.0
 
 const SPEED = 10.0
 #const MAX_SPEED = 20.0
@@ -68,7 +68,7 @@ func _process(delta: float):
 					$trail.mesh.radial_segments = 7
 					$trail.mesh.rings = 5
 				$trail.emitting = dist < DRAW_DIST[3]
-				update_heading(delta)
+				update_heading(delta, threshold[0])
 				if abs(stall) > 10000: stall = 0
 				break
 	else:
@@ -79,7 +79,7 @@ func _process(delta: float):
 	
 	
 
-func update_heading(delta : float):
+func update_heading(delta : float, multiplier : float = 1.0):
 	var neighbors = get_overlapping_areas()
 	var close_neighbors = $Close.get_overlapping_areas()
 	if neighbors.size() != 0:
@@ -100,13 +100,13 @@ func update_heading(delta : float):
 				positions_close += neighbor.global_position
 			
 		# alignment rule
-		heading = (heading + headings.normalized() * ALIGNMENT_STR).normalized()
+		heading = (heading + headings.normalized() * ALIGNMENT_STR * multiplier).normalized()
 		
 		#cohesion rule
-		heading = (heading + to_local(positions_far / neighbors.size()).normalized() * COHESION_STR).normalized()
+		heading = (heading + to_local(positions_far / neighbors.size()).normalized() * COHESION_STR * multiplier).normalized()
 		
 		#seperation rule
-		heading = (heading + to_local(positions_close / neighbors.size()).normalized() * SEPERATION_STR * -1).normalized()
+		heading = (heading + to_local(positions_close / neighbors.size()).normalized() * SEPERATION_STR * multiplier * -1).normalized()
 		
 		#stay near the middle
 		if global_position.length() > MAX_DIST:

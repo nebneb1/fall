@@ -4,7 +4,7 @@ extends Node3D
 @onready var player = get_node("Player")
 
 func _ready():
-	pass
+	Global.game = self
 	#get_tree().set_auto_accept_quit(false)
 	#setup_upnp()
 	#await get_tree().create_timer(3.0).timeout

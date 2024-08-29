@@ -7,10 +7,10 @@ const X_COMPRESSION = 5.0
 const CAMERA_SNAP = 0.01
 
 const MIN_ZOOM = 0.2
-const MAX_ZOOM = 1.0
+const MAX_ZOOM = 0.75
 const ZOOM_STEP = 0.1
 const ZOOM_SPEED = 2.0
-var zoom_target = 1.0
+var zoom_target = MAX_ZOOM
 
 @onready var camera = $Camera3D
 @export var camera_ray : RayCast3D

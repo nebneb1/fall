@@ -2,8 +2,8 @@ extends Node3D
 @onready var boid_scene = preload("res://boid.tscn")
 @export var camera : Camera3D
 
-const DIMENTIONS = Vector3(7, 7, 7)
-const SEPERATION = 20.0
+const DIMENTIONS = Vector3(5, 5, 5)
+const SEPERATION = 10.0
 
 func _ready() -> void:
 	spawn_boids()

@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://djsjq8st6g7ck"]
+[gd_scene load_steps=4 format=3 uid="uid://djsjq8st6g7ck"]
 
 [ext_resource type="Script" path="res://boidfields.gd" id="1_6xsvw"]
-[ext_resource type="Script" path="res://temp/freecam.gd" id="2_en23v"]
 [ext_resource type="Environment" uid="uid://ctaj6x36f36t8" path="res://Art/Mats/worldenv.tres" id="3_bmapt"]
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_xwsr6"]
@@ -9,14 +8,8 @@ auto_exposure_enabled = true
 dof_blur_near_distance = 3.0
 dof_blur_amount = 1.0
 
-[node name="Boidfields" type="Node3D" node_paths=PackedStringArray("camera")]
+[node name="Boidfields" type="Node3D"]
 script = ExtResource("1_6xsvw")
-camera = NodePath("freecam")
-
-[node name="freecam" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.5721, 13.124, 42.2394)
-fov = 114.129
-script = ExtResource("2_en23v")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("3_bmapt")

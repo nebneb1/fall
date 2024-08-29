@@ -4,5 +4,5 @@
 cull_mode = 2
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
-emission_energy_multiplier = 3.84
+emission_energy_multiplier = 8.3
 emission_intensity = 11126.6

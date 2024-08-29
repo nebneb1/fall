@@ -105,3 +105,4 @@ camera_zoom_out={
 lights_and_shadows/use_physical_light_units=true
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=5
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=4
+environment/volumetric_fog/volume_size=512

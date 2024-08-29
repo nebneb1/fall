@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxshdo23v8ddy"]
+
+[ext_resource type="Shader" path="res://Art/Shaders/chirp.gdshader" id="1_s0uy2"]
+[ext_resource type="Script" path="res://chirp.gd" id="2_gbsd4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lmrgm"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_s0uy2")
+shader_parameter/base_color = Color(1, 1, 1, 1)
+shader_parameter/highlight_color = Color(1, 0.921569, 0.643137, 1)
+shader_parameter/transparency = 0.085
+shader_parameter/amount = 4.0
+shader_parameter/intensity = 4.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_c8cnw"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_lmrgm")
+radius = 5.0
+height = 10.0
+radial_segments = 50
+rings = 50
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+mesh = SubResource("SphereMesh_c8cnw")
+script = ExtResource("2_gbsd4")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dx52x8i162idc"]
+
+[ext_resource type="Script" path="res://temp/freecam.gd" id="1_tim7i"]
+
+[node name="Camera3D" type="Camera3D"]
+script = ExtResource("1_tim7i")

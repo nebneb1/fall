@@ -7142,7 +7142,7 @@ skeleton = NodePath("")
 surface_material_override/0 = ExtResource("4_jxp7h")
 
 [node name="medtop-leafs_103" type="MeshInstance3D" parent="leaves"]
-transform = Transform3D(-1.64825, 0.36181, -0.438759, 0.464649, 0.0811507, -1.67859, -0.327898, -1.70372, -0.173131, -2.16678, 7.28388, 2.47576)
+transform = Transform3D(-1.64825, 0.36181, -0.438759, 0.464649, 0.0811507, -1.67859, -0.327898, -1.70372, -0.173131, -2.16678, 8.3564, 1.51398)
 mesh = SubResource("ArrayMesh_cay4b")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_i4acp")
@@ -7196,7 +7196,7 @@ skeleton = NodePath("")
 surface_material_override/0 = ExtResource("4_jxp7h")
 
 [node name="medtop-leafs_117" type="MeshInstance3D" parent="leaves"]
-transform = Transform3D(-0.396513, -1.16201, -0.647764, -0.693866, 0.757342, -0.93385, 1.13509, 0.0570368, -0.797132, -4.51082, 5.53881, 0.523017)
+transform = Transform3D(-0.396513, -1.16201, -0.647764, -0.693866, 0.757342, -0.93385, 1.13509, 0.0570368, -0.797132, -4.51082, 6.57161, -0.366883)
 mesh = SubResource("ArrayMesh_7mmk4")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("4_jxp7h")
