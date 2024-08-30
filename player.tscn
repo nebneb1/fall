@@ -70,43 +70,6 @@ tracks/1/keys = {
 "values": [Vector3(0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_oum2w"]
-resource_name = "idle"
-length = 5.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2.5, 5),
-"transitions": PackedFloat32Array(-2, -2, -2),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, -0.315, 0), Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_l227c"]
-resource_name = "intro"
-length = 3.0
-
-[sub_resource type="Animation" id="Animation_c6v2o"]
-resource_name = "charge"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(-2, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, -1.04, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_1mi40"]
 resource_name = "big_chirp"
 length = 1.5
@@ -135,6 +98,43 @@ tracks/1/keys = {
 "values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0), Vector3(0, 12.5664, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_c6v2o"]
+resource_name = "charge"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -1.04, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_oum2w"]
+resource_name = "idle"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.5, 5),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.315, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_l227c"]
+resource_name = "intro"
+length = 3.0
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p8mll"]
 _data = {
 "RESET": SubResource("Animation_cudx3"),
@@ -152,13 +152,13 @@ emission = Color(0.666667, 0.666667, 0.666667, 1)
 height = 3.36989
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("sparkle1", "sparkle2")]
-transform = Transform3D(0.17115, 0, 0.976515, 0, 0.9914, 0, -0.976515, 0, 0.17115, 0, 0, 0)
+transform = Transform3D(0.294624, 0, -0.94661, 0, 0.9914, 0, 0.94661, 0, 0.294624, 0, 0, 0)
 script = ExtResource("1_wx3ro")
 sparkle1 = NodePath("trail/sparklesnode")
 sparkle2 = NodePath("trail/sparkles2node")
 
 [node name="trail" type="CPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.773042, 0.886573)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.948264, 0.943546)
 amount = 195
 lifetime = 0.4
 preprocess = 1.0

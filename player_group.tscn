@@ -1,18 +1,34 @@
-[gd_scene load_steps=5 format=3 uid="uid://dcd4hcjjj8lqf"]
+[gd_scene load_steps=7 format=3 uid="uid://dcd4hcjjj8lqf"]
 
-[ext_resource type="Script" path="res://strings.gd" id="1_7jhpi"]
 [ext_resource type="PackedScene" uid="uid://bjmkmistd7n46" path="res://player.tscn" id="1_a4ko5"]
+[ext_resource type="PackedScene" uid="uid://b1eb756wce7mt" path="res://string.tscn" id="1_iwug1"]
 [ext_resource type="PackedScene" uid="uid://dv2nk18edsbsq" path="res://camera_holder.tscn" id="2_tceji"]
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_h6mx7"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_gcm3d"]
+resource_local_to_scene = true
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_ncq85"]
+resource_local_to_scene = true
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_a2npd"]
+resource_local_to_scene = true
 
 [node name="player_group" type="Node3D" groups=["player_group"]]
 
-[node name="string" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.17115, 0, 0.976515, 0, 0.9914, 0, -0.976515, 0, 0.17115, 0, 0, 0)
-mesh = SubResource("ImmediateMesh_h6mx7")
-skeleton = NodePath("../Player")
-script = ExtResource("1_7jhpi")
+[node name="string" parent="." node_paths=PackedStringArray("track_to") instance=ExtResource("1_iwug1")]
+mesh = SubResource("ImmediateMesh_gcm3d")
+goal_relitive = Vector3(6, 8, 6)
+track_to = NodePath("../Player")
+
+[node name="string2" parent="." node_paths=PackedStringArray("track_to") instance=ExtResource("1_iwug1")]
+mesh = SubResource("ImmediateMesh_ncq85")
+goal_relitive = Vector3(0, 8, 6)
+track_to = NodePath("../Player")
+
+[node name="string3" parent="." node_paths=PackedStringArray("track_to") instance=ExtResource("1_iwug1")]
+mesh = SubResource("ImmediateMesh_a2npd")
+goal_relitive = Vector3(-6, 8, 6)
+track_to = NodePath("../Player")
 
 [node name="Player" parent="." node_paths=PackedStringArray("camera_holder") instance=ExtResource("1_a4ko5")]
 camera_holder = NodePath("../camera_holder")

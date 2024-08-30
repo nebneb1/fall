@@ -88,13 +88,13 @@ func _process(delta: float):
 	else:
 		match cam_pos:
 			Pos.LEFT_ADJUSTED:
-				camera.global_position = lerp(camera.global_position, positions["left_view"].global_position, delta)
+				camera.position = lerp(camera.position, positions["left_view"].position, delta)
 			
 			Pos.RIGHT_ADJUSTED:
-				camera.global_position = lerp(camera.global_position, positions["right_view"].global_position, delta)
+				camera.position = lerp(camera.position, positions["right_view"].position, delta)
 				
 			Pos.CENTER:
-				camera.global_position = lerp(camera.global_position, positions["center_view"].global_position, delta)
+				camera.position = lerp(camera.position, positions["center_view"].position, delta)
 		#
 	if abs(zoom_target - scale.x) > 0.001:
 		if zoom_target - scale.x > 0:
@@ -119,7 +119,7 @@ func _process(delta: float):
 			#Pos.CENTER:
 				#var tween = create_tween()
 				#tween.tween_property(camera, "position", positions["center_view"].position, TRANS_SPEED).set_ease(Tween.EASE_IN_OUT)
-	global_position = Vector3(player.global_position.x, player.global_position.y + cam_height*scale.x*cam_height_mod, player.global_position.z)
+	global_position = global_position.lerp(Vector3(player.global_position.x, player.global_position.y + cam_height*scale.x*cam_height_mod, player.global_position.z), delta*5.0)
 	
 	
 

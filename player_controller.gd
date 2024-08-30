@@ -28,9 +28,9 @@ func _ready():
 	Debug.track(self, "charge")
 	if get_parent().is_in_group("player_group"):
 		Global.player = self
-
+var dir : Vector2
 func _process(delta: float):
-	var dir
+	dir = Vector2.ZERO
 	if not disable:
 		dir = Vector2(
 		Input.get_action_strength("forward_move")-Input.get_action_strength("back_move"), 

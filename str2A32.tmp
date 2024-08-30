@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1eb756wce7mt"]
+
+[ext_resource type="Script" path="res://strings.gd" id="1_0e8q2"]
+[ext_resource type="Material" uid="uid://mxftf1kqi77h" path="res://Art/Blends/Citizens/strings.tres" id="1_rf4h3"]
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_h6mx7"]
+resource_local_to_scene = true
+
+[node name="string" type="MeshInstance3D"]
+transform = Transform3D(0.9914, 0, 0, 0, 0.9914, 0, 0, 0, 0.9914, 0, 0, 0)
+material_override = ExtResource("1_rf4h3")
+mesh = SubResource("ImmediateMesh_h6mx7")
+skeleton = NodePath("../Player")
+script = ExtResource("1_0e8q2")
