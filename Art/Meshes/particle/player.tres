@@ -1,0 +1,18 @@
+[gd_resource type="ArrayMesh" load_steps=2 format=3 uid="uid://bc6ldvfx5me4r"]
+
+[ext_resource type="Material" uid="uid://b01moepp8svdc" path="res://Art/Blends/Particles/particle_mat.tres" id="1_yt6lj"]
+
+[resource]
+_surfaces = [{
+"aabb": AABB(-0.970427, 0.073591, -1, 1.97043, 0.623885, 2),
+"attribute_data": PackedByteArray(0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0),
+"material": ExtResource("1_yt6lj"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray(193, 158, 253, 255, 255, 127, 29, 78, 255, 255, 253, 255, 0, 0, 29, 78, 0, 0, 0, 0, 255, 127, 29, 78, 0, 0, 0, 0, 255, 127, 29, 206, 255, 255, 253, 255, 255, 255, 29, 206, 193, 158, 253, 255, 255, 127, 29, 206, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103)
+}]

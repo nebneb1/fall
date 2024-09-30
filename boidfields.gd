@@ -16,7 +16,7 @@ func spawn_boids():
 		for y in range(DIMENTIONS.y): 
 			for z in range(DIMENTIONS.z):
 				var inst = boid_scene.instantiate()
-				inst.global_position = Vector3(x,y,z) * SEPERATION
+				inst.start_pos = Vector3(x,y,z) * SEPERATION
 				inst.id = count
 				inst.camera = camera
 				add_child(inst)

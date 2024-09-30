@@ -5,6 +5,7 @@ extends Node3D
 
 func _ready():
 	Global.game = self
+	#Trans.scene("fall", "fog_fade", 10.0)
 	#get_tree().set_auto_accept_quit(false)
 	#setup_upnp()
 	#await get_tree().create_timer(3.0).timeout

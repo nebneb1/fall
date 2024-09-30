@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://crykyj0omo4s7"]
+
+[ext_resource type="Texture2D" uid="uid://cn2dpgkqho7pp" path="res://Art/2D/pbrs/!Bakes/Arch/bake.png" id="1_goiy0"]
+
+[resource]
+resource_name = "Material.008"
+cull_mode = 2
+albedo_texture = ExtResource("1_goiy0")
+distance_fade_min_distance = 2.0
+distance_fade_max_distance = 5.0

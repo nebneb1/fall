@@ -1,7 +1,49 @@
 extends MultiMeshInstance3D
-var pos = material_override.get("shader_parameter/character_position")
 
+const BASE_RADIUS = 2.0
+const SPEED = 0.2
+
+
+var max_durr = 0.0
+var chirp_time = 0.0
+const MAX_TIME = 0.75
+const CHIRP_MULT = 3.0
+
+var targ_radius = BASE_RADIUS
 
 func _process(delta: float):
-	pos = Global.player.global_position
+	material_override.set("shader_parameter/character_position", Global.player.global_position)
+	if Global.player.is_chirping:
+		max_durr = Global.player.chirp_durr
+		targ_radius = max_durr + BASE_RADIUS
+		
+	elif max_durr != 0.0:
+		chirp_time += delta
+		targ_radius = max_durr*CHIRP_MULT + BASE_RADIUS
+		if chirp_time >= MAX_TIME:
+			max_durr = 0.0
+			chirp_time = 0.0
+	
+	else:
+		targ_radius = BASE_RADIUS
+	
+	if material_override.get("shader_parameter/character_radius") <= targ_radius:
+		material_override.set("shader_parameter/character_radius", lerp(material_override.get("shader_parameter/character_radius"), targ_radius, delta * SPEED * (targ_radius-material_override.get("shader_parameter/character_radius"))))
+	else:
+		material_override.set("shader_parameter/character_radius", lerp(material_override.get("shader_parameter/character_radius"), targ_radius, delta * SPEED * (material_override.get("shader_parameter/character_radius")-targ_radius)))
+	
+	#if Global.player.is_chirping:
+		#max_durr = Global.player.chirp_durr
+		#material_override.set("shader_parameter/character_radius", clamp(material_override.get("shader_parameter/character_radius") + max_durr, BASE_RADIUS, BASE_RADIUS*2))
+	#elif max_durr != 0.0:
+		#chirp_time += delta
+		#material_override.set("shader_parameter/character_radius", clamp(material_override.get("shader_parameter/character_radius") + delta * RETURN_SPEED * 2, BASE_RADIUS, BASE_RADIUS*max_durr*CHIRP_MULT))
+		#if chirp_time >= MAX_TIME:
+			#max_durr = 0.0
+			#chirp_time = 0.0
+			#
+			#
+	#elif material_override.get("shader_parameter/character_radius") > BASE_RADIUS:
+		#material_override.set("shader_parameter/character_radius", clamp(material_override.get("shader_parameter/character_radius") - delta * RETURN_SPEED, BASE_RADIUS, BASE_RADIUS*10))
+	
 	

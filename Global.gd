@@ -11,6 +11,8 @@ const CONFIRM_CHIRP = 5.0
 
 var player : CharacterBody3D
 var game : Node3D
+var camera_holder : Node3D
+var can_fall : bool = false
 
 var active_players : Array = []
 var distance = [0, 0]

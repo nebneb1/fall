@@ -29,16 +29,19 @@ func _process(delta: float):
 	
 func _update():
 	for value in tracked_values:
-		var label = value["label"]
-		if label:
-			if value["is_function"]:
-				label.text = value["tag"] + ": " + str(value["callable"].call())
-				if value["print"]: print(str(value["callable"].call()))
-			else:
-				label.text = value["object"].name + " - " + value["tag"] + ": " + str(value["object"].get(value["parameter"]))
-				if value["print"]: print(str(value["object"].get(value["parameter"])))
-				
-		else: print("aa im missing my label this is the worst day of my short computer life...")
+		if not value["object"]:
+			tracked_values.erase(value)
+		else:
+			var label = value["label"]
+			if label:
+				if value["is_function"]:
+					label.text = value["tag"] + ": " + str(value["callable"].call())
+					if value["print"]: print(str(value["callable"].call()))
+				else:
+					label.text = value["object"].name + " - " + value["tag"] + ": " + str(value["object"].get(value["parameter"]))
+					if value["print"]: print(str(value["object"].get(value["parameter"])))
+					
+			else: print("aa im missing my label this is the worst day of my short computer life...")
 
 func _update_list():
 	for child in container.get_children():

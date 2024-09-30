@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d3spdyylt1xf2" path="res://Art/Blends/Citizens/Citizen2.glb" id="1_kmnvo"]
 [ext_resource type="Material" uid="uid://cn3g8p0vw8fms" path="res://Art/Blends/Citizens/black.tres" id="2_xpp7w"]
-[ext_resource type="Material" uid="uid://3pa6550tqwmn" path="res://Art/Blends/Citizens/yellow.tres" id="3_pxc5h"]
+[ext_resource type="Material" uid="uid://3pa6550tqwmn" path="res://Art/Mats/yellow.tres" id="3_pxc5h"]
 [ext_resource type="Shader" path="res://Art/Blends/Citizens/citizen_2.gdshader" id="4_rlf3e"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_regca"]

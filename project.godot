@@ -25,6 +25,7 @@ driver/enable_input=true
 
 Global="*res://Global.gd"
 Debug="*res://debug.tscn"
+Trans="*res://transitions.tscn"
 
 [input]
 

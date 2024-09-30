@@ -1,0 +1,26 @@
+[gd_resource type="TubeTrailMesh" load_steps=3 format=3 uid="uid://dqtmshryhe2e3"]
+
+[sub_resource type="Curve" id="Curve_r5vhb"]
+max_value = 2.0
+_data = [Vector2(0, 0), 0.0, 0.927073, 0, 0, Vector2(0.27051, 1.02419), -0.132161, -0.132161, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jdtwn"]
+transparency = 1
+cull_mode = 2
+emission_enabled = true
+emission = Color(0.835294, 0.698039, 0, 1)
+emission_energy_multiplier = 4.69
+emission_intensity = 56896.6
+disable_receive_shadows = true
+grow_amount = 0.01
+use_particle_trails = true
+
+[resource]
+material = SubResource("StandardMaterial3D_jdtwn")
+radius = 0.01
+radial_steps = 16
+sections = 19
+cap_top = false
+cap_bottom = false
+curve = SubResource("Curve_r5vhb")

@@ -73,3 +73,8 @@ func activate():
 	#out.z = pow(base.z, exp)
 	#
 	#return out
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "cube":
+		Global.can_fall = true

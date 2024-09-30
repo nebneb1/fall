@@ -10,6 +10,7 @@ const SPEED = 10.0
 var camera : Camera3D
 #particles1, particles2, trail quality, trails
 
+var start_pos : Vector3
 
 var heading = Vector3.ZERO
 
@@ -42,6 +43,7 @@ const CALC_DIST = [[8, 200], [4, 60], [2, 30], [1, 0]]
 		
 		
 func _ready() -> void:
+	global_position = start_pos
 	if id == 0: Debug.track(self, "stall", true)
 	#Debug.track(self, "heading")
 	randomize()
@@ -88,7 +90,7 @@ func update_heading(delta : float, multiplier : float = 1.0):
 		var positions_close := Vector3.ZERO
 		#var speeds := 0.0
 		for neighbor in neighbors:
-			if not neighbor.is_in_group("close"):
+			if not neighbor.is_in_group("close") and neighbor.is_in_group("boid"):
 				#print(neighbor.name)
 				headings += neighbor.heading
 				positions_far += neighbor.global_position
@@ -96,7 +98,7 @@ func update_heading(delta : float, multiplier : float = 1.0):
 				
 		
 		for neighbor in close_neighbors:
-			if neighbor.is_in_group("close"):
+			if neighbor.is_in_group("close") and neighbor.is_in_group("boid"):
 				positions_close += neighbor.global_position
 			
 		# alignment rule

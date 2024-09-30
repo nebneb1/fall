@@ -1,7 +1,7 @@
 [gd_resource type="Shader" format=3 uid="uid://crorkfpnr3xu3"]
 
 [resource]
-code = "/** A grass shader by Toadile for Godot 3.x
+code = "/** A grass shader by Toadile for Godot 3.x <ported n modded by me :3>
  * Copies, modififications, and redistrubitions are allowed and encouranged.
  * For best effect, make sure that the quad/geometry is twice the width that is 
  * normal. In most cases, a quad that is 2 by 1 will be sufficient for the grass
@@ -63,6 +63,8 @@ varying float bend_uv_direction;
 varying vec3 instance_offset;
 varying float fade;
 
+//uniform float trail_fade_time = 2.0; // In seconds
+
 void vertex() {
 	float displacement_affect = (1.0 - UV.y);
 	
@@ -111,35 +113,51 @@ void vertex() {
 	VERTEX.y -= inverse_uv_y * flatness * 0.15;
 	
 	// introduce variation per grass instance
-	if (INSTANCE_ID % 2 == 0) bend_uv_direction = 1.0; else bend_uv_direction = -1.0;
+	//if (INSTANCE_ID % 2 == 0) bend_uv_direction = 1.0; else bend_uv_direction = -1.0;
 	
-	if (INSTANCE_ID % 2 == 0) instance_offset = vec3(color_variatiion*0.1); 
-	else instance_offset = vec3(-color_variatiion*0.1);
+	//if (INSTANCE_ID % 2 == 0) instance_offset = vec3(color_variatiion*0.1); 
+	//else instance_offset = vec3(-color_variatiion*0.1);
 	
 	// fade out grass by shrinking it
-	float view_distance = length(VERTEX - vec3(MODELVIEW_MATRIX[3].x, MODELVIEW_MATRIX[3].y, MODELVIEW_MATRIX[3].z));
-	if (view_distance > fade_out_distance + fade_out_transition) fade = 1.0f; else fade = 0.0f;
-	if (view_distance > fade_out_distance)
-	{
-		float offset = (fade_out_distance + fade_out_transition - view_distance) / fade_out_transition;
-		VERTEX.y *= offset;
-	}
+	//float view_distance = length(VERTEX - vec3(MODELVIEW_MATRIX[3].x, MODELVIEW_MATRIX[3].y, MODELVIEW_MATRIX[3].z));
+	//if (view_distance > fade_out_distance + fade_out_transition) fade = 1.0f; else fade = 0.0f;
+	//if (view_distance > fade_out_distance)
+	//{
+		//float offset = (fade_out_distance + fade_out_transition - view_distance) / fade_out_transition;
+		//VERTEX.y *= offset;
+	//}
 	
-	vec3 dir_to_character = character_position - MODEL_MATRIX[3].xyz;
-	// uncomment the following line to have a horizontal only character push
-	dir_to_character.y = 0.0;
+	// Character displacement in world space
+	vec3 world_vertex_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz; // Transform vertex to world space
+	vec3 dir_to_character = character_position - world_vertex_position;
+	dir_to_character.y = 0.0; // Ignore vertical displacement
 	float distance_to_character = length(dir_to_character);
-	float falloff = 1.0 - smoothstep(0.0, 1.0, distance_to_character/character_radius);
-	// Because we operate in vertex space, we need to convert the direction to the character
-	// in vertex space. Otherwise, it wouldn't work for rotated blades of grass.
-	// comment the next line to observe how the blades are not all facing away from the character.
-	dir_to_character = (inverse(MODEL_MATRIX) * vec4(dir_to_character, 0.0)).xyz;
-	dir_to_character = normalize(dir_to_character);
 
-	// sample the curve based on how far we are from the character, in normalized coordinates
-	float falloff_curve = texture(character_distance_falloff_curve, vec2(falloff)).x;
-	// direction to character is inverted because we want to point away from it
-	VERTEX += normalize(-dir_to_character) * falloff_curve * character_push_strength * displacement_affect;
+	if (distance_to_character < character_radius) {
+	    float falloff = 1.0 - smoothstep(0.0, 1.0, distance_to_character / character_radius);
+	    dir_to_character = normalize(dir_to_character);
+
+	    // Apply displacement in local space, but direction is based on world space vector
+	    vec3 local_displacement = (inverse(MODEL_MATRIX) * vec4(dir_to_character, 0.0)).xyz; // Convert to local space
+	    VERTEX += local_displacement * falloff * character_push_strength * displacement_affect;
+
+	    // Fade out grass by shrinking it based on proximity to the character
+	    float character_fade = 1.0 - falloff; // Inverse of falloff to shrink grass as you get closer
+	    VERTEX.y *= character_fade; // Shrink the height as you get closer
+	}
+
+	// Original fade out grass by shrinking it (view distance based)
+	float view_distance = length(world_vertex_position - vec3(MODELVIEW_MATRIX[3].x, MODELVIEW_MATRIX[3].y, MODELVIEW_MATRIX[3].z));
+	if (view_distance > fade_out_distance + fade_out_transition) {
+	    fade = 1.0f;
+	} else {
+	    fade = 0.0f;
+	}
+
+	if (view_distance > fade_out_distance) {
+	    float offset = (fade_out_distance + fade_out_transition - view_distance) / fade_out_transition;
+	    VERTEX.y *= offset;
+	}
 }
 
 //render_mode depth_draw_always; // comment out this if not wanting to use displacement and wanting SSAO

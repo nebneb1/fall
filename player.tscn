@@ -1,43 +1,120 @@
-[gd_scene load_steps=19 format=3 uid="uid://bjmkmistd7n46"]
+[gd_scene load_steps=39 format=3 uid="uid://bjmkmistd7n46"]
 
 [ext_resource type="Script" path="res://player_controller.gd" id="1_wx3ro"]
-[ext_resource type="Material" uid="uid://b01moepp8svdc" path="res://Art/Blends/Particles/particle_mat.tres" id="2_bukpv"]
+[ext_resource type="ArrayMesh" uid="uid://bc6ldvfx5me4r" path="res://Art/Meshes/particle/player.tres" id="2_4t7pj"]
 [ext_resource type="AudioStream" uid="uid://btti0pflt7ura" path="res://temp/Sky SFX/small chirp.ogg" id="3_0wm82"]
+[ext_resource type="SphereMesh" uid="uid://tsjisjgp3epw" path="res://Tres/player.tres" id="3_16h56"]
 [ext_resource type="AudioStream" uid="uid://rj2jo6ft3xo1" path="res://temp/Sky SFX/medium chirp.ogg" id="4_0o6l4"]
 [ext_resource type="AudioStream" uid="uid://cmrajsg26ffmb" path="res://temp/Sky SFX/large chirp.ogg" id="5_okybq"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jxygp"]
-albedo_color = Color(0, 0, 0, 1)
-emission_enabled = true
-emission = Color(1, 1, 1, 1)
-emission_energy_multiplier = 16.0
-emission_intensity = 36465.5
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vhs72"]
+radial_velocity_min = -251.12
+radial_velocity_max = -251.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -100.0
+radial_accel_max = -100.0
+damping_min = 97.758
+damping_max = 97.758
 
-[sub_resource type="SphereMesh" id="SphereMesh_nygfw"]
-material = SubResource("StandardMaterial3D_jxygp")
-radius = 0.1
-height = 0.2
-radial_segments = 32
-rings = 16
-
-[sub_resource type="Curve" id="Curve_tcgj4"]
-_data = [Vector2(0, 0.989011), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.158293, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_4lb11"]
+_data = [Vector2(0, 1), 0.0, -2.35092, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_od3no"]
-_surfaces = [{
-"aabb": AABB(-0.970427, 0.073591, -1, 1.97043, 0.623885, 2),
-"attribute_data": PackedByteArray(0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255),
-"format": 34896613399,
-"index_count": 6,
-"index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0),
-"material": ExtResource("2_bukpv"),
-"name": "Material",
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 6,
-"vertex_data": PackedByteArray(193, 158, 253, 255, 255, 127, 29, 78, 255, 255, 253, 255, 0, 0, 29, 78, 0, 0, 0, 0, 255, 127, 29, 78, 0, 0, 0, 0, 255, 127, 29, 206, 255, 255, 253, 255, 255, 255, 29, 206, 193, 158, 253, 255, 255, 127, 29, 206, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103, 245, 24, 9, 103)
-}]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ow3fj"]
+transparency = 1
+cull_mode = 2
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 8.17
+emission_intensity = 100000.0
+disable_receive_shadows = true
+grow_amount = 0.01
+use_particle_trails = true
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_dmkyf"]
+material = SubResource("StandardMaterial3D_ow3fj")
+radius = 0.1
+sections = 19
+section_rings = 6
+curve = SubResource("Curve_4lb11")
+
+[sub_resource type="Curve" id="Curve_6ytdv"]
+min_value = -2.0
+max_value = 2.0
+_data = [Vector2(0, -2), 0.0, 0.0, 0, 0, Vector2(0.486873, -0.710789), 0.0, 0.0, 0, 0, Vector2(1, -2), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_8r2s0"]
+min_value = -2.0
+max_value = 2.0
+_data = [Vector2(0.0286396, -2), 0.0, 0.0, 0, 0, Vector2(0.749403, 1.10426), 0.0, 0.0, 0, 0, Vector2(1, -2), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_xnjs5"]
+min_value = -2.0
+max_value = 2.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.221957, -0.993654), 0.0, 0.0, 0, 0, Vector2(0.431981, 1.31641), 0.0, 0.0, 0, 0, Vector2(0.77327, -0.333636), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_mbsxx"]
+curve_x = SubResource("Curve_6ytdv")
+curve_y = SubResource("Curve_8r2s0")
+curve_z = SubResource("Curve_xnjs5")
+
+[sub_resource type="Curve" id="Curve_0v75r"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.492754, 1), 0.0, 0.0, 0, 0, Vector2(0.756563, 0.098368), -1.23459, -1.23459, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_88knu"]
+curve = SubResource("Curve_0v75r")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xhghy"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+orbit_velocity_min = -2.0
+orbit_velocity_max = 2.0
+orbit_velocity_curve = SubResource("CurveXYZTexture_mbsxx")
+radial_velocity_min = -3.0
+radial_velocity_max = -3.0
+gravity = Vector3(0, 0, 0)
+damping_min = 75.336
+damping_max = 75.336
+scale_min = 3.0
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_88knu")
+turbulence_noise_strength = 0.1
+turbulence_noise_scale = 0.685
+turbulence_noise_speed = Vector3(0, 0.195, 0)
+turbulence_noise_speed_random = 1.46
+
+[sub_resource type="Curve" id="Curve_l4jad"]
+max_value = 2.0
+_data = [Vector2(0.0172414, 0), 0.0, 0.927073, 0, 0, Vector2(0.422414, 1.53846), 3.43195, 3.43195, 0, 0, Vector2(0.844789, 0.156797), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bv7e5"]
+transparency = 1
+cull_mode = 2
+emission_enabled = true
+emission = Color(0.835294, 0.698039, 0, 1)
+emission_energy_multiplier = 4.69
+emission_intensity = 56896.6
+disable_receive_shadows = true
+grow_amount = 0.01
+use_particle_trails = true
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_ry23j"]
+material = SubResource("StandardMaterial3D_bv7e5")
+radius = 0.01
+radial_steps = 16
+sections = 19
+cap_top = false
+cap_bottom = false
+curve = SubResource("Curve_l4jad")
 
 [sub_resource type="Curve" id="Curve_lf6t6"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.426966, 0.648352), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -148,367 +225,215 @@ _data = {
 density = 0.2
 emission = Color(0.666667, 0.666667, 0.666667, 1)
 
+[sub_resource type="Curve" id="Curve_jdpds"]
+min_value = -2.0
+max_value = 2.0
+_data = [Vector2(0, 2), 0.0, 0.0, 0, 0, Vector2(0.176611, 0.326383), 0.0, 0.0, 0, 0, Vector2(1, -0.592928), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_dw681"]
+curve = SubResource("Curve_jdpds")
+
+[sub_resource type="Curve" id="Curve_unbha"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.492754, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ol0ud"]
+curve = SubResource("Curve_unbha")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1pwxr"]
+emission_shape_offset = Vector3(0, -2.44, 0)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 0.0
+emission_ring_radius = 5.58
+emission_ring_inner_radius = 0.0
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+orbit_velocity_min = -0.763
+orbit_velocity_max = 1.677
+orbit_velocity_curve = SubResource("CurveTexture_dw681")
+radial_velocity_min = -22.13
+radial_velocity_max = -22.13
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -100.0
+radial_accel_max = -100.0
+damping_min = 22.87
+damping_max = 22.87
+scale_min = 3.0
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_ol0ud")
+turbulence_noise_strength = 0.1
+turbulence_noise_scale = 0.685
+turbulence_noise_speed = Vector3(0, 0.195, 0)
+turbulence_noise_speed_random = 1.46
+
+[sub_resource type="Curve" id="Curve_71vyp"]
+max_value = 2.0
+_data = [Vector2(0, 0), 0.0, 0.927073, 0, 0, Vector2(0.461197, 1.98916), 1.17358, 1.17358, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c54ms"]
+transparency = 1
+cull_mode = 2
+emission_enabled = true
+emission = Color(0.835294, 0.698039, 0, 1)
+emission_energy_multiplier = 4.69
+emission_intensity = 56896.6
+disable_receive_shadows = true
+grow_amount = 0.01
+use_particle_trails = true
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_r82i7"]
+material = SubResource("StandardMaterial3D_c54ms")
+radius = 0.01
+radial_steps = 16
+sections = 19
+cap_top = false
+cap_bottom = false
+curve = SubResource("Curve_71vyp")
+
+[sub_resource type="Curve" id="Curve_tcgj4"]
+_data = [Vector2(0, 0.989011), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.158293, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4bbmc"]
 height = 3.36989
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("sparkle1", "sparkle2")]
-transform = Transform3D(0.294624, 0, -0.94661, 0, 0.9914, 0, 0.94661, 0, 0.294624, 0, 0, 0)
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("sparkle1", "sparkle2") groups=["player"]]
+transform = Transform3D(0.9914, 0, 2.87109e-05, 0, 0.9914, 0, -2.87109e-05, 0, 0.9914, 0, 0, 0)
 script = ExtResource("1_wx3ro")
 sparkle1 = NodePath("trail/sparklesnode")
 sparkle2 = NodePath("trail/sparkles2node")
 
-[node name="trail" type="CPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.948264, 0.943546)
-amount = 195
-lifetime = 0.4
-preprocess = 1.0
-speed_scale = 5.0
-mesh = SubResource("SphereMesh_nygfw")
-gravity = Vector3(0, 0, 0)
-scale_amount_curve = SubResource("Curve_tcgj4")
+[node name="trail" type="GPUParticles3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+amount = 2
+lifetime = 14.41
+fixed_fps = 260
+trail_enabled = true
+trail_lifetime = 0.2
+process_material = SubResource("ParticleProcessMaterial_vhs72")
+draw_pass_1 = SubResource("TubeTrailMesh_dmkyf")
+
+[node name="trail3" type="GPUParticles3D" parent="trail"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+amount = 2
+lifetime = 14.0
+speed_scale = 1.34
+fixed_fps = 260
+trail_enabled = true
+trail_lifetime = 0.2
+process_material = SubResource("ParticleProcessMaterial_vhs72")
+draw_pass_1 = SubResource("TubeTrailMesh_dmkyf")
 
 [node name="sparklesnode" type="Node3D" parent="trail"]
-
-[node name="sparkles" type="CPUParticles3D" parent="trail/sparklesnode"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 4.26, 0)
-initial_velocity_max = 20.2
-radial_accel_min = -43.43
-radial_accel_max = 2.71
-damping_min = 22.222
-damping_max = 22.222
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
-
-[node name="sparkles2" type="CPUParticles3D" parent="trail/sparklesnode"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 4.26, 0)
-initial_velocity_max = 20.2
-radial_accel_min = -43.43
-radial_accel_max = 2.71
-damping_min = 22.222
-damping_max = 22.222
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
-
-[node name="sparkles3" type="CPUParticles3D" parent="trail/sparklesnode"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 4.26, 0)
-initial_velocity_max = 20.2
-radial_accel_min = -43.43
-radial_accel_max = 2.71
-damping_min = 22.222
-damping_max = 22.222
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
-
-[node name="sparkles4" type="CPUParticles3D" parent="trail/sparklesnode"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 4.26, 0)
-initial_velocity_max = 20.2
-radial_accel_min = -43.43
-radial_accel_max = 2.71
-damping_min = 22.222
-damping_max = 22.222
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
-
-[node name="sparkles5" type="CPUParticles3D" parent="trail/sparklesnode"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 4.26, 0)
-initial_velocity_max = 20.2
-radial_accel_min = -43.43
-radial_accel_max = 2.71
-damping_min = 22.222
-damping_max = 22.222
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
-
-[node name="sparkles6" type="CPUParticles3D" parent="trail/sparklesnode"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 4.26, 0)
-initial_velocity_max = 20.2
-radial_accel_min = -43.43
-radial_accel_max = 2.71
-damping_min = 22.222
-damping_max = 22.222
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
-
-[node name="sparkles7" type="CPUParticles3D" parent="trail/sparklesnode"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 4.26, 0)
-initial_velocity_max = 20.2
-radial_accel_min = -43.43
-radial_accel_max = 2.71
-damping_min = 22.222
-damping_max = 22.222
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
-
-[node name="sparkles8" type="CPUParticles3D" parent="trail/sparklesnode"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 4.26, 0)
-initial_velocity_max = 20.2
-radial_accel_min = -43.43
-radial_accel_max = 2.71
-damping_min = 22.222
-damping_max = 22.222
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
-
-[node name="sparkles9" type="CPUParticles3D" parent="trail/sparklesnode"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 4.26, 0)
-initial_velocity_max = 20.2
-radial_accel_min = -43.43
-radial_accel_max = 2.71
-damping_min = 22.222
-damping_max = 22.222
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
-
-[node name="sparkles10" type="CPUParticles3D" parent="trail/sparklesnode"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 4.26, 0)
-initial_velocity_max = 20.2
-radial_accel_min = -43.43
-radial_accel_max = 2.71
-damping_min = 22.222
-damping_max = 22.222
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
+visible = false
 
 [node name="sparkles2node" type="Node3D" parent="trail"]
 
-[node name="sparkles2" type="CPUParticles3D" parent="trail/sparkles2node"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-emission_shape = 1
-emission_sphere_radius = 1.0
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 0, 0)
-radial_accel_min = -39.38
-radial_accel_max = -29.62
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
+[node name="GPUParticles3D" type="GPUParticles3D" parent="trail/sparkles2node"]
+transform = Transform3D(1, 3.66598e-17, 0, 3.66598e-17, 1, 1.81899e-12, -1.0842e-19, -1.81899e-12, 1, 0, 0, 0)
+amount = 5
+speed_scale = 0.45
+fixed_fps = 90
+trail_enabled = true
+trail_lifetime = 0.72
+process_material = SubResource("ParticleProcessMaterial_xhghy")
+draw_pass_1 = SubResource("TubeTrailMesh_ry23j")
 
-[node name="sparkles3" type="CPUParticles3D" parent="trail/sparkles2node"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-emission_shape = 1
-emission_sphere_radius = 1.0
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 0, 0)
-radial_accel_min = -39.38
-radial_accel_max = -29.62
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="trail/sparkles2node"]
+amount = 5
+speed_scale = 0.45
+fixed_fps = 90
+trail_enabled = true
+trail_lifetime = 0.72
+process_material = SubResource("ParticleProcessMaterial_xhghy")
+draw_pass_1 = SubResource("TubeTrailMesh_ry23j")
 
-[node name="sparkles4" type="CPUParticles3D" parent="trail/sparkles2node"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-emission_shape = 1
-emission_sphere_radius = 1.0
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 0, 0)
-radial_accel_min = -39.38
-radial_accel_max = -29.62
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
+[node name="GPUParticles3D3" type="GPUParticles3D" parent="trail/sparkles2node"]
+amount = 5
+speed_scale = 0.45
+fixed_fps = 90
+trail_enabled = true
+trail_lifetime = 0.72
+process_material = SubResource("ParticleProcessMaterial_xhghy")
+draw_pass_1 = SubResource("TubeTrailMesh_ry23j")
 
-[node name="sparkles5" type="CPUParticles3D" parent="trail/sparkles2node"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-emission_shape = 1
-emission_sphere_radius = 1.0
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 0, 0)
-radial_accel_min = -39.38
-radial_accel_max = -29.62
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
+[node name="GPUParticles3D4" type="GPUParticles3D" parent="trail/sparkles2node"]
+amount = 5
+speed_scale = 0.45
+fixed_fps = 90
+trail_enabled = true
+trail_lifetime = 0.72
+process_material = SubResource("ParticleProcessMaterial_xhghy")
+draw_pass_1 = SubResource("TubeTrailMesh_ry23j")
 
-[node name="sparkles6" type="CPUParticles3D" parent="trail/sparkles2node"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-emission_shape = 1
-emission_sphere_radius = 1.0
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 0, 0)
-radial_accel_min = -39.38
-radial_accel_max = -29.62
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
+[node name="GPUParticles3D5" type="GPUParticles3D" parent="trail/sparkles2node"]
+amount = 5
+speed_scale = 0.45
+fixed_fps = 90
+trail_enabled = true
+trail_lifetime = 0.72
+process_material = SubResource("ParticleProcessMaterial_xhghy")
+draw_pass_1 = SubResource("TubeTrailMesh_ry23j")
 
-[node name="sparkles7" type="CPUParticles3D" parent="trail/sparkles2node"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-emission_shape = 1
-emission_sphere_radius = 1.0
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 0, 0)
-radial_accel_min = -39.38
-radial_accel_max = -29.62
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
+[node name="GPUParticles3D6" type="GPUParticles3D" parent="trail/sparkles2node"]
+amount = 5
+speed_scale = 0.45
+fixed_fps = 90
+trail_enabled = true
+trail_lifetime = 0.72
+process_material = SubResource("ParticleProcessMaterial_xhghy")
+draw_pass_1 = SubResource("TubeTrailMesh_ry23j")
 
-[node name="sparkles8" type="CPUParticles3D" parent="trail/sparkles2node"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-emission_shape = 1
-emission_sphere_radius = 1.0
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 0, 0)
-radial_accel_min = -39.38
-radial_accel_max = -29.62
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
+[node name="GPUParticles3D7" type="GPUParticles3D" parent="trail/sparkles2node"]
+amount = 5
+speed_scale = 0.45
+fixed_fps = 90
+trail_enabled = true
+trail_lifetime = 0.72
+process_material = SubResource("ParticleProcessMaterial_xhghy")
+draw_pass_1 = SubResource("TubeTrailMesh_ry23j")
 
-[node name="sparkles9" type="CPUParticles3D" parent="trail/sparkles2node"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-emission_shape = 1
-emission_sphere_radius = 1.0
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 0, 0)
-radial_accel_min = -39.38
-radial_accel_max = -29.62
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
+[node name="GPUParticles3D8" type="GPUParticles3D" parent="trail/sparkles2node"]
+amount = 5
+speed_scale = 0.45
+fixed_fps = 90
+trail_enabled = true
+trail_lifetime = 0.72
+process_material = SubResource("ParticleProcessMaterial_xhghy")
+draw_pass_1 = SubResource("TubeTrailMesh_ry23j")
 
-[node name="sparkles10" type="CPUParticles3D" parent="trail/sparkles2node"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-emission_shape = 1
-emission_sphere_radius = 1.0
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 0, 0)
-radial_accel_min = -39.38
-radial_accel_max = -29.62
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
+[node name="GPUParticles3D9" type="GPUParticles3D" parent="trail/sparkles2node"]
+amount = 5
+speed_scale = 0.45
+fixed_fps = 90
+trail_enabled = true
+trail_lifetime = 0.72
+process_material = SubResource("ParticleProcessMaterial_xhghy")
+draw_pass_1 = SubResource("TubeTrailMesh_ry23j")
 
-[node name="sparkles11" type="CPUParticles3D" parent="trail/sparkles2node"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-amount = 15
-mesh = SubResource("ArrayMesh_od3no")
-emission_shape = 1
-emission_sphere_radius = 1.0
-particle_flag_align_y = true
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 0, 0)
-radial_accel_min = -39.38
-radial_accel_max = -29.62
-scale_amount_min = 0.05
-scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_lf6t6")
+[node name="GPUParticles3D10" type="GPUParticles3D" parent="trail/sparkles2node"]
+amount = 5
+speed_scale = 0.45
+fixed_fps = 90
+trail_enabled = true
+trail_lifetime = 0.72
+process_material = SubResource("ParticleProcessMaterial_xhghy")
+draw_pass_1 = SubResource("TubeTrailMesh_ry23j")
 
 [node name="sparkles3" type="CPUParticles3D" parent="trail"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+visible = false
 emitting = false
 amount = 100
 lifetime = 1.5
 one_shot = true
 explosiveness = 1.0
-mesh = SubResource("ArrayMesh_od3no")
+mesh = ExtResource("2_4t7pj")
 emission_shape = 1
 emission_sphere_radius = 1.0
 particle_flag_align_y = true
@@ -523,12 +448,13 @@ scale_amount_curve = SubResource("Curve_lf6t6")
 
 [node name="sparkles4" type="CPUParticles3D" parent="trail"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+visible = false
 emitting = false
 amount = 200
 lifetime = 2.72
 one_shot = true
 explosiveness = 1.0
-mesh = SubResource("ArrayMesh_od3no")
+mesh = ExtResource("2_4t7pj")
 emission_shape = 1
 emission_sphere_radius = 1.0
 particle_flag_align_y = true
@@ -554,33 +480,59 @@ transform = Transform3D(1.27907, 0, 0, 0, 1.27907, 0, 0, 0, 1.27907, 0, 0, 0)
 shape = 0
 material = SubResource("FogMaterial_05bo3")
 
+[node name="GPUParticles3D11" type="GPUParticles3D" parent="trail"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+amount = 46
+lifetime = 0.72
+speed_scale = 0.52
+fixed_fps = 144
+trail_enabled = true
+trail_lifetime = 0.72
+process_material = SubResource("ParticleProcessMaterial_1pwxr")
+draw_pass_1 = SubResource("TubeTrailMesh_r82i7")
+
+[node name="trail2" type="CPUParticles3D" parent="trail"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+visible = false
+amount = 195
+lifetime = 0.4
+preprocess = 1.0
+speed_scale = 5.0
+mesh = ExtResource("3_16h56")
+gravity = Vector3(0, 0, 0)
+scale_amount_curve = SubResource("Curve_tcgj4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="trail"]
+mesh = ExtResource("3_16h56")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_4bbmc")
 
-[node name="flow" type="Area3D" parent="."]
+[node name="flow" type="Area3D" parent="." groups=["player"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="flow"]
 shape = SubResource("CapsuleShape3D_4bbmc")
 
 [node name="SFX" type="Node" parent="."]
 
-[node name="chirp_small" type="AudioStreamPlayer3D" parent="SFX"]
+[node name="chirp_small" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource("3_0wm82")
-volume_db = -19.848
+volume_db = -27.343
 max_polyphony = 6
 
-[node name="chirp_medium" type="AudioStreamPlayer3D" parent="SFX"]
+[node name="chirp_medium" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource("4_0o6l4")
-volume_db = -14.415
+volume_db = -27.343
 max_polyphony = 4
 
-[node name="enter" type="AudioStreamPlayer3D" parent="SFX"]
+[node name="enter" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource("4_0o6l4")
+volume_db = -27.343
 pitch_scale = 0.28
 
-[node name="chirp_large" type="AudioStreamPlayer3D" parent="SFX"]
+[node name="chirp_large" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource("5_okybq")
-volume_db = -5.655
+volume_db = -27.343
 max_polyphony = 4
 
 [node name="chirp_cooldown" type="Timer" parent="."]

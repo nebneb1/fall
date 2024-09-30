@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://byais4nc4cmn2"]
+
+[ext_resource type="Script" path="res://dissolve_controller.gd" id="1_xu41r"]
+
+[node name="Dissolve_Controller" type="Node"]
+script = ExtResource("1_xu41r")

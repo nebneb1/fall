@@ -36,12 +36,19 @@ var cam_height = 3.785/2
 var cam_height_mod = 1.0
 
 var velocity : Vector2 = Vector2.ZERO
-
 #var momentum := Vector3.ZERO
 const DRAG = 10.0
 const TRANS_SPEED = 1.5
 
+const SHAKE_AMOUNT = 0.03 
+var falling : bool = false
+var cam_rot : Vector3
+
+
 func _ready():
+	randomize()
+	Global.camera_holder = self
+	cam_rot = camera.rotation_degrees
 	enable()
 
 func disable():
@@ -83,9 +90,9 @@ func _process(delta: float):
 	camera_ray.rotation.y = rotation.y
 	camera_ray.rotation.x = rotation.x
 	camera_ray.global_position = global_position
-	if camera_ray.is_colliding():
-		camera.global_position =  lerp(camera.global_position, camera_ray.get_collision_point()*0.8, 0.2)
-	else:
+	#if camera_ray.is_colliding():
+		#camera.global_position =  lerp(camera.global_position, camera_ray.get_collision_point()*0.8, 0.2)
+	if true: #else:
 		match cam_pos:
 			Pos.LEFT_ADJUSTED:
 				camera.position = lerp(camera.position, positions["left_view"].position, delta)
@@ -119,7 +126,14 @@ func _process(delta: float):
 			#Pos.CENTER:
 				#var tween = create_tween()
 				#tween.tween_property(camera, "position", positions["center_view"].position, TRANS_SPEED).set_ease(Tween.EASE_IN_OUT)
-	global_position = global_position.lerp(Vector3(player.global_position.x, player.global_position.y + cam_height*scale.x*cam_height_mod, player.global_position.z), delta*5.0)
+	if not falling:
+		global_position = global_position.lerp(Vector3(player.global_position.x, player.global_position.y + cam_height*scale.x*cam_height_mod, player.global_position.z), delta*5.0)
+	else: 
+		global_position = Vector3(player.global_position.x, player.global_position.y + cam_height*scale.x*cam_height_mod, player.global_position.z)
+		camera.rotation_degrees = cam_rot + Vector3(randf_range(-SHAKE_AMOUNT, SHAKE_AMOUNT), randf_range(-SHAKE_AMOUNT, SHAKE_AMOUNT), 0.0) 
+	
+	
+		
 	
 	
 

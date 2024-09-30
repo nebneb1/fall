@@ -1,0 +1,125 @@
+[gd_scene load_steps=15 format=3 uid="uid://cwk051m3hcy0d"]
+
+[ext_resource type="Script" path="res://fall.gd" id="1_fsvgl"]
+[ext_resource type="PackedScene" uid="uid://dcd4hcjjj8lqf" path="res://player_group.tscn" id="1_gorty"]
+[ext_resource type="PackedScene" uid="uid://cbwt52n56q8ks" path="res://clouds.tscn" id="3_3tkyp"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dhljj"]
+sky_top_color = Color(0.356863, 0.423529, 0.517647, 1)
+sky_horizon_color = Color(0.356863, 0.423529, 0.517647, 1)
+ground_bottom_color = Color(1, 0.509804, 0.27451, 1)
+
+[sub_resource type="Sky" id="Sky_ya27d"]
+sky_material = SubResource("ProceduralSkyMaterial_dhljj")
+process_mode = 3
+
+[sub_resource type="Environment" id="Environment_2mn2u"]
+background_mode = 2
+background_energy_multiplier = 2.19
+sky = SubResource("Sky_ya27d")
+tonemap_mode = 3
+tonemap_exposure = 0.5
+ssao_enabled = true
+ssao_radius = 0.94
+ssao_intensity = 6.38
+ssao_power = 0.512265
+ssao_detail = 2.63
+ssao_sharpness = 0.45
+ssil_enabled = true
+ssil_radius = 8.03
+ssil_intensity = 1.51
+sdfgi_enabled = true
+sdfgi_bounce_feedback = 0.44
+sdfgi_y_scale = 0
+glow_enabled = true
+glow_intensity = 8.0
+fog_enabled = true
+fog_light_color = Color(0.8, 0.65098, 0.690196, 1)
+fog_light_energy = 1.34
+fog_density = 0.048
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_length = 2000.0
+volumetric_fog_detail_spread = 2.70375
+volumetric_fog_ambient_inject = 16.0
+volumetric_fog_temporal_reprojection_amount = 0.99
+adjustment_enabled = true
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_xxwgq"]
+auto_exposure_enabled = true
+dof_blur_near_distance = 3.0
+dof_blur_amount = 1.0
+
+[sub_resource type="Gradient" id="Gradient_404bi"]
+offsets = PackedFloat32Array(0, 0.520548, 0.623288)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_b25c3"]
+resource_local_to_scene = true
+noise_type = 3
+frequency = 0.04
+domain_warp_fractal_lacunarity = -0.735
+domain_warp_fractal_gain = -1.245
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_1xja1"]
+resource_local_to_scene = true
+width = 100
+height = 100
+depth = 100
+seamless_blend_skirt = 0.275
+normalize = false
+color_ramp = SubResource("Gradient_404bi")
+noise = SubResource("FastNoiseLite_b25c3")
+
+[sub_resource type="FogMaterial" id="FogMaterial_3cxgo"]
+resource_local_to_scene = true
+density = 3.0654
+albedo = Color(0.482888, 0.470167, 0.423354, 1)
+edge_fade = 1.13137
+density_texture = SubResource("NoiseTexture3D_1xja1")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_nvhar"]
+resource_local_to_scene = true
+noise_type = 3
+frequency = 0.04
+domain_warp_fractal_lacunarity = -0.735
+domain_warp_fractal_gain = -1.245
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_kg35k"]
+resource_local_to_scene = true
+width = 100
+height = 100
+depth = 100
+seamless_blend_skirt = 0.275
+normalize = false
+color_ramp = SubResource("Gradient_404bi")
+noise = SubResource("FastNoiseLite_nvhar")
+
+[sub_resource type="FogMaterial" id="FogMaterial_ir0eq"]
+resource_local_to_scene = true
+density = 3.0654
+albedo = Color(0.482888, 0.470167, 0.423354, 1)
+edge_fade = 1.13137
+density_texture = SubResource("NoiseTexture3D_kg35k")
+
+[node name="Fall" type="Node3D" node_paths=PackedStringArray("fog_holder")]
+script = ExtResource("1_fsvgl")
+fog_holder = NodePath("Fog")
+
+[node name="player_group" parent="." instance=ExtResource("1_gorty")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2mn2u")
+camera_attributes = SubResource("CameraAttributesPractical_xxwgq")
+
+[node name="Fog" type="Node3D" parent="."]
+
+[node name="Clouds" parent="Fog" instance=ExtResource("3_3tkyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 302.895, 0)
+material = SubResource("FogMaterial_3cxgo")
+
+[node name="Clouds2" parent="Fog" instance=ExtResource("3_3tkyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -446.886, 0)
+material = SubResource("FogMaterial_ir0eq")

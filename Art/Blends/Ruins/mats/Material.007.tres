@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://b7eituj01mpf1"]
+
+[resource]
+resource_name = "Material.007"
+cull_mode = 2
+metallic = 1.0
+distance_fade_mode = 2
+distance_fade_min_distance = 2.0
+distance_fade_max_distance = 5.0

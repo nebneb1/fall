@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://3pa6550tqwmn"]
+
+[resource]
+transparency = 1
+depth_draw_mode = 1
+emission_enabled = true
+emission = Color(0.977847, 1, 0.405127, 1)
+emission_energy_multiplier = 16.0
+emission_intensity = 100000.0
+rim = 0.0
+rim_tint = 0.0
+grow_amount = 16.0
+proximity_fade_distance = 4096.0
+distance_fade_mode = 2
+distance_fade_min_distance = 2.0
+distance_fade_max_distance = 5.0

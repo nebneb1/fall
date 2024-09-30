@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://cbwt52n56q8ks"]
+
+[ext_resource type="Script" path="res://clouds.gd" id="1_jrll4"]
+
+[sub_resource type="Gradient" id="Gradient_404bi"]
+offsets = PackedFloat32Array(0, 0.520548, 0.623288)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_et2xa"]
+resource_local_to_scene = true
+noise_type = 3
+frequency = 0.04
+domain_warp_fractal_lacunarity = -0.735
+domain_warp_fractal_gain = -1.245
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_q3ykm"]
+resource_local_to_scene = true
+width = 100
+height = 100
+depth = 100
+seamless_blend_skirt = 0.275
+normalize = false
+color_ramp = SubResource("Gradient_404bi")
+noise = SubResource("FastNoiseLite_et2xa")
+
+[sub_resource type="FogMaterial" id="FogMaterial_mb7d3"]
+resource_local_to_scene = true
+density = 3.0654
+albedo = Color(0.482888, 0.470167, 0.423354, 1)
+edge_fade = 1.13137
+density_texture = SubResource("NoiseTexture3D_q3ykm")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k0we4"]
+size = Vector3(500, 750, 500)
+
+[node name="Clouds" type="FogVolume"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.395, 0)
+size = Vector3(500, 750, 500)
+material = SubResource("FogMaterial_mb7d3")
+script = ExtResource("1_jrll4")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_k0we4")
+
+[connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]

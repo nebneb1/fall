@@ -3,17 +3,23 @@ extends CharacterBody3D
 const MAX_PARTICLES = 150.0
 const CHARGE_RATE = 5.0
 
-var charge = 0.0
+var charge = 1.0
 
 var disable = false
-
+var returning : bool = false
+@export var return_pos : Marker3D
+var return_timer = 0.0
 
 const MAX_SPEED = 5.0
 const ACCEL = 1.0
 const DRAG = .20
 const GRAVITY = -9.8
 const TERMINAL_VELOCITY = -20.0
+const RETURN_SPEED = 100.0
+const RETURN_TIME = 5.0
 var down_vel = 0.0
+var speed_multiplier = 1.0
+const FALLING_MULT = 0.5
 
 var vel := Vector2.ZERO
 
@@ -24,14 +30,20 @@ var vel := Vector2.ZERO
 @export var sparkle1 : Node3D
 @export var sparkle2 : Node3D
 
+var trail_points = []
+const TRAIL_LENGTH = 10
+
+
 func _ready():
 	Debug.track(self, "charge")
 	if get_parent().is_in_group("player_group"):
 		Global.player = self
 var dir : Vector2
+
+var prev_charge = 0.0
 func _process(delta: float):
 	dir = Vector2.ZERO
-	if not disable:
+	if not disable and not returning:
 		dir = Vector2(
 		Input.get_action_strength("forward_move")-Input.get_action_strength("back_move"), 
 		Input.get_action_strength("right_move")-Input.get_action_strength("left_move")).normalized().rotated(-camera_holder.global_rotation.y - PI/2.0)
@@ -40,10 +52,10 @@ func _process(delta: float):
 	
 	var cam_orientation_vector_forwards = Vector2(center.position.x, center.position.z).normalized()
 	var cam_orientation_vector_left = Vector2(center.position.x, center.position.z).normalized().rotated(PI/2.0)
-	if vel.length() <= MAX_SPEED:
-		vel += dir*ACCEL
+	if vel.length() <= MAX_SPEED * speed_multiplier:
+		vel += dir*ACCEL* speed_multiplier
 	else:
-		vel = vel.normalized() * MAX_SPEED
+		vel = vel.normalized() * MAX_SPEED * speed_multiplier
 	
 	
 	if dir.x == 0.0 and vel.x != 0:
@@ -58,8 +70,24 @@ func _process(delta: float):
 	
 	if not is_on_floor():
 		down_vel = clamp(down_vel + delta*GRAVITY*(1-(down_vel/TERMINAL_VELOCITY)), TERMINAL_VELOCITY, 10.0)
+		speed_multiplier = FALLING_MULT
+		if charge > 0.0:
+			charge = clamp(charge - delta/CHARGE_RATE/2.0, 0.0, 1.0)
 	else:
 		down_vel = 0
+		speed_multiplier = 1.0
+	
+	#if returning:
+		#var return_vector : Vector3 = global_position.direction_to(return_pos.global_position).normalized()
+		#return_vector *= RETURN_SPEED
+		#print(return_vector)
+		#vel.x += return_vector.x * delta
+		#vel.y += return_vector.z * delta
+		#down_vel = return_vector.y * delta
+		#return_timer += delta
+		#if return_timer > RETURN_TIME:
+			#return_timer = 0
+			#returning = false
 	
 	velocity = Vector3(vel.x, down_vel, vel.y)
 	#$trail.amount = 100 * (Vector3(vel.x, 0, vel.y).length())
@@ -69,23 +97,30 @@ func _process(delta: float):
 	
 	
 	for i in range(sparkle1.get_child_count()):
-		sparkle1.get_child(i).emitting = i+1 < snapped(charge, 0.1) * 10.0
+		sparkle1.get_child(i).emitting = i < snapped(charge, 0.1) * 10.0
 	
 	for i in range(sparkle2.get_child_count() - 1):
-		sparkle2.get_child(i).emitting = i+1 < snapped(charge, 0.1) * 10.0
+		sparkle2.get_child(i).emitting = i < snapped(charge, 0.1) * 10.0
 	
+	$trail/GPUParticles3D11.emitting = charge != prev_charge or not is_on_floor()
+	prev_charge = charge
+		
 	move_and_slide()
 	
-	chirp_durr += delta
+	if is_chirping:
+		chirp_durr += delta
 	
 	
 	
 	if dir.length() !=  0.0:
 		for i in range(sparkle1.get_child_count() - 1):
 			sparkle1.get_child(i).rotation.y = -dir.angle() - PI/2
+	
+	
+	
 
 func _input(event: InputEvent):
-	if event.is_action_pressed("chirp") and not disable_chirp:  
+	if event.is_action_pressed("chirp") and not disable_chirp:
 		chirp_queue(true)
 		disable = true
 	if event.is_action_released("chirp") and is_chirping: 
@@ -159,7 +194,15 @@ func _on_flow_area_entered(area: Area3D) -> void:
 	if area.is_in_group("activate"):
 		activatable = true 
 		activate_object = area.get_parent()
+		
+	if area.is_in_group("falling"):
+		if Global.can_fall:
+			Trans.scene("fall", "fog_fade", 10.0)
+		else:
+			Trans.fake_trans(Callable(self, "reset_pos"), "fog_fade", 10.0)
 
+func reset_pos():
+	global_position = get_parent().reset_point.global_position
 
 func _on_flow_area_exited(area: Area3D) -> void:
 	if area.is_in_group("flow"):

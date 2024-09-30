@@ -1,36 +1,81 @@
-[gd_scene load_steps=7 format=3 uid="uid://dcd4hcjjj8lqf"]
+[gd_scene load_steps=12 format=3 uid="uid://dcd4hcjjj8lqf"]
 
 [ext_resource type="PackedScene" uid="uid://bjmkmistd7n46" path="res://player.tscn" id="1_a4ko5"]
 [ext_resource type="PackedScene" uid="uid://b1eb756wce7mt" path="res://string.tscn" id="1_iwug1"]
+[ext_resource type="Script" path="res://player_group.gd" id="1_p7e51"]
+[ext_resource type="PackedScene" uid="uid://cx05fmwijmd16" path="res://bloons.tscn" id="2_ilffn"]
 [ext_resource type="PackedScene" uid="uid://dv2nk18edsbsq" path="res://camera_holder.tscn" id="2_tceji"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4tjm3"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 2
+emission_enabled = true
+emission = Color(0.8, 0.792157, 0.345098, 1)
+emission_energy_multiplier = 7.31
+emission_intensity = 25806.4
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_gcm3d"]
 resource_local_to_scene = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ysrn"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 2
+emission_enabled = true
+emission = Color(0.8, 0.792157, 0.345098, 1)
+emission_energy_multiplier = 7.31
+emission_intensity = 25806.4
+
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_ncq85"]
 resource_local_to_scene = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7pp5g"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 2
+emission_enabled = true
+emission = Color(0.8, 0.792157, 0.345098, 1)
+emission_energy_multiplier = 7.31
+emission_intensity = 25806.4
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_a2npd"]
 resource_local_to_scene = true
 
 [node name="player_group" type="Node3D" groups=["player_group"]]
+script = ExtResource("1_p7e51")
 
 [node name="string" parent="." node_paths=PackedStringArray("track_to") instance=ExtResource("1_iwug1")]
+material_override = SubResource("StandardMaterial3D_4tjm3")
 mesh = SubResource("ImmediateMesh_gcm3d")
 goal_relitive = Vector3(6, 8, 6)
 track_to = NodePath("../Player")
 
+[node name="Bloons" parent="string" instance=ExtResource("2_ilffn")]
+
 [node name="string2" parent="." node_paths=PackedStringArray("track_to") instance=ExtResource("1_iwug1")]
+material_override = SubResource("StandardMaterial3D_5ysrn")
 mesh = SubResource("ImmediateMesh_ncq85")
 goal_relitive = Vector3(0, 8, 6)
 track_to = NodePath("../Player")
 
+[node name="Bloons" parent="string2" instance=ExtResource("2_ilffn")]
+type = "flow"
+
 [node name="string3" parent="." node_paths=PackedStringArray("track_to") instance=ExtResource("1_iwug1")]
+material_override = SubResource("StandardMaterial3D_7pp5g")
 mesh = SubResource("ImmediateMesh_a2npd")
 goal_relitive = Vector3(-6, 8, 6)
 track_to = NodePath("../Player")
 
-[node name="Player" parent="." node_paths=PackedStringArray("camera_holder") instance=ExtResource("1_a4ko5")]
+[node name="Bloons" parent="string3" instance=ExtResource("2_ilffn")]
+type = "lang"
+
+[node name="Player" parent="." node_paths=PackedStringArray("return_pos", "camera_holder") instance=ExtResource("1_a4ko5")]
+return_pos = NodePath("../return_pos")
 camera_holder = NodePath("../camera_holder")
 
 [node name="camera_holder" parent="." node_paths=PackedStringArray("camera_ray", "player") instance=ExtResource("2_tceji")]
@@ -45,3 +90,6 @@ visible = false
 
 [node name="marker2" type="CSGSphere3D" parent="."]
 visible = false
+
+[node name="return_pos" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)

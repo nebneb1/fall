@@ -69,7 +69,7 @@ radius = 30.0
 [sub_resource type="SphereShape3D" id="SphereShape3D_07a36"]
 radius = 5.0
 
-[node name="Boid" type="Area3D"]
+[node name="Boid" type="Area3D" groups=["boid"]]
 script = ExtResource("1_luyoo")
 
 [node name="trail" type="CPUParticles3D" parent="."]
@@ -124,7 +124,7 @@ scale_amount_curve = SubResource("Curve_xf7dj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.113338, 0.354942, 0)
 shape = SubResource("SphereShape3D_5talq")
 
-[node name="Close" type="Area3D" parent="." groups=["close"]]
+[node name="Close" type="Area3D" parent="." groups=["boid", "close"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Close"]
 shape = SubResource("SphereShape3D_07a36")
