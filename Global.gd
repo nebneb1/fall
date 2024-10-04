@@ -8,11 +8,26 @@ const PORT = 25564
 const MATCHING_SERVER_IP = "52.53.179.218"
 
 const CONFIRM_CHIRP = 5.0
+const emojis = [
+	[":heart:", "❤️"], [":skull:", "💀"], [":sparkle:", "✨"], [":blush:", "😊"], [":smile:", "😄"], [":stareyes:", "🤩"],
+	[":sweattear:", "😅"], [":joy:", "😂"], [":aw:", "☺️"], [":slightsmile:", "🙂"], [":heartface:", "🥰"],
+	[":hearteyes:", "😍"], [":yum:", "😋"], [":crazy:", "🤪"], [":nerd:", "🤓"], [":sunglasses:", "😎"],
+	[":stareyes:", "🤩"], [":pensive:", "😞"], [":worried:", "😕"], [":sad:", "🙁"], [":ow:", "😣"],
+	[":cry:", "😭"], [":hmph:", "😤"], [":mad:", "😠"], [":angry:", "😡"], [":flushed:", "😳"], 
+	[":dispair:", "😓"], [":thinking:", "🤔"], [":stare:", "😐"], [":rly:", "😑"], [":roll:", "🙄"],
+	[":woa:", "😯"], [":sleep:", "😴"], [":dizzy:", "😵‍💫"], [":zip:", "🤐"], [":sick:", "🤢"],
+	[":shake:", "🤝"], [":thumbsup:", "👍"], [":thumbsdown:", "👎"], [":wave:", "👋"], [":pray:", "🙏"],
+	[":eyes:", "👀"], [":grandma:", "👵"], [":grandpa:", "👴"], [":oheart:", "🧡"], [":yheart:", "💛"], 
+	[":gheart:", "💚"], [":bluheart:", "💙"], [":pheart:", "💜"], [":bheart:", "🖤"], [":wheart:", "🤍"], 
+	[":twoheart:", "💕"], [":sparkleheart:", "💖"]
+]
 
 var player : CharacterBody3D
 var game : Node3D
 var camera_holder : Node3D
 var can_fall : bool = false
+
+var char_pos : Vector2
 
 var active_players : Array = []
 var distance = [0, 0]

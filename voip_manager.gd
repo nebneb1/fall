@@ -16,24 +16,24 @@ var is_active = false
 @export var output_path : NodePath
 @export var audio_capture : AudioEffectCapture
 
-var encoder = Opus.new()
+#var encoder = Opus.new()
 #var decoder = Opus.new()
 
-func setup_audio(id):
-	input = $Input
-	output = get_node(output_path)
-	set_multiplayer_authority(id)
-	if is_multiplayer_authority():
-		input.stream = AudioStreamMicrophone.new()
-		input.play()
-		index = AudioServer.get_bus_index("Record")
-		effect = audio_capture
-	#sync genorator mix rate to heaphone mix rate
-	output.stream.mix_rate = AudioServer.get_mix_rate()
-	#output.stream.mix_rate = 48000
-	output.stream.buffer_length = BUFFER
-	output.play()
-	playback = output.get_stream_playback()
+#func setup_audio(id):
+	#input = $Input
+	#output = get_node(output_path)
+	#set_multiplayer_authority(id)
+	#if is_multiplayer_authority():
+		#input.stream = AudioStreamMicrophone.new()
+		#input.play()
+		#index = AudioServer.get_bus_index("Record")
+		#effect = audio_capture
+	##sync genorator mix rate to heaphone mix rate
+	#output.stream.mix_rate = AudioServer.get_mix_rate()
+	##output.stream.mix_rate = 48000
+	#output.stream.buffer_length = BUFFER
+	#output.play()
+	#playback = output.get_stream_playback()
 	
 
 #func _ready():
@@ -42,14 +42,14 @@ func setup_audio(id):
 
 #var mic_sample_rate
 #var running_avg : Array = []
-func _process(delta):
+#func _process(delta):
 	#mic_sample_rate = find_sample_rate(delta)
 	#if mic_sample_rate:
 		#running_avg.append(mic_sample_rate)
 	#print(average(running_avg)/2.0)
-	if is_active:
-		if is_multiplayer_authority():
-			process_mic()
+	#if is_active:
+		#if is_multiplayer_authority():
+			#process_mic()
 			
 		#process_voice()
 
@@ -69,14 +69,14 @@ func _process(delta):
 	#
 	#return stereo_data.size() / delta
 
-func has_data() -> bool:
-	return effect.can_get_buffer(BUFFER_SIZE)
-
-
-func process_mic():
+#func has_data() -> bool:
+	#return effect.can_get_buffer(BUFFER_SIZE)
+#
+#
+#func process_mic():
 	#var stereo_data : PackedVector2Array = effect.get_buffer(effect.get_frames_available())
-	if has_data():
-		var stereo_data : PackedVector2Array = effect.get_buffer(BUFFER_SIZE)
+	#if has_data():
+		#var stereo_data : PackedVector2Array = effect.get_buffer(BUFFER_SIZE)
 		#var data = PackedFloat32Array()
 		#data.resize(stereo_data.size())
 		#var max_amplitude := 0.0
@@ -93,9 +93,9 @@ func process_mic():
 		
 		
 		
-		var out = encoder.encode(stereo_data)
-		
-		send_data.rpc(out)
+		#var out = encoder.encode(stereo_data)
+		#
+		#send_data.rpc(out)
 		#send_data(data)
 
 #func process_voice():
@@ -109,7 +109,7 @@ func process_mic():
 		
 	
 
-@rpc("any_peer", "call_remote", "reliable")
-func send_data(data : PackedFloat32Array):
-	encoder.decode_and_play(playback, data)
-	#recieved_buffer.append_array(data)
+#@rpc("any_peer", "call_remote", "reliable")
+#func send_data(data : PackedFloat32Array):
+	#encoder.decode_and_play(playback, data)
+	##recieved_buffer.append_array(data)

@@ -40,7 +40,7 @@ var velocity : Vector2 = Vector2.ZERO
 const DRAG = 10.0
 const TRANS_SPEED = 1.5
 
-const SHAKE_AMOUNT = 0.03 
+const SHAKE_AMOUNT = 0.1 
 var falling : bool = false
 var cam_rot : Vector3
 
@@ -86,10 +86,10 @@ func _process(delta: float):
 	if velocity.y > 0: velocity.y -= velocity.y*DRAG*delta
 	elif velocity.y < 0: velocity.y -= velocity.y*DRAG*delta
 	
-	camera_ray.target_position = positions["center_view"].position
-	camera_ray.rotation.y = rotation.y
-	camera_ray.rotation.x = rotation.x
-	camera_ray.global_position = global_position
+	#camera_ray.target_position = positions["center_view"].position
+	#camera_ray.rotation.y = rotation.y
+	#camera_ray.rotation.x = rotation.x
+	#camera_ray.global_position = global_position
 	#if camera_ray.is_colliding():
 		#camera.global_position =  lerp(camera.global_position, camera_ray.get_collision_point()*0.8, 0.2)
 	if true: #else:
@@ -111,8 +111,8 @@ func _process(delta: float):
 	
 	else:
 		scale = Vector3.ONE*zoom_target
-	get_node("../marker").global_position = camera_ray.get_collision_point()
-	get_node("../marker2").global_position = camera_ray.global_position
+	#get_node("../marker").global_position = camera_ray.get_collision_point()
+	#get_node("../marker2").global_position = camera_ray.global_position
 	#else:
 		#match cam_pos:
 			#Pos.LEFT_ADJUSTED:
@@ -149,27 +149,27 @@ func _input(event: InputEvent):
 		else:
 			enable()
 	
-	if event.is_action_pressed("left"):
+	if event.is_action_pressed("left") and not Global.player.texting:
 		var tween = create_tween()
 		tween.tween_property(camera, "position", positions["left_view"].position, TRANS_SPEED).set_ease(Tween.EASE_IN_OUT)
-		camera_ray.target_position = positions["left_view"].position
+		#camera_ray.target_position = positions["left_view"].position
 		cam_pos = Pos.LEFT_ADJUSTED
 	
-	elif event.is_action_pressed("right"):
+	elif event.is_action_pressed("right") and not Global.player.texting:
 		var tween = create_tween()
 		tween.tween_property(camera, "position", positions["right_view"].position, TRANS_SPEED).set_ease(Tween.EASE_IN_OUT)
-		camera_ray.target_position = positions["right_view"].position
+		#camera_ray.target_position = positions["right_view"].position
 		cam_pos = Pos.RIGHT_ADJUSTED
 	
-	elif event.is_action_pressed("middle"):
+	elif event.is_action_pressed("middle") and not Global.player.texting:
 		var tween = create_tween()
 		tween.tween_property(camera, "position", positions["center_view"].position, TRANS_SPEED).set_ease(Tween.EASE_IN_OUT)
-		camera_ray.target_position = positions["center_view"].position
+		#camera_ray.target_position = positions["center_view"].position
 		cam_pos = Pos.CENTER
 	
-	if event.is_action_pressed("camera_zoom_in"):
+	if event.is_action_pressed("camera_zoom_in") and not Global.player.texting:
 		zoom_target = clamp(zoom_target - ZOOM_STEP, MIN_ZOOM, MAX_ZOOM)
 	
-	elif event.is_action_pressed("camera_zoom_out"):
+	elif event.is_action_pressed("camera_zoom_out") and not Global.player.texting:
 		zoom_target = clamp(zoom_target + ZOOM_STEP, MIN_ZOOM, MAX_ZOOM)
 		

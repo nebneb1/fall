@@ -3,7 +3,12 @@ extends Node3D
 @export var player_scene : PackedScene
 @onready var player = get_node("Player")
 
+@onready var font1 = preload("res://Art/Fonts/DejaVuSans.ttf")
+@onready var font2 = preload("res://Art/Fonts/Pangolin-Regular.ttf")
+
 func _ready():
+	print(font1.get_rid())
+	print(font2.get_rid())
 	Global.game = self
 	#Trans.scene("fall", "fog_fade", 10.0)
 	#get_tree().set_auto_accept_quit(false)

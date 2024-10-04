@@ -1,15 +1,6 @@
 extends CharacterBody3D
 
-const MAX_PARTICLES = 150.0
-const CHARGE_RATE = 5.0
-
-var charge = 1.0
-
-var disable = false
-var returning : bool = false
-@export var return_pos : Marker3D
-var return_timer = 0.0
-
+# movement
 const MAX_SPEED = 5.0
 const ACCEL = 1.0
 const DRAG = .20
@@ -17,22 +8,51 @@ const GRAVITY = -9.8
 const TERMINAL_VELOCITY = -20.0
 const RETURN_SPEED = 100.0
 const RETURN_TIME = 5.0
-var down_vel = 0.0
-var speed_multiplier = 1.0
 const FALLING_MULT = 0.5
-
-var vel := Vector2.ZERO
 
 @export var camera_holder : Node3D
 @onready var center = camera_holder.get_node("center_view")
+
+var down_vel = 0.0
+var speed_multiplier = 1.0
+var vel := Vector2.ZERO
+var disable = false
+var pair_falling : bool = true
+
+# chirp
 @onready var chirp_scene = preload("res://chirp.tscn")
 @onready var anim_player = $trail/AnimationPlayer
+
+
+# flow
+const CHARGE_RATE = 5.0
+
 @export var sparkle1 : Node3D
 @export var sparkle2 : Node3D
 
-var trail_points = []
-const TRAIL_LENGTH = 10
+var charge = 1.0
 
+# username
+const MIN_USERNAME_LEN = 3
+const MAX_USERNAME_LEN = 32
+const DEFAULT_USERNAME = "Traveller"
+
+@export var username_input : TextEdit
+@onready var username_label : RichTextLabel = get_node("trail/Nametag/SubViewport/Username")
+@onready var ghost_label : RichTextLabel = get_node("trail/Nametag/SubViewport/Ghost")
+
+var username = ""
+var old_username = ""
+
+# texting
+const MESSAGE_BASE_SEPERATION = 40.0
+const MESSAGE_PER_LINE_SEPERATION = 29.0
+const MESSAGE_HEIGHT = 0.5
+
+@onready var messages = get_node("Messages")
+@onready var text_box_scene = preload("res://text_box.tscn")
+
+var texting : bool = false
 
 func _ready():
 	Debug.track(self, "charge")
@@ -42,16 +62,17 @@ var dir : Vector2
 
 var prev_charge = 0.0
 func _process(delta: float):
+	# movement
 	dir = Vector2.ZERO
-	if not disable and not returning:
+	if not disable and not texting:
 		dir = Vector2(
 		Input.get_action_strength("forward_move")-Input.get_action_strength("back_move"), 
 		Input.get_action_strength("right_move")-Input.get_action_strength("left_move")).normalized().rotated(-camera_holder.global_rotation.y - PI/2.0)
 	else:
 		dir = Vector2.ZERO
 	
-	var cam_orientation_vector_forwards = Vector2(center.position.x, center.position.z).normalized()
-	var cam_orientation_vector_left = Vector2(center.position.x, center.position.z).normalized().rotated(PI/2.0)
+	#var cam_orientation_vector_forwards = Vector2(center.position.x, center.position.z).normalized()
+	#var cam_orientation_vector_left = Vector2(center.position.x, center.position.z).normalized().rotated(PI/2.0)
 	if vel.length() <= MAX_SPEED * speed_multiplier:
 		vel += dir*ACCEL* speed_multiplier
 	else:
@@ -102,7 +123,9 @@ func _process(delta: float):
 	for i in range(sparkle2.get_child_count() - 1):
 		sparkle2.get_child(i).emitting = i < snapped(charge, 0.1) * 10.0
 	
-	$trail/GPUParticles3D11.emitting = charge != prev_charge or not is_on_floor()
+	$trail/GPUParticles3D11.emitting = charge != prev_charge and is_on_floor()
+	$trail/GPUParticles3D12.emitting = not is_on_floor()
+	$trail/GPUParticles3D13.emitting = pair_falling
 	prev_charge = charge
 		
 	move_and_slide()
@@ -118,14 +141,79 @@ func _process(delta: float):
 	
 	
 	
+	if username_input.has_focus():
+		disable = true
+		username_input.text = filter(username_input.text)
+		if len(username_input.text) > MAX_USERNAME_LEN:
+			username_input.text = username_input.text.erase(len(username_input.text)-1)
+		username_input.set_caret_column(len(username_input.text))
+		username = username_input.text
+		username_label.text = "[center]" + username
+	
+	var ydisplace = MESSAGE_HEIGHT
+	var children = messages.get_children()
+	children.reverse()
+	for textbox in children:
+		textbox.position.y = ydisplace
+		ydisplace += textbox.pixel_size * ((textbox.get_num_lines() * MESSAGE_PER_LINE_SEPERATION) + MESSAGE_BASE_SEPERATION)
+	
+	
+const USERNAME_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=!@#$%^&*_+()[]{}|\\;:\"\'<>?,./ "
+func filter(text : String):
+	var out = ""
+	for char in text:
+		if char in USERNAME_CHARS:
+			out += char
+	
+	return out
+		
+func reset_username():
+	if old_username == "":
+			old_username = DEFAULT_USERNAME
+		
+	username = old_username
+	username_label.text = "[center]" + username
+	ghost_label.text = username_label.text
 
 func _input(event: InputEvent):
-	if event.is_action_pressed("chirp") and not disable_chirp:
+	if event.is_action_pressed("chirp") and not disable_chirp and not texting:
 		chirp_queue(true)
 		disable = true
+	
 	if event.is_action_released("chirp") and is_chirping: 
 		chirp_queue(false)
 		disable = false
+	
+	if event.is_action_pressed("chat"):
+		if not pair_falling:
+			if username_input.has_focus():
+				texting = false
+				username_input.text = ""
+				ghost_label.text = username_label.text
+				username_input.release_focus()
+			
+			else:
+				texting = true
+				old_username = username
+				username_input.grab_focus()
+		else:
+			if get_node("Messages/Current"):
+				texting = false
+				var current = get_node("Messages/Current")
+				display_msg(current.text_box.text, 10.0)
+				current.set_readable_only()
+				current.queue_free()
+			else:
+				texting = true
+				var instance = text_box_scene.instantiate()
+				instance.name = "Current"
+				messages.add_child(instance)
+				var child = messages.get_child(messages.get_child_count()-1)
+				child.enable_input()
+	
+	if event.is_action_pressed("escape"):
+		reset_username()
+		
 		
 
 var is_chirping = false
@@ -184,6 +272,16 @@ func chirp(durration : float):
 	#Global.game.add_child(instance)
 	add_child(instance)
 
+func display_msg(msg : String, fade_time : float = 0.0):
+	var instance = text_box_scene.instantiate()
+	messages.add_child(instance)
+	var child = messages.get_child(messages.get_child_count()-1)
+	child.set_readable_only()
+	child.text_box.text = msg
+	if fade_time != 0.0:
+		child.free_in_time(fade_time)
+	
+
 
 var charging = false
 var activatable = false
@@ -217,3 +315,15 @@ func _on_chirp_cooldown_timeout() -> void:
 	if disable_chirp:
 		anim_player.play("idle", 0.5)
 		disable_chirp = false
+
+
+func _on_text_input_focus_entered() -> void:
+	pass
+
+
+func _on_text_input_focus_exited() -> void:
+	if not len(username) >= MIN_USERNAME_LEN or not len(username) <= MAX_USERNAME_LEN:
+		reset_username()
+	
+	Global.network_info["username"] = username
+	disable = false

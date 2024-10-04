@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://bjmkmistd7n46"]
+[gd_scene load_steps=41 format=3 uid="uid://bjmkmistd7n46"]
 
 [ext_resource type="Script" path="res://player_controller.gd" id="1_wx3ro"]
 [ext_resource type="ArrayMesh" uid="uid://bc6ldvfx5me4r" path="res://Art/Meshes/particle/player.tres" id="2_4t7pj"]
@@ -6,6 +6,7 @@
 [ext_resource type="SphereMesh" uid="uid://tsjisjgp3epw" path="res://Tres/player.tres" id="3_16h56"]
 [ext_resource type="AudioStream" uid="uid://rj2jo6ft3xo1" path="res://temp/Sky SFX/medium chirp.ogg" id="4_0o6l4"]
 [ext_resource type="AudioStream" uid="uid://cmrajsg26ffmb" path="res://temp/Sky SFX/large chirp.ogg" id="5_okybq"]
+[ext_resource type="FontFile" uid="uid://biinrb6co35em" path="res://Art/Fonts/Pangolin-Regular.ttf" id="8_786wc"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vhs72"]
 radial_velocity_min = -251.12
@@ -17,7 +18,7 @@ damping_min = 97.758
 damping_max = 97.758
 
 [sub_resource type="Curve" id="Curve_4lb11"]
-_data = [Vector2(0, 1), 0.0, -2.35092, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, -1.30398, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ow3fj"]
@@ -83,8 +84,6 @@ radial_velocity_max = -3.0
 gravity = Vector3(0, 0, 0)
 damping_min = 75.336
 damping_max = 75.336
-scale_min = 3.0
-scale_max = 3.0
 scale_curve = SubResource("CurveTexture_88knu")
 turbulence_noise_strength = 0.1
 turbulence_noise_scale = 0.685
@@ -299,14 +298,18 @@ curve = SubResource("Curve_71vyp")
 _data = [Vector2(0, 0.989011), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.158293, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_d6ejj"]
+viewport_path = NodePath("trail/Nametag/SubViewport")
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4bbmc"]
 height = 3.36989
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("sparkle1", "sparkle2") groups=["player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("sparkle1", "sparkle2", "username_input") groups=["player"]]
 transform = Transform3D(0.9914, 0, 2.87109e-05, 0, 0.9914, 0, -2.87109e-05, 0, 0.9914, 0, 0, 0)
 script = ExtResource("1_wx3ro")
 sparkle1 = NodePath("trail/sparklesnode")
 sparkle2 = NodePath("trail/sparkles2node")
+username_input = NodePath("UsernameInput")
 
 [node name="trail" type="GPUParticles3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
@@ -482,7 +485,32 @@ material = SubResource("FogMaterial_05bo3")
 
 [node name="GPUParticles3D11" type="GPUParticles3D" parent="trail"]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+emitting = false
 amount = 46
+lifetime = 0.72
+speed_scale = 0.52
+fixed_fps = 144
+trail_enabled = true
+trail_lifetime = 0.72
+process_material = SubResource("ParticleProcessMaterial_1pwxr")
+draw_pass_1 = SubResource("TubeTrailMesh_r82i7")
+
+[node name="GPUParticles3D12" type="GPUParticles3D" parent="trail"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+emitting = false
+amount = 12
+lifetime = 0.72
+speed_scale = 0.52
+fixed_fps = 144
+trail_enabled = true
+trail_lifetime = 0.72
+process_material = SubResource("ParticleProcessMaterial_1pwxr")
+draw_pass_1 = SubResource("TubeTrailMesh_r82i7")
+
+[node name="GPUParticles3D13" type="GPUParticles3D" parent="trail"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+emitting = false
+amount = 12
 lifetime = 0.72
 speed_scale = 0.52
 fixed_fps = 144
@@ -503,7 +531,61 @@ gravity = Vector3(0, 0, 0)
 scale_amount_curve = SubResource("Curve_tcgj4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="trail"]
+transform = Transform3D(1, 3.66598e-17, 3.25261e-19, 3.66598e-17, 1, 5.45697e-12, -3.25261e-19, -5.45697e-12, 1, 0, 0, 0)
 mesh = ExtResource("3_16h56")
+
+[node name="Nametag" type="Sprite3D" parent="trail"]
+transform = Transform3D(-5.32075e-09, 0.121725, 1.49078e-19, -0.121725, -5.32075e-09, 2.50111e-12, 2.50111e-12, -5.99513e-21, 0.121725, 0.397881, -1.73919e-08, -3.7935e-20)
+cast_shadow = 0
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture = SubResource("ViewportTexture_d6ejj")
+
+[node name="SubViewport" type="SubViewport" parent="trail/Nametag"]
+transparent_bg = true
+handle_input_locally = false
+use_hdr_2d = true
+size = Vector2i(3095, 202)
+
+[node name="Username" type="RichTextLabel" parent="trail/Nametag/SubViewport"]
+modulate = Color(3, 3, 3, 1)
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -101.0
+offset_bottom = 101.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_fonts/normal_font = ExtResource("8_786wc")
+theme_override_font_sizes/normal_font_size = 161
+bbcode_enabled = true
+text = "[center]new name"
+fit_content = true
+scroll_active = false
+
+[node name="Ghost" type="RichTextLabel" parent="trail/Nametag/SubViewport"]
+modulate = Color(0.741176, 0.741176, 0.741176, 0.545098)
+z_index = -1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -101.0
+offset_bottom = 101.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_fonts/normal_font = ExtResource("8_786wc")
+theme_override_font_sizes/normal_font_size = 161
+bbcode_enabled = true
+text = "[center]old name"
+fit_content = true
+scroll_active = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_4bbmc")
@@ -537,6 +619,17 @@ max_polyphony = 4
 
 [node name="chirp_cooldown" type="Timer" parent="."]
 
+[node name="UsernameInput" type="TextEdit" parent="."]
+offset_left = 6.0
+offset_top = 4.0
+offset_right = 295.0
+offset_bottom = 71.0
+draw_spaces = true
+
+[node name="Messages" type="Node3D" parent="."]
+
 [connection signal="area_entered" from="flow" to="." method="_on_flow_area_entered"]
 [connection signal="area_exited" from="flow" to="." method="_on_flow_area_exited"]
 [connection signal="timeout" from="chirp_cooldown" to="." method="_on_chirp_cooldown_timeout"]
+[connection signal="focus_entered" from="UsernameInput" to="." method="_on_text_input_focus_entered"]
+[connection signal="focus_exited" from="UsernameInput" to="." method="_on_text_input_focus_exited"]

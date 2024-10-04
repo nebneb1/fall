@@ -1,0 +1,151 @@
+[gd_scene load_steps=8 format=3 uid="uid://tjxc40mmgxnw"]
+
+[ext_resource type="FontFile" uid="uid://biinrb6co35em" path="res://Art/Fonts/Pangolin-Regular.ttf" id="1_i8g28"]
+[ext_resource type="Script" path="res://subviewport_pos.gd" id="1_qou28"]
+[ext_resource type="StyleBox" uid="uid://dxga0xh41ca1a" path="res://Tres/textbg.tres" id="2_jcqri"]
+
+[sub_resource type="Animation" id="Animation_mjt7j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(3, 3, 3, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_x8jvk"]
+resource_name = "chat"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 0.5),
+"update": 0,
+"values": [Color(3, 3, 3, 0), Color(3, 3, 3, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_uckbv"]
+resource_name = "float"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(2.82843, 1),
+"update": 0,
+"values": [0.0, 1.21649]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(3, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(3, 3, 3, 1), Color(3, 3, 3, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i6mwt"]
+_data = {
+"RESET": SubResource("Animation_mjt7j"),
+"chat": SubResource("Animation_x8jvk"),
+"float": SubResource("Animation_uckbv")
+}
+
+[node name="Placement" type="Node2D"]
+script = ExtResource("1_qou28")
+
+[node name="TextBox" type="RichTextLabel" parent="."]
+modulate = Color(3, 3, 3, 1)
+clip_contents = false
+custom_minimum_size = Vector2(65, 80)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = 665.0
+offset_right = 850.0
+offset_bottom = 645.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 3
+focus_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("1_i8g28")
+theme_override_font_sizes/normal_font_size = 66
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+selection_enabled = true
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="Panel" type="Panel" parent="TextBox"]
+modulate = Color(0.75, 0.75, 0.75, 1)
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_jcqri")
+
+[node name="Animation" type="AnimationPlayer" parent="TextBox"]
+libraries = {
+"": SubResource("AnimationLibrary_i6mwt")
+}
+speed_scale = 0.5
+
+[node name="Edit" type="TextEdit" parent="TextBox"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 980.0
+offset_top = -137.0
+offset_right = 1588.0
+offset_bottom = 84.0

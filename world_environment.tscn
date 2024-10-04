@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhsb66ox4aode"]
+
+[ext_resource type="Environment" uid="uid://ctaj6x36f36t8" path="res://Art/Mats/worldenv.tres" id="1_v7j0i"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_1h1i0"]
+auto_exposure_enabled = true
+dof_blur_near_distance = 3.0
+dof_blur_amount = 1.0
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = ExtResource("1_v7j0i")
+camera_attributes = SubResource("CameraAttributesPractical_1h1i0")

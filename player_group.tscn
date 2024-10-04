@@ -74,22 +74,8 @@ track_to = NodePath("../Player")
 [node name="Bloons" parent="string3" instance=ExtResource("2_ilffn")]
 type = "lang"
 
-[node name="Player" parent="." node_paths=PackedStringArray("return_pos", "camera_holder") instance=ExtResource("1_a4ko5")]
-return_pos = NodePath("../return_pos")
+[node name="Player" parent="." node_paths=PackedStringArray("camera_holder") instance=ExtResource("1_a4ko5")]
 camera_holder = NodePath("../camera_holder")
 
-[node name="camera_holder" parent="." node_paths=PackedStringArray("camera_ray", "player") instance=ExtResource("2_tceji")]
-camera_ray = NodePath("../cam_ray")
+[node name="camera_holder" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_tceji")]
 player = NodePath("../Player")
-
-[node name="cam_ray" type="RayCast3D" parent="."]
-target_position = Vector3(6.455, -1, 0)
-
-[node name="marker" type="CSGSphere3D" parent="."]
-visible = false
-
-[node name="marker2" type="CSGSphere3D" parent="."]
-visible = false
-
-[node name="return_pos" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)

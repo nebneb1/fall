@@ -1,0 +1,204 @@
+[gd_scene load_steps=9 format=3 uid="uid://cqrvwxks6edx6"]
+
+[ext_resource type="FontFile" uid="uid://biinrb6co35em" path="res://Art/Fonts/Pangolin-Regular.ttf" id="1_bkcfm"]
+[ext_resource type="StyleBox" uid="uid://dxga0xh41ca1a" path="res://Tres/textbg.tres" id="2_lv12s"]
+
+[sub_resource type="Theme" id="Theme_ceo7u"]
+/styles/aaa = null
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o2q42"]
+
+[sub_resource type="Animation" id="Animation_x8jvk"]
+resource_name = "chat"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(0, 300), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 0.5),
+"update": 0,
+"values": [Color(3, 3, 3, 0), Color(3, 3, 3, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_mjt7j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 565)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(3, 3, 3, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_uckbv"]
+resource_name = "float"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(3.86375, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -5000)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(2.2974, 1),
+"update": 0,
+"values": [0.0, 1.21649]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(3, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(3, 3, 3, 1), Color(3, 3, 3, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i6mwt"]
+_data = {
+"RESET": SubResource("Animation_mjt7j"),
+"chat": SubResource("Animation_x8jvk"),
+"float": SubResource("Animation_uckbv")
+}
+
+[node name="Edit" type="TextEdit"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 164.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ceo7u")
+theme_override_colors/background_color = Color(0, 0, 0, 0)
+theme_override_colors/font_color = Color(3, 3, 3, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.498039)
+theme_override_constants/outline_size = 6
+theme_override_constants/caret_width = 5
+theme_override_fonts/font = ExtResource("1_bkcfm")
+theme_override_font_sizes/font_size = 65
+theme_override_styles/normal = SubResource("StyleBoxEmpty_o2q42")
+text = "this is some textr"
+
+[node name="TextBox" type="RichTextLabel" parent="."]
+visible = false
+modulate = Color(3, 3, 3, 1)
+clip_contents = false
+custom_minimum_size = Vector2(57.285, 63.85)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.553819
+anchor_bottom = 1.0
+offset_top = 565.0
+offset_right = 799.653
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 9
+focus_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("1_bkcfm")
+theme_override_font_sizes/normal_font_size = 66
+bbcode_enabled = true
+text = "so what if i cant make it"
+fit_content = true
+scroll_active = false
+selection_enabled = true
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color(0.74902, 0.74902, 0.74902, 1)
+top_level = true
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_lv12s")
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+root_node = NodePath("../TextBox")
+libraries = {
+"": SubResource("AnimationLibrary_i6mwt")
+}

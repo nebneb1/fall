@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5ibv7tjmaqye"]
+
+[ext_resource type="Script" path="res://Networking.gd" id="1_0y8a1"]
+
+[node name="Network_Room" type="Node"]
+script = ExtResource("1_0y8a1")

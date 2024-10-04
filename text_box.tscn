@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://cam7gnbg3b2yg"]
+
+[ext_resource type="Script" path="res://text_box_manager.gd" id="1_3qpik"]
+[ext_resource type="PackedScene" uid="uid://tjxc40mmgxnw" path="res://box.tscn" id="1_yvfsf"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_4okfs"]
+viewport_path = NodePath("UIViewport")
+
+[node name="TextBox" type="Sprite3D"]
+transform = Transform3D(0.34, 0, 0, 0, 0.34, 0, 0, 0, 0.34, 0, 0, 0)
+gi_mode = 0
+offset = Vector2(0, 3550)
+modulate = Color(100, 100, 100, 1)
+billboard = 2
+double_sided = false
+alpha_hash_scale = 2.0
+texture = SubResource("ViewportTexture_4okfs")
+script = ExtResource("1_3qpik")
+
+[node name="UIViewport" type="SubViewport" parent="."]
+transparent_bg = true
+use_hdr_2d = true
+canvas_item_default_texture_filter = 2
+size = Vector2i(3087, 7100)
+
+[node name="Placement" parent="UIViewport" node_paths=PackedStringArray("viewport") instance=ExtResource("1_yvfsf")]
+viewport = NodePath("..")
+bias = Vector2(0.37, 0.89)
