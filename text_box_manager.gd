@@ -13,12 +13,15 @@ var USEABLE_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567
 
 func _ready():
 	animation.play("chat")
-	#find_minimum_border_size()
+	call_deferred("find_minimum_border_size")
 	for emoji in Global.emojis: 
 		USEABLE_CHARS += emoji[1]
 	
+	
+	
 var prev_input : String
 func _process(delta: float):
+	#call_deferred("find_minimum_border_size")
 	if is_instance_valid(input):
 		if input.has_focus() and input.text != prev_input:
 			var carot_pos = input.get_caret_column()
@@ -32,7 +35,7 @@ func _process(delta: float):
 				input.text = input.text.erase(len(input.text)-1)
 			input.set_caret_column(carot_pos)
 			text_box.text = input.text
-		find_minimum_border_size()
+			call_deferred("find_minimum_border_size")
 		text_box.anchor_top = 0.0
 		prev_input = input.text
 
@@ -44,6 +47,8 @@ func filter(text : String):
 			out += char
 	
 	return out
+
+
 
 func set_readable_only():
 	if is_instance_valid(input):
@@ -72,8 +77,8 @@ func free_in_time(time : float):
 
 func find_minimum_border_size():
 	text_box.offset_right = DEFAULT_LENGTH
-	text_box.offset_top = 665.0
-	text_box.offset_bottom = 665.0
+	#text_box.offset_top = 665.0
+	#text_box.offset_bottom = 665.0
 	if text_box.get_line_count() == 1:
 		var good_line_size = DEFAULT_LENGTH
 		for test_size in range(DEFAULT_LENGTH, int(text_box.custom_minimum_size.x), -TEST_INTERVAL):
@@ -82,6 +87,14 @@ func find_minimum_border_size():
 			else: good_line_size = test_size
 		
 		text_box.offset_right = good_line_size
-		
-func _input(event: InputEvent): viewport.push_input(event)
+		call_deferred("fix_weird_ahh_bug")
+	
+	print(Engine.get_frames_drawn())
+	
+
+func fix_weird_ahh_bug(): text_box.offset_top = 600
+
+
+func _input(event: InputEvent): 
+	viewport.push_input(event)
 		

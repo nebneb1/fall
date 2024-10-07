@@ -33,7 +33,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_x8jvk"]
 resource_name = "chat"
-length = 0.4
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -41,10 +41,10 @@ tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 0.5),
+"times": PackedFloat32Array(0, 0.3, 2),
+"transitions": PackedFloat32Array(1, 2.92817, 2.92817),
 "update": 0,
-"values": [Color(3, 3, 3, 0), Color(3, 3, 3, 1)]
+"values": [Color(3, 3, 3, 0), Color(3.5, 3.5, 3.5, 1), Color(3, 3, 3, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false

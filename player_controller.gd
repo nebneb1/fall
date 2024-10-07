@@ -123,9 +123,13 @@ func _process(delta: float):
 	for i in range(sparkle2.get_child_count() - 1):
 		sparkle2.get_child(i).emitting = i < snapped(charge, 0.1) * 10.0
 	
-	$trail/GPUParticles3D11.emitting = charge != prev_charge and is_on_floor()
+	$trail/GPUParticles3D11.emitting = charge > prev_charge and is_on_floor()
 	$trail/GPUParticles3D12.emitting = not is_on_floor()
-	$trail/GPUParticles3D13.emitting = pair_falling
+	#$trail/GPUParticles3D13.emitting = pair_falling
+	
+	#print($trail/GPUParticles3D11.emitting,
+	#$trail/GPUParticles3D12.emitting,
+	#$trail/GPUParticles3D13.emitting,prev_charge)
 	prev_charge = charge
 		
 	move_and_slide()
@@ -278,6 +282,7 @@ func display_msg(msg : String, fade_time : float = 0.0):
 	var child = messages.get_child(messages.get_child_count()-1)
 	child.set_readable_only()
 	child.text_box.text = msg
+	child.call_deferred("find_minimum_border_size")
 	if fade_time != 0.0:
 		child.free_in_time(fade_time)
 	

@@ -485,7 +485,6 @@ material = SubResource("FogMaterial_05bo3")
 
 [node name="GPUParticles3D11" type="GPUParticles3D" parent="trail"]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
-emitting = false
 amount = 46
 lifetime = 0.72
 speed_scale = 0.52
@@ -497,7 +496,6 @@ draw_pass_1 = SubResource("TubeTrailMesh_r82i7")
 
 [node name="GPUParticles3D12" type="GPUParticles3D" parent="trail"]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
-emitting = false
 amount = 12
 lifetime = 0.72
 speed_scale = 0.52

@@ -2281,7 +2281,7 @@ visible = false
 mesh = ExtResource("6_8rk1w")
 
 [node name="player_group" parent="." instance=ExtResource("3_novdk")]
-transform = Transform3D(-0.0550373, 0, -0.998484, 0, 1, 0, 0.998484, 0, -0.0550373, -20.7957, 4.71305, 0)
+transform = Transform3D(-0.0550373, 0, -0.998484, 0, 1, 0, 0.998484, 0, -0.0550373, -20.7957, 76.9755, 0)
 
 [node name="Foglamp" type="FogVolume" parent="."]
 transform = Transform3D(0.978375, 0.0675396, -0.195501, -0.0688685, 0.997625, -2.98155e-09, 0.195037, 0.0134639, 0.980703, 18.3715, 1.03711, 3.17165)
@@ -2582,7 +2582,7 @@ mesh = SubResource("ArrayMesh_ecp6j")
 skeleton = NodePath("")
 
 [node name="Cube_001-rigid" type="MeshInstance3D" parent="rubble/Cube_001-rigid"]
-transform = Transform3D(1.01267, -0.0516932, -0.0042292, 0.0516887, 1.01268, -0.00116742, 0.00428321, 0.00095031, 1.01399, -0.00303745, -0.00575948, -0.0101299)
+transform = Transform3D(1.01267, -0.0516934, -0.00422922, 0.0516889, 1.01268, -0.00116743, 0.00428323, 0.000950312, 1.01399, -0.00303745, -0.00575948, -0.0101299)
 mesh = SubResource("ArrayMesh_3462q")
 skeleton = NodePath("")
 
