@@ -48,6 +48,7 @@ var cam_rot : Vector3
 func _ready():
 	randomize()
 	Global.camera_holder = self
+	Global.camera = camera
 	cam_rot = camera.rotation_degrees
 	enable()
 

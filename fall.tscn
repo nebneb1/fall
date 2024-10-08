@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://cwk051m3hcy0d"]
+[gd_scene load_steps=16 format=3 uid="uid://cwk051m3hcy0d"]
 
 [ext_resource type="Script" path="res://fall.gd" id="1_fsvgl"]
 [ext_resource type="PackedScene" uid="uid://dcd4hcjjj8lqf" path="res://player_group.tscn" id="1_gorty"]
+[ext_resource type="PackedScene" uid="uid://b0rivt0kpw7cq" path="res://spawner.tscn" id="2_jxnh3"]
 [ext_resource type="PackedScene" uid="uid://cbwt52n56q8ks" path="res://clouds.tscn" id="3_3tkyp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dhljj"]
@@ -107,6 +108,8 @@ density_texture = SubResource("NoiseTexture3D_kg35k")
 [node name="Fall" type="Node3D" node_paths=PackedStringArray("fog_holder")]
 script = ExtResource("1_fsvgl")
 fog_holder = NodePath("Fog")
+
+[node name="Spawner" parent="." instance=ExtResource("2_jxnh3")]
 
 [node name="player_group" parent="." instance=ExtResource("1_gorty")]
 

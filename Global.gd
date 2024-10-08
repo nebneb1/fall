@@ -15,7 +15,7 @@ const emojis = [
 	[":stareyes:", "🤩"], [":pensive:", "😞"], [":worried:", "😕"], [":sad:", "🙁"], [":ow:", "😣"],
 	[":cry:", "😭"], [":hmph:", "😤"], [":mad:", "😠"], [":angry:", "😡"], [":flushed:", "😳"], 
 	[":dispair:", "😓"], [":thinking:", "🤔"], [":stare:", "😐"], [":rly:", "😑"], [":roll:", "🙄"],
-	[":woa:", "😯"], [":sleep:", "😴"], [":dizzy:", "😵‍💫"], [":zip:", "🤐"], [":sick:", "🤢"],
+	[":woah:", "😯"], [":sleep:", "😴"], [":dizzy:", "😵‍💫"], [":zip:", "🤐"], [":sick:", "🤢"],
 	[":shake:", "🤝"], [":thumbsup:", "👍"], [":thumbsdown:", "👎"], [":wave:", "👋"], [":pray:", "🙏"],
 	[":eyes:", "👀"], [":grandma:", "👵"], [":grandpa:", "👴"], [":oheart:", "🧡"], [":yheart:", "💛"], 
 	[":gheart:", "💚"], [":bluheart:", "💙"], [":pheart:", "💜"], [":bheart:", "🖤"], [":wheart:", "🤍"], 
@@ -25,6 +25,7 @@ const emojis = [
 var player : CharacterBody3D
 var game : Node3D
 var camera_holder : Node3D
+var camera : Camera3D
 var can_fall : bool = false
 
 var char_pos : Vector2
