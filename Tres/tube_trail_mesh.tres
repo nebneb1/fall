@@ -5,9 +5,10 @@ max_value = 2.0
 _data = [Vector2(0, 0), 0.0, 0.927073, 0, 0, Vector2(0.27051, 1.02419), -0.132161, -0.132161, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jdtwn"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_epl5i"]
 transparency = 1
 cull_mode = 2
+albedo_color = Color(1, 1, 1, 0.0862745)
 emission_enabled = true
 emission = Color(0.835294, 0.698039, 0, 1)
 emission_energy_multiplier = 4.69
@@ -17,7 +18,7 @@ grow_amount = 0.01
 use_particle_trails = true
 
 [resource]
-material = SubResource("StandardMaterial3D_jdtwn")
+material = SubResource("StandardMaterial3D_epl5i")
 radius = 0.01
 radial_steps = 16
 sections = 19

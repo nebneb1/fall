@@ -1,9 +1,17 @@
 [gd_resource type="SphereMesh" load_steps=2 format=3 uid="uid://tsjisjgp3epw"]
 
-[ext_resource type="Material" uid="uid://cibvqogyw1lma" path="res://Art/Mats/player.tres" id="1_ssk6u"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dwjg8"]
+resource_local_to_scene = true
+transparency = 1
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 16.0
+emission_intensity = 36465.5
 
 [resource]
-material = ExtResource("1_ssk6u")
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_dwjg8")
 radius = 0.1
 height = 0.2
 radial_segments = 32

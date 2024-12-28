@@ -114,7 +114,7 @@ emission_intensity = 59427.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nkuj4"]
 emission_enabled = true
-emission = Color(0.737255, 0.513726, 1, 1)
+emission = Color(1, 0.768627, 0.25098, 1)
 emission_energy_multiplier = 16.0
 emission_intensity = 100000.0
 
@@ -124,7 +124,7 @@ script = ExtResource("1_x4ctb")
 [node name="OmniLight3D2" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 2.98023e-08, 3.72529e-09, -3.72529e-09, -4.09782e-08, 1, 2.98023e-08, -1, -4.09782e-08, -0.0664902, 5.29869, -2.07669)
 light_intensity_lumens = 50000.0
-light_color = Color(0.917647, 0.380392, 1, 1)
+light_color = Color(0.878431, 0.811765, 0, 1)
 light_energy = 16.0
 light_volumetric_fog_energy = 13.767
 omni_range = 5.361

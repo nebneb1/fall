@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cskk6b66nkc6u"]
+
+[ext_resource type="Script" path="res://cam_area.gd" id="1_a2si4"]
+
+[node name="CamArea" type="Area3D" groups=["cam"]]
+script = ExtResource("1_a2si4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]

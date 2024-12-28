@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bn38kkyx51mlh"]
+[gd_scene load_steps=37 format=3 uid="uid://bn38kkyx51mlh"]
 
 [ext_resource type="Script" path="res://puppet_player.tres.gd" id="1_wnmsc"]
 [ext_resource type="ArrayMesh" uid="uid://bc6ldvfx5me4r" path="res://Art/Meshes/particle/player.tres" id="2_8tn2o"]
@@ -17,11 +17,12 @@ radial_accel_max = -100.0
 damping_min = 97.758
 damping_max = 97.758
 
-[sub_resource type="Curve" id="Curve_4lb11"]
+[sub_resource type="Curve" id="Curve_4v83o"]
 _data = [Vector2(0, 1), 0.0, -1.30398, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ow3fj"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s60u5"]
+resource_local_to_scene = true
 transparency = 1
 cull_mode = 2
 emission_enabled = true
@@ -32,12 +33,37 @@ disable_receive_shadows = true
 grow_amount = 0.01
 use_particle_trails = true
 
-[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_dmkyf"]
-material = SubResource("StandardMaterial3D_ow3fj")
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_fswan"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_s60u5")
 radius = 0.1
 sections = 19
 section_rings = 6
-curve = SubResource("Curve_4lb11")
+curve = SubResource("Curve_4v83o")
+
+[sub_resource type="Curve" id="Curve_skqyh"]
+_data = [Vector2(0, 1), 0.0, -1.30398, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yr5qp"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 8.17
+emission_intensity = 100000.0
+disable_receive_shadows = true
+grow_amount = 0.01
+use_particle_trails = true
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_blche"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_yr5qp")
+radius = 0.1
+sections = 19
+section_rings = 6
+curve = SubResource("Curve_skqyh")
 
 [sub_resource type="Curve" id="Curve_lf6t6"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.426966, 0.648352), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -227,6 +253,163 @@ viewport_path = NodePath("trail/Nametag/SubViewport")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_kmrti"]
 
+[sub_resource type="Animation" id="Animation_2ffjm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("trail:draw_pass_1:material:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("trail/trail3:draw_pass_1:material:albedo_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("trail/MeshInstance3D:mesh:material:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("trail/MeshInstance3D:mesh:material:emission")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("trail/trail3:draw_pass_1:material:emission")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("trail:draw_pass_1:material:emission")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_87aj2"]
+resource_name = "fade_puppet"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("trail:draw_pass_1:material:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.34151, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("trail/trail3:draw_pass_1:material:albedo_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.34151, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("trail/MeshInstance3D:mesh:material:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("trail/MeshInstance3D:mesh:material:emission")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("trail/trail3:draw_pass_1:material:emission")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.34151, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("trail:draw_pass_1:material:emission")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.34151, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dj651"]
+_data = {
+"RESET": SubResource("Animation_2ffjm"),
+"fade_puppet": SubResource("Animation_87aj2")
+}
+
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 transform = Transform3D(0.9914, 0, 0, 0, 0.9914, 0, 0, 0, 0.9914, 0, 0, 0)
 script = ExtResource("1_wnmsc")
@@ -239,7 +422,7 @@ fixed_fps = 260
 trail_enabled = true
 trail_lifetime = 0.2
 process_material = SubResource("ParticleProcessMaterial_vhs72")
-draw_pass_1 = SubResource("TubeTrailMesh_dmkyf")
+draw_pass_1 = SubResource("TubeTrailMesh_fswan")
 
 [node name="trail3" type="GPUParticles3D" parent="trail"]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
@@ -250,7 +433,7 @@ fixed_fps = 260
 trail_enabled = true
 trail_lifetime = 0.2
 process_material = SubResource("ParticleProcessMaterial_vhs72")
-draw_pass_1 = SubResource("TubeTrailMesh_dmkyf")
+draw_pass_1 = SubResource("TubeTrailMesh_blche")
 
 [node name="sparkles3" type="CPUParticles3D" parent="trail"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
@@ -309,6 +492,7 @@ material = SubResource("FogMaterial_05bo3")
 
 [node name="GPUParticles3D12" type="GPUParticles3D" parent="trail"]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+visible = false
 amount = 12
 lifetime = 0.72
 speed_scale = 0.52
@@ -320,6 +504,7 @@ draw_pass_1 = SubResource("TubeTrailMesh_r82i7")
 
 [node name="GPUParticles3D13" type="GPUParticles3D" parent="trail"]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+visible = false
 emitting = false
 amount = 12
 lifetime = 0.72
@@ -342,7 +527,7 @@ gravity = Vector3(0, 0, 0)
 scale_amount_curve = SubResource("Curve_tcgj4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="trail"]
-transform = Transform3D(1, 3.66598e-17, 3.25261e-19, 3.66598e-17, 1, 5.45697e-12, -3.25261e-19, -5.45697e-12, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 3.25261e-19, 0, 1, 5.45697e-12, -3.25261e-19, -5.45697e-12, 1, 0, 0, 0)
 mesh = ExtResource("3_r68ew")
 
 [node name="Nametag" type="Sprite3D" parent="trail"]
@@ -405,3 +590,8 @@ volume_db = -27.343
 max_polyphony = 4
 
 [node name="Messages" type="Node3D" parent="."]
+
+[node name="FadePuppet" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dj651")
+}

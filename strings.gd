@@ -16,6 +16,9 @@ var goal_target = Vector3.ZERO
 @export var gravity_effect = -0.2
 @export var goal_effect = 0.3
 
+@export var grav_modifier_curve : Curve
+@export var grav_modifier_effect : float = 0.1
+
 var player_RID : RID
 func _ready():
 	var count = round(distance / division_length)
@@ -30,6 +33,8 @@ func _process(delta: float):
 	get_active_material(0).albedo_color.a = lerp(get_active_material(0).albedo_color.a, float(Global.player.is_chirping), delta * TRANSPARENCY_TRANSSITION_SPEED)
 
 var player_dir : Vector2
+
+
 func _physics_process(delta: float):
 	
 	
@@ -45,7 +50,7 @@ func _physics_process(delta: float):
 	goal = goal.lerp(goal_target, delta * TARGET_SPEED)
 	
 	mesh.clear_surfaces()
-	mesh.surface_begin(Mesh.PRIMITIVE_LINES)
+	mesh.surface_begin(Mesh.PRIMITIVE_LINE_STRIP)
 	#var base = Global.player.position + Global.player.get_node("trail").position.rotated(Vector3.UP, Global.player.position)
 	var base = to_local(Global.player.get_node("trail").global_position)
 	points[0] = base
@@ -55,7 +60,7 @@ func _physics_process(delta: float):
 		var prev_point = points[i]
 		points[i] = points[i-1] + (
 			(points[i-1].direction_to(points[i]) + (
-				Vector3(0.0, gravity_effect, 0.0)
+				Vector3(0.0, gravity_effect + grav_modifier_effect * (grav_modifier_curve.sample(float(i) / float(points.size()))), 0.0)
 			) + (
 				points[i-1].direction_to(track_to.position + goal) * goal_effect 
 			)

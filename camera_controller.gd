@@ -2,9 +2,16 @@ extends Node3D
 
 const SENSITIVITY : Vector2 = Vector2(1.0, 1.0)
 const MAX_VELOCITY = 5.0
-const X_ROT_LIMS = [deg_to_rad(45.0), deg_to_rad(35.0), deg_to_rad(-15.0), deg_to_rad(-22.0)]
+const Y_ROT_LIMS = [deg_to_rad(-30.0), deg_to_rad(30.0)]
+const X_ROT_LIMS = [deg_to_rad(-45.0), deg_to_rad(45.0)]
 const X_COMPRESSION = 5.0
 const CAMERA_SNAP = 0.01
+
+const DIFF_MULTIPLIER = 2.5
+
+var deadzone = deg_to_rad(3.0)
+var target_pull = 6.0
+var target_rotation = Vector2.ZERO
 
 const MIN_ZOOM = 0.2
 const MAX_ZOOM = 0.75
@@ -44,8 +51,16 @@ const SHAKE_AMOUNT = 0.1
 var falling : bool = false
 var cam_rot : Vector3
 
+var debug_lock : bool = false
+
+var active_tween1 : Tween = null
+var active_tween : Tween = null
+
+var manual_only = false
 
 func _ready():
+	#scale = Vector3.ONE * 50.0 
+	#Debug.track(self, "rotation")
 	randomize()
 	Global.camera_holder = self
 	Global.camera = camera
@@ -61,31 +76,62 @@ func enable():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _process(delta: float):
-	velocity.x = clamp(velocity.x, -MAX_VELOCITY, MAX_VELOCITY)
-	rotate_y(velocity.x*delta*SENSITIVITY.x)
+	#print(target_rotation)
 	if velocity.x > 0: velocity.x -= velocity.x*DRAG*delta
 	elif velocity.x < 0: velocity.x -= velocity.x*DRAG*delta
-	
-	
-	velocity.y = clamp(velocity.y, -MAX_VELOCITY/2, MAX_VELOCITY/2)
-	
-	rotation.x = clamp(rotation.x + velocity.y * delta * SENSITIVITY.y, X_ROT_LIMS[3], X_ROT_LIMS[0])
-	
-	
-	if (rotation.x > X_ROT_LIMS[1]):
-		if velocity.y > 0:
-			velocity.y -= DRAG*delta*X_COMPRESSION
-		else:
-			velocity.y -= DRAG*delta
-			
-	if (rotation.x < X_ROT_LIMS[2]):
-		if velocity.y < 0:
-			velocity.y += DRAG*delta*X_COMPRESSION
-		else:
-			velocity.y += DRAG*delta
-	
 	if velocity.y > 0: velocity.y -= velocity.y*DRAG*delta
 	elif velocity.y < 0: velocity.y -= velocity.y*DRAG*delta
+	
+	velocity.y = clamp(velocity.y, -MAX_VELOCITY/2, MAX_VELOCITY/2)
+	velocity.x = clamp(velocity.x, -MAX_VELOCITY, MAX_VELOCITY)
+	
+	rotation.y += velocity.x*delta*SENSITIVITY.x
+	rotation.x += velocity.y*delta*SENSITIVITY.y
+	
+	if not (Global.debug and Input.is_action_pressed("debug")) and not debug_lock:
+		if Input.is_action_just_released("debug"):
+			print(rotation.x, " ", rotation.y, " ", cam_pos, " ", zoom_target)
+		
+		if target_rotation.distance_to(Vector2(rotation.x, rotation.y)) > deadzone:
+			var dif : Vector2 = Vector2(target_rotation.x-rotation.x, target_rotation.y-rotation.y)
+			rotation.x += (dif.x - deadzone * sign(dif.x)) * pow(abs(dif.x * DIFF_MULTIPLIER), 0.5) * target_pull * delta
+			rotation.y += (dif.y - deadzone * sign(dif.y)) * pow(abs(dif.y * DIFF_MULTIPLIER), 1) * target_pull * delta
+	elif Input.is_action_just_pressed("debug2"):
+		debug_lock = !debug_lock
+		
+		#rotation.y = clamp(rotation.y, X_ROT_LIMS[0], X_ROT_LIMS[1])
+		#rotation.x = clamp(rotation.x, Y_ROT_LIMS[0], Y_ROT_LIMS[1])
+	
+	#rotation.x = clamp(rotation.x + velocity.y * delta * SENSITIVITY.y, X_ROT_LIMS[3], X_ROT_LIMS[0])
+	
+	
+	#if (rotation.x > X_ROT_LIMS[1]):
+		#if velocity.y > 0:
+			#velocity.y -= DRAG*delta*X_COMPRESSION*(rotation.x-X_ROT_LIMS[1])
+		#else:
+			#velocity.y -= DRAG*delta*(rotation.x-X_ROT_LIMS[1])
+			#
+	#if (rotation.x < X_ROT_LIMS[2]):
+		#if velocity.y < 0:
+			#velocity.y += DRAG*delta*X_COMPRESSION*(X_ROT_LIMS[2]-rotation.x)
+		#else:
+			#velocity.y += DRAG*delta*(rotation.x-X_ROT_LIMS[2])
+	#
+	#if (rotation.y > Y_ROT_LIMS[1]):
+		#if velocity.x > 0:
+			#velocity.x -= DRAG*delta*X_COMPRESSION*(rotation.y-Y_ROT_LIMS[1])
+		#else:
+			#velocity.x -= DRAG*delta*(rotation.y-Y_ROT_LIMS[1])
+			#
+	#if (rotation.y < Y_ROT_LIMS[2]):
+		#if velocity.x < 0:
+			#velocity.x += DRAG*delta*X_COMPRESSION*(Y_ROT_LIMS[2]-rotation.y)
+		#else:
+			#velocity.x += DRAG*delta*(rotation.y-Y_ROT_LIMS[2])
+	#
+	#
+	#
+	#
 	
 	#camera_ray.target_position = positions["center_view"].position
 	#camera_ray.rotation.y = rotation.y
@@ -132,11 +178,39 @@ func _process(delta: float):
 	else: 
 		global_position = Vector3(player.global_position.x, player.global_position.y + cam_height*scale.x*cam_height_mod, player.global_position.z)
 		camera.rotation_degrees = cam_rot + Vector3(randf_range(-SHAKE_AMOUNT, SHAKE_AMOUNT), randf_range(-SHAKE_AMOUNT, SHAKE_AMOUNT), 0.0) 
+
+
+func set_cam_params(rot : Vector2, ease_type : Tween.EaseType = Tween.EaseType.EASE_IN_OUT, trans_type : Tween.TransitionType = Tween.TransitionType.TRANS_SINE, trans_time : float = 2.0, cam_pos_to : Pos = Pos.LEFT_ADJUSTED, zoom : float = 0.0, pull : float = 6.0, deadzone_to : float = 3.0):
+	print("cam trans ", rot, " ", ease_type, " ", trans_type, " ", trans_time, " ", cam_pos_to, " ", zoom, " ", pull, " ", deadzone_to)
+	if active_tween:
+		active_tween.stop()
+	if active_tween1:
+		active_tween1.stop()
 	
+	var tween : Tween = create_tween()
+	tween.tween_property(self, "target_rotation", rot, trans_time).set_ease(ease_type).set_trans(trans_type)
+	active_tween = tween
+	cam_pos = cam_pos_to
+	if zoom != 0.0: 
+		var tween1 : Tween = create_tween()
+		tween1.tween_property(self, "zoom_target", zoom, trans_time).set_ease(ease_type).set_trans(trans_type)
+		active_tween1 = tween1
+	target_pull = pull
+	deadzone = deg_to_rad(deadzone_to)
 	
-		
-	
-	
+
+func change_cam_area(area : Area3D):
+	if not manual_only:
+		set_cam_params(area.rot, area.ease_type, area.trans_type, area.trans_time, area.cam_pos, area.zoom, area.pull, area.deadzone)
+	#var tween : Tween = create_tween()
+	#tween.tween_property(self, "target_rotation", area.rot, area.trans_time).set_ease(area.ease_type).set_trans(area.trans_type)
+	#cam_pos = area.cam_pos
+	#if area.zoom != 0.0: 
+		#var tween1 : Tween = create_tween()
+		#tween1.tween_property(self, "zoom_target", area.zoom, area.trans_time).set_ease(area.ease_type).set_trans(area.trans_type)
+	#target_pull = area.pull
+	#deadzone = deg_to_rad(area.deadzone)
+
 
 func _input(event: InputEvent):
 	if event is InputEventMouseMotion and movement_enabled:

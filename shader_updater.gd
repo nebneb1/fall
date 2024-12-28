@@ -2,6 +2,7 @@ extends MultiMeshInstance3D
 
 const BASE_RADIUS = 2.0
 const SPEED = 0.2
+const RETRACT_SPEED = 5.0
 
 
 var max_durr = 0.0
@@ -15,17 +16,17 @@ func _process(delta: float):
 	material_override.set("shader_parameter/character_position", Global.player.global_position)
 	if Global.player.is_chirping:
 		max_durr = Global.player.chirp_durr
-		targ_radius = max_durr + BASE_RADIUS
+		targ_radius = clamp(max_durr, 0.0, Global.player.CHIRP_THRESHOLDS[2]) + BASE_RADIUS
 		
 	elif max_durr != 0.0:
 		chirp_time += delta
-		targ_radius = max_durr*CHIRP_MULT + BASE_RADIUS
+		targ_radius = clamp(max_durr, 0.0, Global.player.CHIRP_THRESHOLDS[2]) * CHIRP_MULT + BASE_RADIUS
 		if chirp_time >= MAX_TIME:
 			max_durr = 0.0
 			chirp_time = 0.0
 	
 	else:
-		targ_radius = BASE_RADIUS
+		targ_radius = lerp(targ_radius, BASE_RADIUS, delta * RETRACT_SPEED)
 	
 	if material_override.get("shader_parameter/character_radius") <= targ_radius:
 		material_override.set("shader_parameter/character_radius", lerp(material_override.get("shader_parameter/character_radius"), targ_radius, delta * SPEED * (targ_radius-material_override.get("shader_parameter/character_radius"))))

@@ -1,4 +1,7 @@
 extends CharacterBody3D
+# misc
+
+var can_delete = true
 
 # movement
 const GRAVITY = -9.8
@@ -66,6 +69,14 @@ const MIN_CHIRP_SIZE = 0.07
 func chirp_charge():
 	anim_player.play("charge", 0.5)
 
+func delete(play_animation : bool = false):
+	if can_delete:
+		if play_animation:
+			$FadePuppet.play("fade_puppet")
+			await get_tree().create_timer(0.5).timeout
+			queue_free()
+		else:
+			queue_free()
 
 func chirp(durration : float):
 	durration = clamp(durration, 0.0, CHIRP_THRESHOLDS[2])

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://q4c15j3xp2jl"]
+
+[ext_resource type="PackedScene" uid="uid://c1beveajo2r77" path="res://Art/Meshes/islands/geo-island2.glb" id="1_7r7mh"]
+[ext_resource type="PackedScene" uid="uid://dcd4hcjjj8lqf" path="res://player_group.tscn" id="2_fq7ok"]
+
+[node name="2geo" type="Node3D"]
+
+[node name="geo-island2" parent="." instance=ExtResource("1_7r7mh")]
+
+[node name="player_group" parent="." instance=ExtResource("2_fq7ok")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.974, 44.2265, -0.133049)

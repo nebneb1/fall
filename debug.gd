@@ -22,10 +22,14 @@ var tracked_values : Array = [
 ]
 
 func _ready():
-	_update_list()
+	if Global.debug:
+		_update_list()
+	else:
+		hide()
 	
 func _process(delta: float):
-	_update()
+	if Global.debug:
+		_update()
 	
 func _update():
 	for value in tracked_values:

@@ -2,6 +2,10 @@ extends Node3D
 
 const PLAYER_CHANGE_RATE = 10.0
 const SPAWN_RADIUS = 50.0
+const FADE_CHANCE = 2 #1/n
+const FADE_THRESHOLD = 2.5 # only fades if pix color is below this value
+const SAT_THRESHOLD = 0.1 # only fades if pix color is above this sat value
+
 
 @onready var puppet_player_scene = preload("res://puppet_player.tscn")
 
@@ -24,11 +28,22 @@ func _process(delta: float):
 		elif player_count > player_count_goal:
 			for child in get_children():
 				if not Global.camera.is_position_in_frustum(child.global_position):
-					child.queue_free()
+					child.delete()
 					break
 			
 			player_count = get_child_count()
-			
+		
+		await RenderingServer.frame_post_draw
+		
+		var viewport_texture = get_viewport().get_texture().get_image()
+		for child in get_children():
+			if Global.camera.is_position_in_frustum(child.global_position):
+				var pix_color = viewport_texture.get_pixelv(Global.camera.unproject_position(child.global_position))
+				#if pix_color.r + pix_color.g + pix_color.b < FADE_THRESHOLD and randi_range(1, FADE_CHANCE) == 1:
+				if pix_color.r + pix_color.g + pix_color.b < FADE_THRESHOLD and pix_color.s > SAT_THRESHOLD and randi_range(1, FADE_CHANCE) == 1:
+					child.delete(true)
+					player_count = get_child_count()
+					
 			
 
 func get_random_valid_point() -> Vector3:

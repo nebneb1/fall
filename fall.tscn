@@ -1,9 +1,48 @@
-[gd_scene load_steps=16 format=3 uid="uid://cwk051m3hcy0d"]
+[gd_scene load_steps=22 format=3 uid="uid://cwk051m3hcy0d"]
 
 [ext_resource type="Script" path="res://fall.gd" id="1_fsvgl"]
 [ext_resource type="PackedScene" uid="uid://dcd4hcjjj8lqf" path="res://player_group.tscn" id="1_gorty"]
 [ext_resource type="PackedScene" uid="uid://b0rivt0kpw7cq" path="res://spawner.tscn" id="2_jxnh3"]
 [ext_resource type="PackedScene" uid="uid://cbwt52n56q8ks" path="res://clouds.tscn" id="3_3tkyp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4tjm3"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 2
+emission_enabled = true
+emission = Color(0.8, 0.792157, 0.345098, 1)
+emission_energy_multiplier = 7.31
+emission_intensity = 25806.4
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_gcm3d"]
+resource_local_to_scene = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ysrn"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 2
+emission_enabled = true
+emission = Color(0.8, 0.792157, 0.345098, 1)
+emission_energy_multiplier = 7.31
+emission_intensity = 25806.4
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_ncq85"]
+resource_local_to_scene = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7pp5g"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 2
+emission_enabled = true
+emission = Color(0.8, 0.792157, 0.345098, 1)
+emission_energy_multiplier = 7.31
+emission_intensity = 25806.4
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_a2npd"]
+resource_local_to_scene = true
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dhljj"]
 sky_top_color = Color(0.356863, 0.423529, 0.517647, 1)
@@ -113,6 +152,21 @@ fog_holder = NodePath("Fog")
 
 [node name="player_group" parent="." instance=ExtResource("1_gorty")]
 
+[node name="string" parent="player_group" index="0"]
+material_override = SubResource("StandardMaterial3D_4tjm3")
+mesh = SubResource("ImmediateMesh_gcm3d")
+
+[node name="string2" parent="player_group" index="1"]
+material_override = SubResource("StandardMaterial3D_5ysrn")
+mesh = SubResource("ImmediateMesh_ncq85")
+
+[node name="string3" parent="player_group" index="2"]
+material_override = SubResource("StandardMaterial3D_7pp5g")
+mesh = SubResource("ImmediateMesh_a2npd")
+
+[node name="camera_holder" parent="player_group" index="4"]
+cam_pos = 2
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_2mn2u")
 camera_attributes = SubResource("CameraAttributesPractical_xxwgq")
@@ -126,3 +180,5 @@ material = SubResource("FogMaterial_3cxgo")
 [node name="Clouds2" parent="Fog" instance=ExtResource("3_3tkyp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -446.886, 0)
 material = SubResource("FogMaterial_ir0eq")
+
+[editable path="player_group"]

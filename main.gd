@@ -7,9 +7,10 @@ extends Node3D
 @onready var font2 = preload("res://Art/Fonts/Pangolin-Regular.ttf")
 
 func _ready():
-	print(font1.get_rid())
-	print(font2.get_rid())
+	#print(font1.get_rid())
+	#print(font2.get_rid())
 	Global.game = self
+	Global.camera_holder.set_cam_params(Vector2(0.646, -1.893), Tween.EaseType.EASE_OUT, Tween.TransitionType.TRANS_EXPO, 0.0, Global.Pos.RIGHT_ADJUSTED, 0.6, 10.0, 0.0)
 	#Trans.scene("fall", "fog_fade", 10.0)
 	#get_tree().set_auto_accept_quit(false)
 	#setup_upnp()

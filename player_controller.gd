@@ -9,12 +9,16 @@ const TERMINAL_VELOCITY = -20.0
 const RETURN_SPEED = 100.0
 const RETURN_TIME = 5.0
 const FALLING_MULT = 0.5
+const CHIRPING_SPEED_BONUS = 1.1
+const PAIR_FALLING_SPEED_BONUS = 1.75
+
 
 @export var camera_holder : Node3D
 @onready var center = camera_holder.get_node("center_view")
 
 var down_vel = 0.0
 var speed_multiplier = 1.0
+var terminal_velocity_multiplier = 1.0
 var vel := Vector2.ZERO
 var disable = false
 var pair_falling : bool = true
@@ -53,9 +57,12 @@ const MESSAGE_HEIGHT = 0.5
 @onready var text_box_scene = preload("res://text_box.tscn")
 
 var texting : bool = false
+var chirp_num = 0
 
 func _ready():
-	Debug.track(self, "charge")
+	#Debug.track(self, "charge")
+	anim_player.play("charge_idle")
+	disable = true
 	if get_parent().is_in_group("player_group"):
 		Global.player = self
 var dir : Vector2
@@ -89,15 +96,25 @@ func _process(delta: float):
 		elif vel.y < -DRAG: vel.y += DRAG * delta * 60.0
 		else: vel.y = 0
 	
+	
 	if not is_on_floor():
-		down_vel = clamp(down_vel + delta*GRAVITY*(1-(down_vel/TERMINAL_VELOCITY)), TERMINAL_VELOCITY, 10.0)
+		if is_chirping:
+			terminal_velocity_multiplier = CHIRPING_SPEED_BONUS
+		else:
+			terminal_velocity_multiplier = 1.0
+		
+		if pair_falling:
+			pass
+			#terminal_velocity_multiplier = PAIR_FALLING_SPEED_BONUS
+			
+		down_vel = clamp(down_vel + delta*GRAVITY*(1-(down_vel/(TERMINAL_VELOCITY*terminal_velocity_multiplier))), TERMINAL_VELOCITY*terminal_velocity_multiplier, 10.0)
 		speed_multiplier = FALLING_MULT
 		if charge > 0.0:
 			charge = clamp(charge - delta/CHARGE_RATE/2.0, 0.0, 1.0)
+		
 	else:
 		down_vel = 0
 		speed_multiplier = 1.0
-	
 	#if returning:
 		#var return_vector : Vector3 = global_position.direction_to(return_pos.global_position).normalized()
 		#return_vector *= RETURN_SPEED
@@ -117,12 +134,12 @@ func _process(delta: float):
 		charge = clamp(charge + delta/CHARGE_RATE, 0.0, 1.0)
 	
 	
-	for i in range(sparkle1.get_child_count()):
+	for i in range(sparkle1.get_child_count() - 1):
 		sparkle1.get_child(i).emitting = i < snapped(charge, 0.1) * 10.0
 	
-	for i in range(sparkle2.get_child_count() - 1):
-		sparkle2.get_child(i).emitting = i < snapped(charge, 0.1) * 10.0
-	
+	for i in range(sparkle2.get_child_count()):
+		sparkle2.get_child(i).emitting = i < snapped(charge, 0.1) * 10.0 and is_chirping
+		
 	$trail/GPUParticles3D11.emitting = charge > prev_charge and is_on_floor()
 	$trail/GPUParticles3D12.emitting = not is_on_floor()
 	#$trail/GPUParticles3D13.emitting = pair_falling
@@ -147,6 +164,7 @@ func _process(delta: float):
 	
 	if username_input.has_focus():
 		disable = true
+		disable_chirp = true
 		username_input.text = filter(username_input.text)
 		if len(username_input.text) > MAX_USERNAME_LEN:
 			username_input.text = username_input.text.erase(len(username_input.text)-1)
@@ -184,7 +202,7 @@ func _input(event: InputEvent):
 		chirp_queue(true)
 		disable = true
 	
-	if event.is_action_released("chirp") and is_chirping: 
+	if event.is_action_released("chirp") and (is_chirping and not texting): 
 		chirp_queue(false)
 		disable = false
 	
@@ -220,7 +238,7 @@ func _input(event: InputEvent):
 		
 		
 
-var is_chirping = false
+var is_chirping = true # should be false by default but useful for intro
 var chirp_durr : float = 0.0
 var disable_chirp : bool = false
 const CHIRP_THRESHOLDS = [0.75, 1.5, 2.0]
@@ -230,51 +248,59 @@ func chirp_queue(pressed : bool):
 	if is_chirping:
 		chirp(chirp_durr)
 	
-	if pressed:
+	if pressed and chirp_num > 1:
 		anim_player.play("charge", 0.5)
 		for child in sparkle1.get_children():
-			child.tangential_accel_max = 100.0
+			pass
+			#child.tangential_accel_max = 100.0
 	else:
 		for child in sparkle1.get_children():
-			child.tangential_accel_max = 0.0
+			pass
+			#child.tangential_accel_max = 0.0
 	chirp_durr = 0.0
 	is_chirping = pressed
 
 
 
 func chirp(durration : float):
-	durration = clamp(durration, 0.0, CHIRP_THRESHOLDS[2])
-	if durration < CHIRP_THRESHOLDS[0]:
-		$SFX/chirp_small.play()
-		anim_player.play("idle", 0.5)
-		charge *= 0.75 
-	elif durration < CHIRP_THRESHOLDS[1]:
-		disable_chirp = true
-		if charge >= 0.2:
-			$trail/sparkles3.emitting = true
-			if activatable:
-				activate_object.activate()
-		$chirp_cooldown.start(0.75)
-		anim_player.play("idle", 0.35)
-		charge *= 0.4 
-		$SFX/chirp_medium.play()
-		
-	else:
-		disable_chirp = true
-		if charge >= 0.2:
-			$trail/sparkles4.emitting = true
-			if activatable:
-				activate_object.activate()
-		$chirp_cooldown.start(1.5)
-		anim_player.play("big_chirp", 0.05)
-		charge = 0
-		$SFX/chirp_large.play()
+	chirp_num += 1
+	if chirp_num != 2:
+		durration = clamp(durration, 0.0, CHIRP_THRESHOLDS[2])
+		if durration < CHIRP_THRESHOLDS[0]:
+			$SFX/chirp_small.play()
+			anim_player.play("idle", 0.5)
+			charge *= 0.75 
+		elif durration < CHIRP_THRESHOLDS[1]:
+			disable_chirp = true
+			if charge >= 0.2:
+				$trail/sparkles3.emitting = true
+				if activatable:
+					activate_object.activate()
+			$chirp_cooldown.start(0.75)
+			anim_player.play("idle", 0.35)
+			charge *= 0.4 
+			$SFX/chirp_medium.play()
+			
+		else:
+			disable_chirp = true
+			if charge >= 0.2:
+				$trail/sparkles4.emitting = true
+				if activatable:
+					activate_object.activate()
+			$chirp_cooldown.start(1.5)
+			anim_player.play("big_chirp", 0.05)
+			charge = 0
+			$SFX/chirp_large.play()
 	
-	var instance = chirp_scene.instantiate()
-	instance.chirp_size = (durration / CHIRP_THRESHOLDS[2]) * (1.0-MIN_CHIRP_SIZE) + MIN_CHIRP_SIZE
+	if chirp_num == 1:
+		Global.camera_holder.set_cam_params(Vector2(0.3, 0.0), Tween.EaseType.EASE_OUT, Tween.TransitionType.TRANS_SINE, 6.0, Global.Pos.CENTER, 1.0, 20.0, 0.0)
+	if chirp_num != 2:
+		var instance = chirp_scene.instantiate()
+		instance.chirp_size = (durration / CHIRP_THRESHOLDS[2]) * (1.0-MIN_CHIRP_SIZE) + MIN_CHIRP_SIZE
+		add_child(instance)
 	#instance.global_position = $trail.global_position
 	#Global.game.add_child(instance)
-	add_child(instance)
+	
 
 func display_msg(msg : String, fade_time : float = 0.0):
 	var instance = text_box_scene.instantiate()
@@ -299,10 +325,15 @@ func _on_flow_area_entered(area: Area3D) -> void:
 		activate_object = area.get_parent()
 		
 	if area.is_in_group("falling"):
+		Global.camera_holder.set_cam_params(Vector2(-1.0, 0.0), Tween.EaseType.EASE_IN_OUT, Tween.TransitionType.TRANS_SINE, 4.0, Global.Pos.CENTER, 1.25, 40.0, 2.0)
 		if Global.can_fall:
+			
 			Trans.scene("fall", "fog_fade", 10.0)
 		else:
 			Trans.fake_trans(Callable(self, "reset_pos"), "fog_fade", 10.0)
+	
+	if area.is_in_group("cam"):
+		Global.camera_holder.change_cam_area(area)
 
 func reset_pos():
 	global_position = get_parent().reset_point.global_position

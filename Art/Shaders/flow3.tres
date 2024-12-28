@@ -43,6 +43,8 @@ uniform sampler2D noise2;
 uniform sampler2D wave;
 uniform sampler2D normalmap: hint_normal;
 
+uniform vec2 flow_direction;
+
 // Varying variables
 varying float height;
 varying vec3 world_pos;
@@ -95,14 +97,14 @@ void fragment() {
 	
 	float time = TIME * speed;
 	
-	vec3 n1 = texture(noise1, UV + time).rgb;
+	vec3 n1 = texture(noise1, UV + (time*10.0)/10.0 * flow_direction).rgb;
 	
-	vec3 n2 = texture(noise2, UV - time * 0.2).rgb;
+	vec3 n2 = texture(noise2, UV + (time) * flow_direction * 0.2).rgb;
 	
 	vec2 uv_movement = UV * 4.0;
 	uv_movement += TIME * speed * 4.0;
 	
-	float sum = (n1.r + n2.r) - 1.0;
+	float sum = (n1.r + n2.r) - 0.4;
 	
 	float z_depth = rim(texture(DEPTH_TEXTURE, SCREEN_UV).x);
 	
@@ -139,7 +141,7 @@ void fragment() {
 	
 	// konvertier fin in vec3 um
 	//ALBEDO = vec3(fin) + mix(alpha.rgb, (surface_color + depth_color_adj).rgb, gradientcolor.a);
-	ALBEDO = (vec3(fin) + mix(alpha.rgb, depth_color_adj.rgb, gradientcolor.a))*5.0;
+	ALBEDO = (vec3(fin) + mix(alpha.rgb, depth_color_adj.rgb, gradientcolor.a))*3.0;
 	ALPHA = ALBEDO.b;
 	//EMISSION = (vec3(fin) + mix(alpha.rgb, depth_color_adj.rgb, gradientcolor.a));
 	NORMAL_MAP = texture(normalmap, uv_movement).rgb;

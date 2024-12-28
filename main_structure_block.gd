@@ -18,6 +18,8 @@ func move():
 	
 
 func movee():
+	Global.camera_holder.manual_only = false
+	Global.camera_holder.set_cam_params(Vector2(0.2, 0.0), Tween.EaseType.EASE_IN_OUT, Tween.TransitionType.TRANS_CUBIC, 6.0, Global.Pos.CENTER, 0.5, 20.0, 3.0)
 	if target:
 		targ_basis = target.global_basis
 		targ_pos = target.global_position
@@ -64,6 +66,8 @@ func calc_angular_velocity(from_basis: Basis, to_basis: Basis) -> Vector3:
 
 
 func activate():
+	Global.camera_holder.manual_only = true
+	Global.camera_holder.set_cam_params(Vector2(0.7258, 0.0), Tween.EaseType.EASE_OUT, Tween.TransitionType.TRANS_SINE, 2.0, Global.Pos.CENTER, 0.75, 40.0, 0.0)
 	$AnimationPlayer.play("cube")
 
 #func vec3_pow(base : Vector3, exp: float):

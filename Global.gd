@@ -4,7 +4,7 @@ const NET_SAVE_DIRECTORY = "user://saves/network.fall"
 const SAVE_DIRECTORY = "user://saves/save.fall"
 #const BACKUPS = ["user://saves/backup1.fall", "user://saves/backup2.fall"]
 const GAME_IDENTIFIER = "under_dream"
-const PORT = 25564
+const PORT = 25565
 const MATCHING_SERVER_IP = "52.53.179.218"
 
 const CONFIRM_CHIRP = 5.0
@@ -18,7 +18,7 @@ const emojis = [
 	[":woah:", "😯"], [":sleep:", "😴"], [":dizzy:", "😵‍💫"], [":zip:", "🤐"], [":sick:", "🤢"],
 	[":shake:", "🤝"], [":thumbsup:", "👍"], [":thumbsdown:", "👎"], [":wave:", "👋"], [":pray:", "🙏"],
 	[":eyes:", "👀"], [":grandma:", "👵"], [":grandpa:", "👴"], [":oheart:", "🧡"], [":yheart:", "💛"], 
-	[":gheart:", "💚"], [":bluheart:", "💙"], [":pheart:", "💜"], [":bheart:", "🖤"], [":wheart:", "🤍"], 
+	[":gheart:", "💚"], [":bheart:", "💙"], [":pheart:", "💜"], [":dheart:", "🖤"], [":wheart:", "🤍"], 
 	[":twoheart:", "💕"], [":sparkleheart:", "💖"]
 ]
 
@@ -27,6 +27,12 @@ var game : Node3D
 var camera_holder : Node3D
 var camera : Camera3D
 var can_fall : bool = false
+
+enum Pos { # for use in camera
+	LEFT_ADJUSTED,
+	RIGHT_ADJUSTED,
+	CENTER
+}
 
 var char_pos : Vector2
 
